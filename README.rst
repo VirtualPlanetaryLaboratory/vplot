@@ -32,7 +32,7 @@ Quick-and-dirty docs
       -y YAXIS [YAXIS ...]      Parameter(s) to plot on the y-axis
       -a ALPHA                  Parameter to control line alpha
 
-    version: 0.1.1
+    version: 0.3.0
 
     vplot_config.py options:
       figheight, figname, figwidth, interactive, legend_all, legend_fontsize, legend_loc,
