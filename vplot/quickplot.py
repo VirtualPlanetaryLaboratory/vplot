@@ -153,10 +153,15 @@ def QuickPlot(conf=None, bodies=None, xaxis=None, yaxis=None,
         for b, body in enumerate(output.bodies):
 
             # Get indices of the parameters
-            xi = np.where(
-                np.array([param.name for param in body.params]) == x)[0]
-            yi = np.where(
-                np.array([param.name for param in body.params]) == y)[0]
+            if len(body.params):
+                xi = np.where(
+                    np.array([param.name for param in body.params]) == x)[0]
+                yi = np.where(
+                    np.array([param.name for param in body.params]) == y)[0]
+            else:
+                xi = np.array([], dtype=int)
+                yi = np.array([], dtype=int)
+
             if aaxis is not None and aaxis != 'None':
                 ai = np.where(a == np.array(
                     [param.name for param in body.params]))[0]
