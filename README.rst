@@ -4,11 +4,12 @@ A suite of plotting routines for ``vplanet``.
 
 Installation
 ============
-```
-git clone https://github.com/UWVPL/vplot.git
-cd vplot
-python setup.py develop
-```
+
+.. code-block:: bash
+
+    git clone https://github.com/UWVPL/vplot.git
+    cd vplot
+    python setup.py develop
 
 You can edit the ``vplot_config.py`` to specify custom
 settings. This file is automatically created in the *cwd* when you run ``vplot``.
