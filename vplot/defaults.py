@@ -4,14 +4,14 @@
 defaults.py
 -----------
 
-These are the default config values used by VPLOT. You can override these by placing
-a file named `vplot_config.py` in the VPLANET output directory and setting custom 
-values for these parameters.
+These are the default config values used by VPLOT. You can override these by
+placing a file named `vplot_config.py` in the VPLANET output directory and
+setting custom values for these parameters.
 
 '''
 
 # A
-aaxis =                   None                                                        # Alpha-axis param     
+aaxis =                   None                                                        # Alpha-axis param
 alog =                    3                                                           # If alpha-axis range is more than this many orders of magnitude, make it log-scaled. Set to False to force linear scale
 
 # B
@@ -68,26 +68,26 @@ yticklabel_fontsize =     12                                                    
 
 class _Docs(object):
   '''
-  
+
   '''
-  
+
   def __init__(self):
-  
+
     # A
     self.aaxis =              'Parameter to plot on the alpha (transparancy) axis. Default is None'
     self.alog =               'If alpha-axis range is more than this many orders of magnitude, make it log-scaled. Set to False to force linear scale'
-  
+
     # B
     self.bodies =             'List of body names to plot. Should match names of .in files. Default is [], which plots curves for all bodies in the cwd.'
-    
+
     # C
     self.columns =            'If True, arranges subplots into multiple columns. If False, plots up to a maximum of `maxrows` plots in a single column.'
-    
+
     # F
     self.figheight =          'Figure height in inches'
     self.figname =            'Figure file name'
     self.figwidth =           'Figure width in inches'
-    
+
     # I
     self.interactive =        'If True, figure pops up in an interactive window. If False, saves figure directly to disk.'
 
