@@ -64,7 +64,7 @@ axes.formatter.use_locale     : False
 axes.formatter.use_mathtext   : True
 axes.formatter.useoffset      : False
 axes.unicode_minus            : True
-axes.prop_cycle               : cycler('color', 'bgrcmyk')
+#axes.prop_cycle               : cycler('color', 'bgrcmyk')
 axes.xmargin                  : 0
 axes.ymargin                  : 0.1
 axes.spines.bottom            : True
