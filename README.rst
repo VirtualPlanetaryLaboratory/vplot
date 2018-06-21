@@ -7,7 +7,7 @@ Installation
 
 .. code-block:: bash
 
-    git clone https://github.com/UWVPL/vplot.git
+    git clone https://github.com/VirtualPlanetaryLaboratory/vplot.git
     cd vplot
     python setup.py develop
 
