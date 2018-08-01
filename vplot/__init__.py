@@ -3,7 +3,7 @@
 from __future__ import division, print_function, absolute_import, \
      unicode_literals
 
-__version__ = "0.3.1"
+__version__ = "0.3.2"
 __author__ = "Rodrigo Luger (rodluger@uw.edu)"
 __copyright__ = "Copyright 2018 Rodrigo Luger"
 
