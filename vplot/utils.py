@@ -436,7 +436,7 @@ def GetParams(outputorder, file):
 
     # This workaround takes care of units that contain spaces
     while True:
-        foo = re.search('\[[A-Za-z0-9]+ [A-Za-z0-9]+\]', outputorder)
+        foo = re.search('\[[A-Za-z0-9 ]+ [A-Za-z0-9]+\]', outputorder)
         if foo is not None:
             tmp = foo.group().replace(' ', '_')
             outputorder = outputorder.replace(foo.group(), tmp)
