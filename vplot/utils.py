@@ -166,11 +166,12 @@ class Body(object):
 
     '''
 
-    def __init__(self, name="", infile="", fwfile="", climfile="",
+    def __init__(self, name="", infile="", fwfile="", bwfile="", climfile="",
                  params=[], gridparams=[], color=None):
         self.name = name
         self.infile = infile
         self.fwfile = fwfile
+        self.bwfile = bwfile
         self.climfile = climfile
         self.params = params
         self.gridparams = gridparams
@@ -371,6 +372,7 @@ def GetArrays(path='.', bodies=[], benchmark=False, colors=None, logfile=None):
                 'Unable to retrieve `sName` from %s.' % body.infile)
         body.name = infile[j].split()[1]
         body.fwfile = '%s.%s.forward' % (output.sysname, body.name)
+        body.bwfile = '%s.%s.backward' % (output.sysname, body.name)
         body.climfile = '%s.%s.Climate' % (output.sysname, body.name)
         if not os.path.exists(os.path.join(path, body.climfile)):
             body.climfile = ""
@@ -395,11 +397,23 @@ def GetArrays(path='.', bodies=[], benchmark=False, colors=None, logfile=None):
         except IOError:
             fwfile = ['']
 
+        # Grab the backward arrays. Note that they may not exist for this body
+        try:
+            with open(os.path.join(path, body.bwfile), 'r') as f:
+                bwfile = f.readlines()
+        except IOError:
+            bwfile = ['']
+
         # Now grab the output order
         outputorder = re.search(r'- BODY: %s -(.*?)\nOutput Order:(.*?)\n'
                                 % body.name,
                                 logfile, re.DOTALL).groups()[1]
-        body.params = GetParams(outputorder, fwfile)
+        if fwfile != ['']:
+            body.params = GetParams(outputorder, fwfile)
+        elif bwfile != ['']:
+            body.params = GetParams(outputorder, bwfile)
+        else:
+            raise Exception("TODO: Runs with no forward/backward files.")
 
         if body.climfile != "":
             # Grab the climate arrays...
@@ -450,7 +464,7 @@ def GetParams(outputorder, file):
         # Get the name and units
         name, unit = re.search('(.*?)\[(.*?)\]', param).groups()
 
-        # Grab the values in the fwfile
+        # Grab the values in the fwfile/bwfile
         array = []
         for line in file:
             array.append(float(line.split()[j]))
