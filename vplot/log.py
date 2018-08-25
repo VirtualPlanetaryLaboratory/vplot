@@ -56,6 +56,12 @@ def Variablify(param):
     if par:
         param = par.groups()[0]
 
+    # If the param name starts with a number,
+    # add an underscore so we can make it a
+    # valid class property name
+    if any(param.startswith(str(n)) for n in range(10)):
+        param = "_" + param
+
     return param
 
 

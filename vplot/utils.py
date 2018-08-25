@@ -485,6 +485,13 @@ def GetOutput(path='.', **kwargs):
             unit = param.unit
             name = param.name
             parent = body.name
+
+            # If the param name starts with a number,
+            # add an underscore so we can make it a
+            # valid class property name
+            if any(param.name.startswith(str(n)) for n in range(10)):
+                param.name = "_" + param.name
+
             setattr(getattr(output, body.name), param.name,
                     array(param.array, unit=unit, description=description,
                           name=name, parent=parent, color=body.color))
