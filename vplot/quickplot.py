@@ -74,6 +74,9 @@ def QuickPlot(conf=None, bodies=None, xaxis=None, yaxis=None,
     param_names = list(
         set([param.name for body in output.bodies for param in body.params]))
 
+    if len(param_names) == 0:
+        raise Exception("There don't seem to be any parameters to be plotted.")
+
     # The x-axis parameter
     x = param_names[np.argmax(
         np.array([name.lower().startswith(xaxis.lower())

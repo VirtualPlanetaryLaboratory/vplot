@@ -412,8 +412,6 @@ def GetArrays(path='.', bodies=[], benchmark=False, colors=None, logfile=None):
             body.params = GetParams(outputorder, fwfile)
         elif bwfile != ['']:
             body.params = GetParams(outputorder, bwfile)
-        else:
-            raise Exception("TODO: Runs with no forward/backward files.")
 
         if body.climfile != "":
             # Grab the climate arrays...
@@ -431,12 +429,6 @@ def GetArrays(path='.', bodies=[], benchmark=False, colors=None, logfile=None):
                 body.gridparams = GetParams(gridorder, climfile)
             except:
                 pass
-
-    # Final check
-    if len([param.name for body in output.bodies
-            for param in body.params]) == 0:
-        raise Exception(
-            "There don't seem to be any parameters to be plotted...")
 
     return output
 
