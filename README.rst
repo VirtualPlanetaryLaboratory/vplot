@@ -2,7 +2,9 @@ vplot
 -----
 A suite of plotting routines for ``vplanet``. It can be used to both generate a
 plot of all vplanet output data, or combined with matplotlib to easily import data
-for more professional figures.
+for more professional figures. If running from the command line, the output parameter
+list(s) must include Time, i.e. you can only instantly plot the evolution of the
+parameters as a function of time.
 
 Installation
 ============
@@ -50,7 +52,7 @@ Quick-and-dirty docs
     optional arguments:
       -h [OPTION_NAME]          Show this help message or the docstring for OPTION_NAME
       -b BODIES [BODIES ...]    Bodies to plot; should match names of .in files in cwd
-      -x XAXIS                  Parameter to plot on the x-axis (NOTE: This must be Time)
+      -x XAXIS                  Parameter to plot on the x-axis
       -y YAXIS [YAXIS ...]      Parameter(s) to plot on the y-axis
       -a ALPHA                  Parameter to control line alpha
 
