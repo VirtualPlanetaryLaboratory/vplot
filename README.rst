@@ -1,7 +1,7 @@
 vplot
 -----
-A suite of plotting routines for ``vplanet``. It can be used to both generate a
-plot of all vplanet output data, or combined with matplotlib to easily import data
+A suite of plotting routines for ``vplanet <https://github.com/VirtualPlanetaryLaboratory/vplanet-private>``. It can be used to both generate a
+plot of all ``vplanet`` output data, or combined with matplotlib to easily import data
 for more professional figures. If running from the command line, the output parameter
 list(s) must include Time, i.e. you can only instantly plot the evolution of the
 parameters as a function of time.
@@ -9,7 +9,7 @@ parameters as a function of time.
 Installation
 ============
 
-`vplot` will work most effectively if installed as the super-user as follows:
+``vplot`` will work most effectively if installed as the super-user as follows:
 
 .. code-block:: bash
 
