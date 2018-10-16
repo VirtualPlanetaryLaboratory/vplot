@@ -68,8 +68,7 @@ Quick-and-dirty docs
     Type `vplot -h OPTION_NAME` for info on any option
 
 After installation ``vplot`` can be imported and used with matplotlib to easily
-import ``vplanet`` data and quickly generate figures. You can see the examples directory
-in the ``vplanet` repo for
-examples on how to use ``vplot`` in this case.
+import ``vplanet`` data and quickly generate figures. You can check the examples/ directory
+in the ``vplanet`` repo for examples on how to use ``vplot`` in this case.
 
 ``vplot`` must be installed to perform unit tests with ``vplanet``.
