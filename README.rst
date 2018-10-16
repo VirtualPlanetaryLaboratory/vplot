@@ -1,6 +1,6 @@
 vplot
 -----
-A suite of plotting routines for ``vplanet <https://github.com/VirtualPlanetaryLaboratory/vplanet-private>``. It can be used to both generate a
+A suite of plotting routines for ``vplanet``. It can be used to both generate a
 plot of all ``vplanet`` output data, or combined with matplotlib to easily import data
 for more professional figures. If running from the command line, the output parameter
 list(s) must include Time, i.e. you can only instantly plot the evolution of the
@@ -29,8 +29,8 @@ You can edit the ``vplot_config.py`` to specify custom
 settings. This file is automatically created in the *cwd* when you run ``vplot``.
 Type ``vplot -h`` for the complete list of options.
 
-`vplot` can be run from the command line to quickly generate a figure that shows
-the evolution of every output parameter from a vplanet simulation. After a simulation
+``vplot`` can be run from the command line to quickly generate a figure that shows
+the evolution of every output parameter from a ``vplanet`` simulation. After a simulation
 has completed, simply type
 
 .. code-block:: bash
@@ -67,9 +67,9 @@ Quick-and-dirty docs
 
     Type `vplot -h OPTION_NAME` for info on any option
 
-After installation `vplot` can be imported and used with matplotlib to easily
-import `vplanet` data and quickly generate figures. You can see the examples directory
-in the `vplanet` repo for
-examples on how to use vplot in this case.
+After installation ``vplot` can be imported and used with matplotlib to easily
+import ``vplanet`` data and quickly generate figures. You can see the examples directory
+in the ``vplanet` repo for
+examples on how to use ``vplot`` in this case.
 
-`vplot` must be installed to perform unit tests with `vplanet`
+``vplot`` must be installed to perform unit tests with ``vplanet``.
