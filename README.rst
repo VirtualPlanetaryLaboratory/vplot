@@ -17,12 +17,10 @@ Installation
     cd vplot
     python setup.py develop
 
-If you prefer to install without root access, you can do so with the following:
+If you prefer to install without root access, you can do so by replacing the last line with:
 
 .. code-block:: bash
 
-    git clone https://github.com/VirtualPlanetaryLaboratory/vplot.git
-    cd vplot
     python setup.py install --user
 
 You can edit the ``vplot_config.py`` to specify custom
