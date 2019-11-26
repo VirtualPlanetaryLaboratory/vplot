@@ -1,29 +1,20 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import division, print_function, absolute_import, \
-     unicode_literals
-
-__version__ = "0.3.3"
 __author__ = "Rodrigo Luger (rodluger@uw.edu)"
-__copyright__ = "Copyright 2018 Rodrigo Luger"
+__copyright__ = "Copyright 2018, 2019 Rodrigo Luger"
 
-# Was vplot imported from setup.py?
-try:
-    __VPLOT_SETUP__
-except NameError:
-    __VPLOT_SETUP__ = False
+import matplotlib.pyplot as plt
+import logging
 
-# This is a regular vplot run
-if not __VPLOT_SETUP__:
+# Set up the matplotlib stylesheet
+plt.style.use("seaborn-paper")
 
-    # Set up the matplotlib stylesheet
-    import os
-    import matplotlib.pyplot as pl
-    pl.style.use(os.path.join(os.path.dirname(
-                 os.path.abspath(__file__)),
-        'vplot.mplstyle'))
+# Set up the logger
+logger = logging.getLogger("vplot")
+ch = logging.StreamHandler()
+ch.setLevel(logging.ERROR)
+formatter = logging.Formatter("%(levelname)s:%(message)s")
+ch.setFormatter(formatter)
+logger.addHandler(ch)
 
-    # Import main stuff
-    from . import plot, quickplot, utils, log
-    from .utils import GetOutput
-    from .plot import plot, show, savefig, colors, make_pretty
+# Import user-facing stuff
+from .output import GetOutput

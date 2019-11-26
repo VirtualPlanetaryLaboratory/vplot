@@ -1,240 +1,291 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-'''
-log.py
-------
-
-'''
-
+from . import logger
+from . import custom_units
 import re
 import os
+from glob import glob
+import astropy.units as u
+import logging
+import numpy as np
+import warnings
 
 
-class ufloat(float):
-    '''
-    Simple subclass to add a ``unit`` attribute to a float
-    object. Note that the unit does **not** propagate through
-    when operations are done to ``ufloat``. I'd have to
-    implement ``__mult__``, ``__sum__``, etc. methods for that.
-    '''
+def get_param_unit(param, file, line):
+    """
+    Grab the parameter unit from a line in the log file.
 
-    def __new__(self, value, unit=''):
-        return float.__new__(self, value)
+    Returns an `astropy.units` unit.
+    """
+    match = re.search(r"\[(.*?)\]", param)
+    if match:
+        unit_str = match.groups()[0]
 
-    def __init__(self, value, unit=''):
-        float.__init__(value)
-        self.unit = unit
+        with warnings.catch_warnings(record=True) as w:
+            try:
+                unit = u.Unit(unit_str)
+                assert len(w) == 0
+            except ValueError:
+                logger.error(
+                    "Error processing line {} of {}: ".format(line, file)
+                    + "Cannot interpret unit."
+                )
+                unit = u.Unit("")
+            except AssertionError:
+                logger.warn(
+                    "Error processing line {} of {}: ".format(line, file)
+                    + str(w[0].message)
+                )
+                unit = u.Unit("")
 
-    def __repr__(self):
-        return '%s %s' % (str(self), self.unit)
-
-
-def Unitify(param):
-    '''
-
-    '''
-
-    unit = re.search('\[(.*?)\]', param)
-    if unit:
-        unit = unit.groups()[0]
+        return unit
     else:
-        unit = ''
-    return unit
+        # Dimensionless
+        return u.Unit("")
 
 
-def Variablify(param):
-    '''
+def get_param_name(param, file, line):
+    """
+    Grab the parameter name from a line in the log file.
 
-    '''
-
-    repl = [(' ', '_'),
-            ('#', '')]
+    Returns a string.
+    """
+    # Replace bad characters
+    repl = [("#", "")]
     for a, b in repl:
         param = param.replace(a, b)
 
-    par = re.search('\((.*?)\)', param)
-    if par:
-        param = par.groups()[0]
+    # Search for a match
+    match = re.search(r"\((.*?)\)", param)
+    if match:
+        param = match.groups()[0]
+        # If the param name starts with a number,
+        # add an underscore so we can make it a
+        # valid class property name
+        if any(param.startswith(str(n)) for n in range(10)):
+            param = "_" + param
+        return param
+    else:
+        # There is no (ParameterName) here.
+        # This is therefore not a variable, but a setting.
+        # If there are spaces, get rid of them and force title case
+        if " " in param:
+            param = param.title().replace(" ", "")
+        return param
 
-    # If the param name starts with a number,
-    # add an underscore so we can make it a
-    # valid class property name
-    if any(param.startswith(str(n)) for n in range(10)):
-        param = "_" + param
 
-    return param
+def get_param_value(val, unit, file, line):
+    """
+    Grab the parameter value from a line in the log file.
 
-
-def Quantify(val, unit):
-    '''
-
-    '''
-
+    Returns an int, float (with units), bool, None (if no value
+    was provided) or a string (if processing failed).
+    """
+    # Remove spaces
     val = val.lstrip().rstrip()
-    int_chars = ['0', '1', '2', '3', '4',
-                 '5', '6', '7', '8', '9', '-']
-    float_chars = ['0', '1', '2', '3', '4',
-                   '5', '6', '7', '8', '9',
-                   '.', '-', '+', 'e']
+
+    # Is there a value?
+    if val == "":
+        return None
+
+    # Check if int, float, or bool
+    int_chars = "-0123456789"
+    float_chars = int_chars + ".+e"
     if all([c in int_chars for c in val]):
         try:
             val = int(val)
-        except:
-            pass
+        except ValueError:
+            logger.error(
+                "Error processing line {} of {}: ".format(line, file)
+                + "Cannot interpret value as integer."
+            )
+            # Return unprocessed string
+            return val
     elif all([c in float_chars for c in val]):
         try:
-            val = ufloat(val, unit)
-        except:
-            pass
-    elif (val == 'True') or (val == 'Yes'):
+            val = float(val) * unit
+        except ValueError:
+            logger.error(
+                "Error processing line {} of {}: ".format(line, file)
+                + "Cannot interpret value as float."
+            )
+            # Return unprocessed string
+            return val
+    elif (val.lower() == "true") or (val.lower() == "yes"):
         val = True
-    elif (val == 'False') or (val == 'No'):
+    elif (val.lower() == "false") or (val.lower() == "no"):
         val = False
+    elif val.lower() == "inf":
+        val = np.inf
+    elif val.lower() == "-inf":
+        val = -np.inf
+    elif val.lower() == "nan":
+        val = np.nan
     return val
 
 
 class Log(object):
-    '''
+    """
 
-    '''
+    """
 
     def __init__(self, sysname=""):
         self.sysname = sysname
-        self.header = LogStage('Header')
-        self.initial = LogStage('Initial')
-        self.final = LogStage('Final')
+        self.header = LogStage("Header")
+        self.initial = LogStage("Initial")
+        self.final = LogStage("Final")
+        self._body_names = []
+        self.path = ""
 
     def __repr__(self):
         return "<VPLOT Log File: %s>" % self.sysname
 
 
 class LogStage(object):
-    '''
+    """
 
-    '''
+    """
 
-    def __init__(self, name='Header'):
+    def __init__(self, name="Header"):
         self._name = name
-        self._bodies = []
-
-    def __getitem__(self, i):
-        return self._bodies[i]
-
-    def __len__(self):
-        return len(self._bodies)
 
     def __repr__(self):
         return "<VPLOT Log Object: %s>" % self._name
 
 
 class LogBody(object):
-    '''
+    """
 
-    '''
+    """
 
-    def __init__(self, name=''):
+    def __init__(self, name=""):
         self._name = name
 
     def __repr__(self):
         return "<VPLOT Log Object: %s>" % self._name
 
 
-def GetLog(sysname='', path='.', benchmark=False, logfile=None, **kwargs):
-    '''
+def GetLog(sysname=None, path=".", ext="log"):
+    """
 
-    '''
+    """
+    # Just in case!
+    if ext.startswith("."):
+        ext = ext[1:]
 
-    # Is this a benchmarking run?
-    if benchmark:
-        logext = '.log.truth'
+    # Look for the log file
+    if sysname is None:
+        lf = glob(os.path.join(path, "*.%s" % (ext)))
+        if len(lf) > 1:
+            raise Exception("There are multiple log files in this directory.")
+        elif len(lf) == 0:
+            raise Exception("There doesn't seem to be a log file in this directory.")
+        else:
+            lf = lf[0]
+            sysname = os.path.basename(lf).split(".%s" % ext)[0]
     else:
-        logext = '.log'
+        lf = glob(os.path.join(path, "%s.%s" % (sysname, ext)))
+        if len(lf) == 0:
+            raise Exception("There doesn't seem to be a log file in this directory.")
+        else:
+            lf = lf[0]
 
-    # Get the log file
-    lf = [f for f in os.listdir(path) if f.endswith(logext)]
-    if len(lf) > 1:
-        lf = os.path.join(path, logfile)
-        if lf is None:
-            raise Exception(
-                "There's more than one log file in the cwd!" +
-                " VPLOT is confused.")
-    elif len(lf) == 0:
-        raise Exception(
-            "There doesn't seem to be a log file in this directory.")
-    else:
-        lf = os.path.join(path, lf[0])
-    with open(lf, 'r') as f:
-        tmp = f.readlines()
+    # Grab the contents
+    with open(lf, "r") as f:
+        lines = f.readlines()
+
+    # Shorten the file name for logging
+    lf = os.path.basename(lf)
 
     # Remove newlines and blank lines
     header = []
     initial = []
     final = []
     stage = 0
-    for line in tmp:
-        line = line.replace('\n', '')
-        if 'INITIAL SYSTEM PROPERTIES' in line:
+    for i, line in enumerate(lines):
+        line = line.replace("\n", "")
+        if "INITIAL SYSTEM PROPERTIES" in line:
             stage = 1
-        elif 'FINAL SYSTEM PROPERTIES' in line:
+        elif "FINAL SYSTEM PROPERTIES" in line:
             stage = 2
         if len(line):
             if stage == 0:
-                if ('Log file' not in line) and ('FORMATTING' not in line):
-                    header.append(line)
+                if ("Log file" not in line) and ("FORMATTING" not in line):
+                    header.append((i + 1, line))
             elif stage == 1:
-                if ('INITIAL SYSTEM PROPERTIES' not in line) and \
-                   ('PARAMETERS' not in line):
-                    initial.append(line)
+                if ("SYSTEM PROPERTIES" not in line) and ("PARAMETERS" not in line):
+                    initial.append((i + 1, line))
             elif stage == 2:
-                final.append(line)
+                if ("SYSTEM PROPERTIES" not in line) and ("PARAMETERS" not in line):
+                    final.append((i + 1, line))
 
-    log = Log('xuvevol')
+    # Instantiate a `Log` object
+    log = Log(sysname)
+    log.path = os.path.abspath(path)
 
-    for line in header:
-        param, val = line.split(': ')
-        unit = Unitify(param)
-        param = Variablify(param)
-        val = Quantify(val, unit)
-        setattr(log.header, param, val)
+    # Process the header
+    for i, line in header:
+        try:
+            name_and_unit, value = line.split(":")
+            unit = get_param_unit(name_and_unit, lf, i)
+            name = get_param_name(name_and_unit, lf, i)
+            value = get_param_value(value, unit, lf, i)
+            setattr(log.header, name, value)
+        except Exception as e:
+            raise ValueError("Error processing line {} of {}: ".format(i, lf) + str(e))
 
-    body = 'system'
+    # Process the initial conditions
+    body = "system"
     setattr(log.initial, body, LogBody(body))
-    for line in initial:
-        if 'BODY:' not in line:
+    for i, line in initial:
+        if "BODY:" not in line:
             try:
-                param, val = line.split(': ')
-            except:
-                continue
-            unit = Unitify(param)
-            param = Variablify(param)
-            val = Quantify(val, unit)
-            setattr(getattr(log.initial, body), param, val)
+                name_and_unit, value = line.split(":")
+                unit = get_param_unit(name_and_unit, lf, i)
+                name = get_param_name(name_and_unit, lf, i)
+                value = get_param_value(value, unit, lf, i)
+                setattr(getattr(log.initial, body), name, value)
+            except Exception as e:
+                raise ValueError(
+                    "Error processing line {} of {}: ".format(i, lf) + str(e)
+                )
         else:
             try:
-                match = re.search('BODY:\s(.*?)\s-', line)
+                match = re.search(r"BODY:\s(.*?)\s-", line)
                 body = match.groups()[0]
             except:
-                raise ValueError("Can't understand body name in: %s." % line)
+                raise ValueError(
+                    "Error processing line {} of {}: ".format(i, lf)
+                    + "Cannot understand body name."
+                    + line
+                )
             setattr(log.initial, body, LogBody(body))
+            log._body_names.append(body)
 
-    body = 'system'
+    # Process the final conditions
+    body = "system"
     setattr(log.final, body, LogBody(body))
-    for line in final:
-        if 'BODY:' not in line:
+    for i, line in final:
+        if "BODY:" not in line:
             try:
-                param, val = line.split(': ')
-            except:
-                continue
-            unit = Unitify(param)
-            param = Variablify(param)
-            val = Quantify(val, unit)
-            setattr(getattr(log.final, body), param, val)
+                name_and_unit, value = line.split(":")
+                unit = get_param_unit(name_and_unit, lf, i)
+                name = get_param_name(name_and_unit, lf, i)
+                value = get_param_value(value, unit, lf, i)
+                setattr(getattr(log.final, body), name, value)
+            except Exception as e:
+                raise ValueError(
+                    "Error processing line {} of {}: ".format(i, lf) + str(e)
+                )
         else:
             try:
-                match = re.search('BODY:\s(.*?)\s-', line)
+                match = re.search(r"BODY:\s(.*?)\s-", line)
                 body = match.groups()[0]
             except:
-                raise ValueError("Can't understand body name in: %s." % line)
+                raise ValueError(
+                    "Error processing line {} of {}: ".format(i, lf)
+                    + "Cannot understand body name."
+                    + line
+                )
             setattr(log.final, body, LogBody(body))
 
     return log
