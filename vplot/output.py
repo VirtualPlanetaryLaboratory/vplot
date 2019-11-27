@@ -2,6 +2,7 @@
 from . import logger
 from . import custom_units
 from .log import GetLog
+from .quantity import Quantity
 import logging
 import numpy as np
 import re
@@ -127,10 +128,9 @@ def GetParams(outputorder, file):
             array.append(float(line.split()[j]))
 
         # Give it units, a name, and a description
-        array = np.array(array)
-        array *= unit
-        array.name = name
-        array.description = description.get(name, name)
+        array = Quantity(
+            np.array(array) * unit, name=name, description=description.get(name, name)
+        )
 
         # Add to the list
         params.append(array)
