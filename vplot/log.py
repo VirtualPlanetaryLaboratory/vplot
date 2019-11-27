@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from . import logger
 from . import custom_units
+from .quantity import Quantity
 import re
 import os
 from glob import glob
@@ -102,7 +103,7 @@ def get_param_value(val, unit, file, line):
             return val
     elif all([c in float_chars for c in val]):
         try:
-            val = float(val) * unit
+            val = Quantity(float(val) * unit)
         except ValueError:
             logger.error(
                 "Error processing line {} of {}: ".format(line, file)
