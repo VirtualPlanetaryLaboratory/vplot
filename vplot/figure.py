@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
+from . import logger
 import matplotlib
 from matplotlib.figure import Figure
 import astropy.units as u
+import sys
 
 
 def _get_array_info(array, long_label=True):
@@ -220,14 +223,20 @@ class VPLOTFigure(Figure):
                 if make_legend:
                     ax.legend(loc="best")
 
-    def show(self, *args, **kwargs):
+    def draw(self, *args, **kwargs):
         self._add_labels()
-        super().show(*args, **kwargs)
-
-    def savefig(self, *args, **kwargs):
-        self._add_labels()
-        super().savefig(*args, **kwargs)
+        super().draw(*args, **kwargs)
 
 
-# HACK
+# HACK: Override `Figure` so this will work seamlessly in the background
+# NOTE: This requires vplot to be imported **before** pyplot!
 matplotlib.figure.Figure = VPLOTFigure
+
+# HACK: Warn the user if they've imported matplotlib.pyplot already
+if "matplotlib.pyplot" in sys.modules:
+    logger.error(
+        "It looks like you already imported `matplotlib.pyplot`. "
+        + "In order for `vplot` to work correctly, please import it "
+        + "**before** any `matplotlib` modules."
+    )
+

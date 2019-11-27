@@ -14,13 +14,11 @@ output = vpl.GetOutput()
 cbp = output.cbp
 earth = output.earth
 
-# Plot
+# Set up the figure
 fig, axes = plt.subplots(nrows=3, ncols=3, figsize=(15, 12))
-
 fig.subplots_adjust(left=0.1, right=0.9, bottom=0.1, top=0.9, hspace=0.3, wspace=0.3)
 for ax in axes.flatten():
     ax.margins(0, None)
-
 
 axes[0, 0].set_title("Single body, single quantity")
 axes[0, 0].plot(cbp.Time, cbp.Eccentricity)

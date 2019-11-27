@@ -3,16 +3,6 @@ __author__ = "Rodrigo Luger (rodluger@gmail.edu)"
 __copyright__ = "Copyright 2018, 2019 Rodrigo Luger"
 
 
-# Set up the custom figure **before** any other imports
-from . import figure
-
-
-# Set up the matplotlib stylesheet
-import matplotlib.pyplot as plt
-
-plt.style.use("seaborn-paper")
-
-
 # Set up the logger
 import logging
 
@@ -24,5 +14,16 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 
+# Set up the custom figure **before** any other imports
+from . import figure
+
+
+# Set up the matplotlib stylesheet
+import matplotlib.pyplot as plt
+
+plt.style.use("seaborn-paper")
+
+
 # Import user-facing stuff
 from .output import GetOutput
+from .autoplot import AutoPlot

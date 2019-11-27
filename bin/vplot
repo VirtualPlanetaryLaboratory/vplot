@@ -1,3 +1,16 @@
 #!/usr/bin/env python
-# TODO:
-raise NotImplementedError("Command line interface not yet implemented.")
+# TODO: This routine is still under development
+from vplot import AutoPlot
+import argparse
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(prog="vplot", add_help=False)
+    parser.add_argument(
+        "-g",
+        "--group",
+        default="param",
+        help="What to group plots by (param | type | none)",
+    )
+    args = parser.parse_args()
+
+    AutoPlot(group=args.group)
