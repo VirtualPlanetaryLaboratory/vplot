@@ -1,6 +1,8 @@
 # Misc
 .DS_Store
 .vscode
+*.forward
+*.backward
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

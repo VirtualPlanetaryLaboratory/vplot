@@ -30,6 +30,7 @@ class quantity_support(units.ConversionInterface):
 
     @staticmethod
     def axisinfo(unit, axis):
+        # We set the axes labels in `VPLOTFigure` instead
         return None
 
     @staticmethod
