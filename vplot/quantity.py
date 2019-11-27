@@ -81,8 +81,7 @@ class Quantity(u.Quantity):
         cls,
         value,
         unit=None,
-        name=None,
-        description=None,
+        tags=None,
         dtype=None,
         copy=True,
         order=None,
@@ -209,8 +208,8 @@ class Quantity(u.Quantity):
         value = value.view(cls)
         value._set_unit(value_unit)
 
-        value.name = name
-        value.description = description
+        # Custom tags for vplot
+        value.tags = tags
 
         if unit is value_unit:
             return value
@@ -236,5 +235,5 @@ class Quantity(u.Quantity):
         if "info" in obj.__dict__:
             self.info = obj.info
 
-        self.name = getattr(obj, "name", None)
-        self.description = getattr(obj, "description", None)
+        # Custom tags for vplot
+        self.tags = getattr(obj, "tags", None)

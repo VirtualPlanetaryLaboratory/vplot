@@ -81,7 +81,7 @@ def GetParamDescriptions():
     return description
 
 
-def GetParams(outputorder, file):
+def GetParams(outputorder, file, body=None, color=None):
     """
 
     """
@@ -127,10 +127,12 @@ def GetParams(outputorder, file):
         for line in file:
             array.append(float(line.split()[j]))
 
-        # Give it units, a name, and a description
-        array = Quantity(
-            np.array(array) * unit, name=name, description=description.get(name, name)
+        # Give it units and `tags`
+        tags = dict(
+            name=name, description=description.get(name, name), body=body, color=color
         )
+
+        array = Quantity(np.array(array) * unit, tags=tags)
 
         # Add to the list
         params.append(array)
@@ -187,9 +189,13 @@ def GetArrays(log):
         # Now grab the output order and the params
         outputorder = getattr(log.initial, body.name).OutputOrder
         if fwfile != [""]:
-            body._params = GetParams(outputorder, fwfile)
+            body._params = GetParams(
+                outputorder, fwfile, body=body.name, color=body.color
+            )
         elif bwfile != [""]:
-            body._params = GetParams(outputorder, bwfile)
+            body._params = GetParams(
+                outputorder, bwfile, body=body.name, color=body.color
+            )
 
         # Climate file
         if body.climfile != "":
@@ -203,7 +209,9 @@ def GetArrays(log):
             # ... and the grid order
             try:
                 gridorder = getattr(log.initial, body.name).GridOutputOrder
-                body._gridparams = GetParams(gridorder, climfile)
+                body._gridparams = GetParams(
+                    gridorder, climfile, body=body.name, color=body.color
+                )
             except:
                 logger.error(
                     "Unable to obtain grid output parameters from %s." % body.climfile
@@ -232,7 +240,7 @@ def GetOutput(sysname=None, path="."):
 
         # Make all the arrays accessible as attributes
         for array in getattr(output, body.name)._params:
-            setattr(getattr(output, body.name), array.name, array)
+            setattr(getattr(output, body.name), array.tags["name"], array)
 
         # Grid params
         if len(getattr(output, body.name)._gridparams):
