@@ -2,6 +2,9 @@
 __author__ = "Rodrigo Luger (rodluger@gmail.edu)"
 __copyright__ = "Copyright 2018, 2019 Rodrigo Luger"
 
+# Import the version
+from .vplot_version import __version__
+
 
 # Set up the logger
 import logging
