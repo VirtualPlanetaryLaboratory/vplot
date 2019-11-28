@@ -4,7 +4,9 @@ import sys
 import os
 
 # Get the current version
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "vplot"))
+sys.path.insert(
+    0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "vplot")
+)
 from vplot_version import __version__  # NOQA
 
 

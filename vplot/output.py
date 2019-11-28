@@ -67,7 +67,9 @@ def GetParamDescriptions():
     help = help.replace("\x1b[0m", "")
 
     # Get only the output params
-    stroutput = help.split("These options follow the argument saOutputOrder.")[1]
+    stroutput = help.split("These options follow the argument saOutputOrder.")[
+        1
+    ]
     stroutput = [x for x in stroutput.split("\n") if len(x)]
     description = {}
     for out in stroutput:
@@ -114,11 +116,14 @@ def GetParams(outputorder, file, body=None, color=None):
                 unit = u.Unit(unit_str)
                 assert len(w) == 0
             except ValueError as e:
-                logger.error("Error processing unit {}: ".format(unit_str) + (str(e)))
+                logger.error(
+                    "Error processing unit {}: ".format(unit_str) + (str(e))
+                )
                 unit = u.Unit("")
             except AssertionError:
                 logger.warn(
-                    "Error processing unit {}: ".format(unit_str) + str(w[0].message)
+                    "Error processing unit {}: ".format(unit_str)
+                    + str(w[0].message)
                 )
                 unit = u.Unit("")
 
@@ -129,7 +134,10 @@ def GetParams(outputorder, file, body=None, color=None):
 
         # Give it units and `tags`
         tags = dict(
-            name=name, description=description.get(name, name), body=body, color=color
+            name=name,
+            description=description.get(name, name),
+            body=body,
+            color=color,
         )
 
         array = Quantity(np.array(array) * unit, tags=tags)
@@ -214,7 +222,8 @@ def GetArrays(log):
                 )
             except:
                 logger.error(
-                    "Unable to obtain grid output parameters from %s." % body.climfile
+                    "Unable to obtain grid output parameters from %s."
+                    % body.climfile
                 )
         else:
             body._gridparams = []

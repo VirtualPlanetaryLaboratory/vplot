@@ -100,7 +100,9 @@ class Quantity(u.Quantity):
                 # the above already makes a copy (with float dtype)
                 copy = False
 
-            if type(value) is not cls and not (subok and isinstance(value, cls)):
+            if type(value) is not cls and not (
+                subok and isinstance(value, cls)
+            ):
                 value = value.view(cls)
 
             if dtype is None:
@@ -111,7 +113,12 @@ class Quantity(u.Quantity):
                     dtype = float
 
             return np.array(
-                value, dtype=dtype, copy=copy, order=order, subok=True, ndmin=ndmin
+                value,
+                dtype=dtype,
+                copy=copy,
+                order=order,
+                subok=True,
+                ndmin=ndmin,
             )
 
         # Maybe str, or list/tuple of Quantity? If so, this may set value_unit.
@@ -184,12 +191,18 @@ class Quantity(u.Quantity):
                     copy = False  # copy will be made in conversion at end
 
         value = np.array(
-            value, dtype=dtype, copy=copy, order=order, subok=False, ndmin=ndmin
+            value,
+            dtype=dtype,
+            copy=copy,
+            order=order,
+            subok=False,
+            ndmin=ndmin,
         )
 
         # check that array contains numbers or long int objects
         if value.dtype.kind in "OSU" and not (
-            value.dtype.kind == "O" and isinstance(value.item(0), numbers.Number)
+            value.dtype.kind == "O"
+            and isinstance(value.item(0), numbers.Number)
         ):
             raise TypeError(
                 "The value must be a valid Python or " "Numpy numeric type."

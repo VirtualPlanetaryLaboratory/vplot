@@ -25,7 +25,9 @@ def AutoPlot(sysname=None, path=".", group="param"):
         params += body._params
 
     # Get the time array in years
-    time = [param for param in params if param.tags.get("name", None) == "Time"]
+    time = [
+        param for param in params if param.tags.get("name", None) == "Time"
+    ]
     if len(time) == 0:
         time = time[0]
     else:
@@ -36,7 +38,9 @@ def AutoPlot(sysname=None, path=".", group="param"):
         time = time[0]
 
     # Remove it from the params
-    params = [param for param in params if param.tags.get("name", None) != "Time"]
+    params = [
+        param for param in params if param.tags.get("name", None) != "Time"
+    ]
 
     # One plot per physical type
     if group == "type":
@@ -44,7 +48,9 @@ def AutoPlot(sysname=None, path=".", group="param"):
         physical_types = list(set([p.unit.physical_type for p in params]))
         for physical_type in physical_types:
             arrays = [
-                param for param in params if param.unit.physical_type == physical_type
+                param
+                for param in params
+                if param.unit.physical_type == physical_type
             ]
             fig, ax = plt.subplots(1)
             for array in arrays:

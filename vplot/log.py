@@ -179,14 +179,18 @@ def GetLog(sysname=None, path=".", ext="log"):
         if len(lf) > 1:
             raise Exception("There are multiple log files in this directory.")
         elif len(lf) == 0:
-            raise Exception("There doesn't seem to be a log file in this directory.")
+            raise Exception(
+                "There doesn't seem to be a log file in this directory."
+            )
         else:
             lf = lf[0]
             sysname = os.path.basename(lf).split(".%s" % ext)[0]
     else:
         lf = glob(os.path.join(path, "%s.%s" % (sysname, ext)))
         if len(lf) == 0:
-            raise Exception("There doesn't seem to be a log file in this directory.")
+            raise Exception(
+                "There doesn't seem to be a log file in this directory."
+            )
         else:
             lf = lf[0]
 
@@ -213,10 +217,14 @@ def GetLog(sysname=None, path=".", ext="log"):
                 if ("Log file" not in line) and ("FORMATTING" not in line):
                     header.append((i + 1, line))
             elif stage == 1:
-                if ("SYSTEM PROPERTIES" not in line) and ("PARAMETERS" not in line):
+                if ("SYSTEM PROPERTIES" not in line) and (
+                    "PARAMETERS" not in line
+                ):
                     initial.append((i + 1, line))
             elif stage == 2:
-                if ("SYSTEM PROPERTIES" not in line) and ("PARAMETERS" not in line):
+                if ("SYSTEM PROPERTIES" not in line) and (
+                    "PARAMETERS" not in line
+                ):
                     final.append((i + 1, line))
 
     # Instantiate a `Log` object
@@ -232,7 +240,9 @@ def GetLog(sysname=None, path=".", ext="log"):
             value = get_param_value(value, unit, lf, i)
             setattr(log.header, name, value)
         except Exception as e:
-            raise ValueError("Error processing line {} of {}: ".format(i, lf) + str(e))
+            raise ValueError(
+                "Error processing line {} of {}: ".format(i, lf) + str(e)
+            )
 
     # Process the initial conditions
     body = "system"

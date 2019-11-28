@@ -11,7 +11,9 @@ from matplotlib import units
 
 # Get all subclass for Quantity, since matplotlib checks on class, not subclass.
 def all_issubclass(cls):
-    return {cls}.union([s for c in cls.__subclasses__() for s in all_issubclass(c)])
+    return {cls}.union(
+        [s for c in cls.__subclasses__() for s in all_issubclass(c)]
+    )
 
 
 class quantity_support(units.ConversionInterface):

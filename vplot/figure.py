@@ -56,8 +56,12 @@ class VPLOTFigure(Figure):
                 continue
 
             # Check if there are labels already
-            xlabel_exists = not (ax.get_xlabel() is None or ax.get_xlabel() == "")
-            ylabel_exists = not (ax.get_ylabel() is None or ax.get_ylabel() == "")
+            xlabel_exists = not (
+                ax.get_xlabel() is None or ax.get_xlabel() == ""
+            )
+            ylabel_exists = not (
+                ax.get_ylabel() is None or ax.get_ylabel() == ""
+            )
             legend_exists = ax.get_legend() is not None
 
             # Skip if the user already set these
@@ -78,13 +82,17 @@ class VPLOTFigure(Figure):
                 x, y = line.get_data()
 
                 # Grab the x metadata
-                unit, _, label, physical_type = _get_array_info(x, self.long_labels)
+                unit, _, label, physical_type = _get_array_info(
+                    x, self.long_labels
+                )
                 xunits.append(unit)
                 xlabels.append(label)
                 xtypes.append(physical_type)
 
                 # Grab the y metadata
-                unit, body, label, physical_type = _get_array_info(y, self.long_labels)
+                unit, body, label, physical_type = _get_array_info(
+                    y, self.long_labels
+                )
                 yunits.append(unit)
                 ylabels.append(label)
                 ytypes.append(physical_type)
