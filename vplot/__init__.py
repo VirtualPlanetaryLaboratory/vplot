@@ -22,9 +22,14 @@ from . import figure
 
 
 # Set up the matplotlib stylesheet
+import os
 import matplotlib.pyplot as plt
 
-plt.style.use("seaborn-paper")
+plt.style.use(
+    os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "style", "vplot.mplstyle"
+    )
+)
 
 
 # Import user-facing stuff

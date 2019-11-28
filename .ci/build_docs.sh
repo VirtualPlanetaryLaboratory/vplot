@@ -8,7 +8,9 @@ if [[ -n $CONDA ]]; then
 fi
 
 # Install dependencies
+conda install -y -q -c conda-forge pandoc
 pip install -U sphinx
+pip install -U "nbconvert>=5.5"
 pip install -U sphinx_rtd_theme
 pip install -U nbsphinx
 pip install jupyter_client
