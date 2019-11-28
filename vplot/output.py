@@ -54,13 +54,15 @@ def get_param_descriptions():
     """
 
     """
-
-    # Call vplanet help (it better be in the path!)
+    # Check if vplanet is callable
     try:
-        help = subprocess.getoutput("vplanet -h")
-    except OSError:
+        subprocess.check_output(["vplanet", "-h"])
+    except (FileNotFoundError, OSError):
         logging.error("Unable to call VPLANET. Is it in your PATH?")
         return {}
+
+    # Get the help message, which contains all the parameters
+    help = subprocess.getoutput("vplanet -h")
 
     # Remove bold tags
     help = help.replace("\x1b[1m", "")
