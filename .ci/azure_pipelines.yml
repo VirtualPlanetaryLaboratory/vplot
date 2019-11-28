@@ -25,6 +25,7 @@ jobs:
       BUILDREASON: $(Build.Reason)
       GHUSER: $(GITHUB_USER)
       GHKEY: $(GITHUB_API_KEY)
+      GHBRANCH: $(Build.SourceBranchName)
 
   - task: PublishTestResults@2
     condition: succeededOrFailed()
