@@ -14,50 +14,52 @@ output = vpl.get_output()
 cbp = output.cbp
 earth = output.earth
 
-# Set up the figure
-fig, axes = plt.subplots(nrows=3, ncols=3, figsize=(15, 12))
-fig.subplots_adjust(
-    left=0.1, right=0.9, bottom=0.1, top=0.9, hspace=0.3, wspace=0.3
-)
-for ax in axes.flatten():
-    ax.margins(0, None)
+# Plot several things
+plt.figure()
+plt.title("Single body, single quantity")
+plt.plot(cbp.Time, cbp.Eccentricity)
 
-axes[0, 0].set_title("Single body, single quantity")
-axes[0, 0].plot(cbp.Time, cbp.Eccentricity)
+plt.figure()
+plt.title("Single body, two quantities")
+plt.plot(cbp.Time, cbp.LongA, ".")
+plt.plot(cbp.Time, cbp.LongP, ".")
 
-axes[0, 1].set_title("Single body, two quantities")
-axes[0, 1].plot(cbp.Time, cbp.LongA, ".")
-axes[0, 1].plot(cbp.Time, cbp.LongP, ".")
+plt.figure()
+plt.title("Two bodies, single quantity")
+plt.plot(cbp.Time, cbp.Eccentricity)
+plt.plot(earth.Time, earth.Eccentricity)
 
-axes[0, 2].set_title("Two bodies, single quantity")
-axes[0, 2].plot(cbp.Time, cbp.Eccentricity)
-axes[0, 2].plot(earth.Time, earth.Eccentricity)
+plt.figure()
+plt.title("Two bodies, two quantities")
+plt.plot(cbp.Time, cbp.LongA)
+plt.plot(earth.Time, earth.LongP)
 
-axes[1, 0].set_title("Two bodies, two quantities")
-axes[1, 0].plot(cbp.Time, cbp.LongA)
-axes[1, 0].plot(earth.Time, earth.LongP)
+plt.figure()
+plt.title("One angle in degrees, one in radians")
+plt.plot(cbp.Time, cbp.LongA, ".")
+plt.plot(cbp.Time, cbp.LongP.to("rad"), ".")
 
-axes[1, 1].set_title("One angle in degrees, one in radians")
-axes[1, 1].plot(cbp.Time, cbp.LongA, ".")
-axes[1, 1].plot(cbp.Time, cbp.LongP.to("rad"), ".")
+plt.figure()
+plt.title("A vplot quantity and a quantity with no y units")
+plt.plot(cbp.Time, cbp.LongA)
+plt.plot(cbp.Time, 180 + np.random.randn(len(cbp.Time)))
 
-axes[1, 2].set_title("A vplot quantity and a quantity with no y units")
-axes[1, 2].plot(cbp.Time, cbp.LongA)
-axes[1, 2].plot(cbp.Time, 180 + np.random.randn(len(cbp.Time)))
-
-axes[2, 0].set_title("A vplot quantity and a quantity with no x or y units")
-axes[2, 0].plot(cbp.Time, cbp.LongA)
-axes[2, 0].plot(
+plt.figure()
+plt.title("A vplot quantity and a quantity with no x or y units")
+plt.plot(cbp.Time, cbp.LongA)
+plt.plot(
     np.linspace(0, 100, len(cbp.Time)), 180 + np.random.randn(len(cbp.Time))
 )
 
-axes[2, 1].set_title("Same as first axis, but with custom labels")
-axes[2, 1].plot(cbp.Time, cbp.Eccentricity)
-axes[2, 1].set_xlabel("Years elapsed")
-axes[2, 1].set_ylabel("Eccentricity of the circumbinary planet")
+plt.figure()
+plt.title("Same as first plot, but with custom labels")
+plt.plot(cbp.Time, cbp.Eccentricity)
+plt.xlabel("Years elapsed")
+plt.ylabel("Eccentricity of the circumbinary planet")
 
-axes[2, 2].set_title("An unrelated, unitless quantity")
-axes[2, 2].plot(np.linspace(0, 1, 100), np.random.randn(100))
+plt.figure()
+plt.title("An unrelated, unitless quantity")
+plt.plot(np.linspace(0, 1, 100), np.random.randn(100))
 
-# Show
+# Show all plotss
 plt.show()
