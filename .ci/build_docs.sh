@@ -1,5 +1,5 @@
 #!/bin/bash
-#set -e
+set -e
 
 # Load the environment
 if [[ -n $CONDA ]]; then
@@ -11,6 +11,7 @@ fi
 pip install -U sphinx
 pip install -U sphinx_rtd_theme
 pip install -U nbsphinx
+pip install jupyter_client
 
 # Build the docs
 make -C docs html
