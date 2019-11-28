@@ -33,5 +33,18 @@ plt.style.use(
 
 
 # Import user-facing stuff
-from .output import GetOutput
-from .autoplot import AutoPlot
+from .log import Log, LogBody, LogStage
+from .output import get_output, Output, Body
+from .auto_plot import auto_plot
+
+
+# User-facing stuff
+__all__ = [
+    "get_output",
+    "auto_plot",
+    "Log",
+    "LogBody",
+    "LogStage",
+    "Output",
+    "Body",
+]

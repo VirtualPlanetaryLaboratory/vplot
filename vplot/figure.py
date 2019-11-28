@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from . import logger
 import matplotlib
+import matplotlib.pyplot
 from matplotlib.figure import Figure
 import astropy.units as u
 import sys

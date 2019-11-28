@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from . import logger
 from . import custom_units
-from .log import GetLog
+from .log import get_log
 from .quantity import Quantity
 import logging
 import numpy as np
@@ -50,7 +50,7 @@ class Body(object):
         return "<VPLOT Body: %s>" % self.name
 
 
-def GetParamDescriptions():
+def get_param_descriptions():
     """
 
     """
@@ -83,12 +83,12 @@ def GetParamDescriptions():
     return description
 
 
-def GetParams(outputorder, file, body=None, color=None):
+def get_params(outputorder, file, body=None, color=None):
     """
 
     """
     # Get parameter descriptions from the vplanet help
-    description = GetParamDescriptions()
+    description = get_param_descriptions()
 
     # Remove spaces from units
     units = re.search(r"\[(.*?)\]", outputorder)
@@ -148,7 +148,7 @@ def GetParams(outputorder, file, body=None, color=None):
     return params
 
 
-def GetArrays(log):
+def get_arrays(log):
     """
 
     """
@@ -197,11 +197,11 @@ def GetArrays(log):
         # Now grab the output order and the params
         outputorder = getattr(log.initial, body.name).OutputOrder
         if fwfile != [""]:
-            body._params = GetParams(
+            body._params = get_params(
                 outputorder, fwfile, body=body.name, color=body.color
             )
         elif bwfile != [""]:
-            body._params = GetParams(
+            body._params = get_params(
                 outputorder, bwfile, body=body.name, color=body.color
             )
 
@@ -217,7 +217,7 @@ def GetArrays(log):
             # ... and the grid order
             try:
                 gridorder = getattr(log.initial, body.name).GridOutputOrder
-                body._gridparams = GetParams(
+                body._gridparams = get_params(
                     gridorder, climfile, body=body.name, color=body.color
                 )
             except:
@@ -234,13 +234,23 @@ def GetArrays(log):
     return output
 
 
-def GetOutput(sysname=None, path="."):
-    """
-
+def get_output(sysname=None, path="."):
+    """Parse all of the output from a :py:obj:`vplanet` run.
+    
+    Args:
+        sysname (str, optional): System name. This is determined automatically,
+            unless there are multiple runs in the same :py:obj:`path`. Defaults 
+            to None.
+        path (str, optional): Path to the directory containing the results of 
+            the :py:obj:`vplanet` run. Defaults to the current directory.
+    
+    Returns:
+        A :py:class:`Output` instance containing all the information from the
+        ``.log``, ``.forward``, and ``.backward`` output files.
     """
     # Get the log file and the arrays
-    log = GetLog(sysname=sysname, path=path)
-    output = GetArrays(log)
+    log = get_log(sysname=sysname, path=path)
+    output = get_arrays(log)
 
     for body in output.bodies:
 

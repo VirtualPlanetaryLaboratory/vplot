@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from . import logger
-from .output import GetOutput
+from .output import get_output
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-def AutoPlot(sysname=None, path=".", group="param", show=True):
+def auto_plot(sysname=None, path=".", group="param", show=True):
     """Automatically plot the results of a :py:obj:`vplanet` run.
     
     Args:
@@ -22,7 +22,7 @@ def AutoPlot(sysname=None, path=".", group="param", show=True):
             returns the figures instead.
     
     Returns:
-        list: If :py:obj:`show` is False, returns a list of figures.
+        If :py:obj:`show` is False, returns a list of figures.
     """
     # Parse kwargs
     group_allowed = ["type", "param", "none"]
@@ -32,7 +32,7 @@ def AutoPlot(sysname=None, path=".", group="param", show=True):
     )
 
     # Grab the output
-    output = GetOutput(sysname=sysname, path=path)
+    output = get_output(sysname=sysname, path=path)
 
     # Grab all params
     params = []

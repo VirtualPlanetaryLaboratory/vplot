@@ -10,13 +10,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Load data
-output = vpl.GetOutput()
+output = vpl.get_output()
 cbp = output.cbp
 earth = output.earth
 
 # Set up the figure
 fig, axes = plt.subplots(nrows=3, ncols=3, figsize=(15, 12))
-fig.subplots_adjust(left=0.1, right=0.9, bottom=0.1, top=0.9, hspace=0.3, wspace=0.3)
+fig.subplots_adjust(
+    left=0.1, right=0.9, bottom=0.1, top=0.9, hspace=0.3, wspace=0.3
+)
 for ax in axes.flatten():
     ax.margins(0, None)
 

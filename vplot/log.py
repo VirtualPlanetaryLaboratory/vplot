@@ -165,7 +165,7 @@ class LogBody(object):
         return "<VPLOT Log Object: %s>" % self._name
 
 
-def GetLog(sysname=None, path=".", ext="log"):
+def get_log(sysname=None, path=".", ext="log"):
     """
 
     """

@@ -9,8 +9,8 @@ fi
 
 # Install dependencies
 conda install -y -q -c conda-forge pandoc
-conda install ipykernel
-conda update nb_conda nb_conda_kernels nb_anacondacloud
+conda install -y -q ipykernel
+conda update -y -q nb_conda nb_conda_kernels nb_anacondacloud
 pip install -U sphinx
 pip install -U "nbconvert>=5.5"
 pip install -U sphinx_rtd_theme
