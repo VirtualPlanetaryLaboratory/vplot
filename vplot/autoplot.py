@@ -5,9 +5,24 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def AutoPlot(sysname=None, path=".", group="param"):
-    """
-
+def AutoPlot(sysname=None, path=".", group="param", show=True):
+    """Automatically plot the results of a :py:obj:`vplanet` run.
+    
+    Args:
+        sysname (str, optional): System name. This is determined automatically,
+            unless there are multiple runs in the same :py:obj:`path`. Defaults 
+            to None.
+        path (str, optional): Path to the directory containing the results of 
+            the :py:obj:`vplanet` run. Defaults to the current directory.
+        group (str, optional): How to group plots. Options are "param" 
+            (one plot per parameter), "type" (one plot per physical type, such
+            as angle, length, etc.), or "none" (one plot per column in the output
+            file). Defaults to "param".
+        show (bool, optional): Show the plots? Defaults to True. If False,
+            returns the figures instead.
+    
+    Returns:
+        list: If :py:obj:`show` is False, returns a list of figures.
     """
     # Parse kwargs
     group_allowed = ["type", "param", "none"]
@@ -43,6 +58,7 @@ def AutoPlot(sysname=None, path=".", group="param"):
     ]
 
     # One plot per physical type
+    figs = []
     if group == "type":
 
         physical_types = list(set([p.unit.physical_type for p in params]))
@@ -55,6 +71,7 @@ def AutoPlot(sysname=None, path=".", group="param"):
             fig, ax = plt.subplots(1)
             for array in arrays:
                 ax.plot(time, array)
+            figs.append(fig)
 
     # One plot per parameter name (multiple bodies)
     elif group == "param":
@@ -69,6 +86,7 @@ def AutoPlot(sysname=None, path=".", group="param"):
             fig, ax = plt.subplots(1)
             for array in arrays:
                 ax.plot(time, array)
+            figs.append(fig)
 
     # One plot per parameter
     else:
@@ -76,5 +94,9 @@ def AutoPlot(sysname=None, path=".", group="param"):
         for param in params:
             fig, ax = plt.subplots(1)
             ax.plot(time, param)
+            figs.append(fig)
 
-    plt.show()
+    if show:
+        plt.show()
+    else:
+        return figs

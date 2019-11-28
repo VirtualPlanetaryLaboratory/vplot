@@ -9,11 +9,16 @@ fi
 
 # Install dependencies
 conda install -y -q -c conda-forge pandoc
+conda install ipykernel
+conda update nb_conda nb_conda_kernels nb_anacondacloud
 pip install -U sphinx
 pip install -U "nbconvert>=5.5"
 pip install -U sphinx_rtd_theme
 pip install -U nbsphinx
-pip install jupyter_client
+pip install -U jupyter_client
+
+# List available kernels
+jupyter kernelspec list
 
 # Build the docs
 make -C docs html
