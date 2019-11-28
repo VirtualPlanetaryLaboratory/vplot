@@ -2,16 +2,18 @@
 import numpy as np
 import re
 import numbers
+import astropy
 import astropy.units as u
 from astropy.units.core import Unit, dimensionless_unscaled
 from astropy.utils.misc import isiterable
 
+
 # TODO: There may be other methods in
 # https://github.com/astropy/astropy/blob/master/astropy/units/quantity.py
-# that we'll need to subclass in order to get `name` and `description` to work
+# that we'll need to subclass in order to get `tags` to work
 
 
-class Quantity(u.Quantity):
+class VPLOTQuantity(u.Quantity):
     """A `~astropy.units.Quantity` represents a number with some associated unit.
     See also: http://docs.astropy.org/en/stable/units/quantity.html
     Parameters
@@ -94,7 +96,7 @@ class Quantity(u.Quantity):
             unit = Unit(unit)
 
         # optimize speed for Quantity with no dtype given, copy=False
-        if isinstance(value, Quantity):
+        if isinstance(value, u.Quantity):
             if unit is not None and unit is not value.unit:
                 value = value.to(unit)
                 # the above already makes a copy (with float dtype)
@@ -250,3 +252,7 @@ class Quantity(u.Quantity):
 
         # Custom tags for vplot
         self.tags = getattr(obj, "tags", None)
+
+
+# HACK: Override `Quantity` so this will work seamlessly in the background
+astropy.units.Quantity = VPLOTQuantity

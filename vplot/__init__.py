@@ -17,8 +17,12 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 
-# Set up the custom figure **before** any other imports
+# Override matplotlib.figure.Figure
 from . import figure
+
+
+# Override astropy.units.Quantity
+from . import quantity
 
 
 # Set up the matplotlib stylesheet

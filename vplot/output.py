@@ -2,7 +2,6 @@
 from . import logger
 from . import custom_units
 from .log import get_log
-from .quantity import Quantity
 import logging
 import numpy as np
 import re
@@ -10,6 +9,7 @@ import os
 import subprocess
 import warnings
 import astropy.units as u
+from astropy.units import Quantity
 
 
 class Output(object):

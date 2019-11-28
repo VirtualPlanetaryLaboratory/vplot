@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from . import logger
 from . import custom_units
-from .quantity import Quantity
 import re
 import os
 from glob import glob
 import astropy.units as u
+from astropy.units import Quantity
 import logging
 import numpy as np
 import warnings
