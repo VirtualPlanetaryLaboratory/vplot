@@ -15,7 +15,7 @@
     <a href="https://virtualplanetarylaboratory.github.io/vplot/coverage/">
       <img src="https://virtualplanetarylaboratory.github.io/vplot/coverage/coverage.svg"/>
     </a>
-    <!-- read the docss -->
+    <!-- read the docs -->
     <a href="https://virtualplanetarylaboratory.github.io/vplot/">
       <img src="https://img.shields.io/badge/read-the%20docs-blue.svg?style=flat"/>
     </a>

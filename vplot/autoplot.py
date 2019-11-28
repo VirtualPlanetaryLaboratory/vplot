@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def AutoPlot(sysname=None, path=".", group="type"):
+def AutoPlot(sysname=None, path=".", group="param"):
     """
 
     """

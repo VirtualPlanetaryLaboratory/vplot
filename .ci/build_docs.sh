@@ -10,6 +10,7 @@ fi
 # Install dependencies
 pip install -U sphinx
 pip install -U sphinx_rtd_theme
+pip install -U nbsphinx
 
 # Build the docs
 make -C docs html

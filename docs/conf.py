@@ -31,7 +31,16 @@ release = "0.4.0"
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = []
+extensions = [
+    "sphinx.ext.autodoc",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.todo",
+    "matplotlib.sphinxext.plot_directive",
+    "nbsphinx",
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -54,3 +63,25 @@ html_theme = "sphinx_rtd_theme"
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 
+
+# -- Extension settings ------------------------------------------------------
+
+# Get current git branch
+branch = os.getenv("GHBRANCH", "master")
+
+# Add a heading to notebooks
+nbsphinx_prolog = """
+{%s set docname = env.doc2path(env.docname, base=None) %s}
+.. note:: This tutorial was generated from a Jupyter notebook that can be
+          downloaded `here <https://github.com/VirtualPlanetaryLaboratory/vplot/blob/%s/{{ docname }}>`_.
+""" % (
+    "%",
+    "%",
+    branch,
+)
+nbsphinx_prompt_width = 0
+nbsphinx_timeout = 600
+napoleon_use_ivar = True
+todo_include_todos = True
+autosummary_generate = True
+autodoc_docstring_signature = True

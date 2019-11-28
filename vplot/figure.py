@@ -229,14 +229,17 @@ class VPLOTFigure(Figure):
 
 
 # HACK: Override `Figure` so this will work seamlessly in the background
-# NOTE: This requires vplot to be imported **before** pyplot!
 matplotlib.figure.Figure = VPLOTFigure
 
-# HACK: Warn the user if they've imported matplotlib.pyplot already
-if "matplotlib.pyplot" in sys.modules:
-    logger.error(
-        "It looks like you already imported `matplotlib.pyplot`. "
-        + "In order for `vplot` to work correctly, please import it "
-        + "**before** any `matplotlib` modules."
-    )
+# HACK: We need to explicitly override `plt.figure` since its default
+# kwarg for `FigureClass` is `matplotlib.figure.Figure`. This default
+# value is parsed on **import**, so if the user imported `pyplot`
+# before `vplot`, the default figure class will still be the old one.
+mpl_figure = matplotlib.pyplot.figure
 
+
+def figure_wrapper(*args, FigureClass=VPLOTFigure, **kwargs):
+    return mpl_figure(*args, FigureClass=VPLOTFigure, **kwargs)
+
+
+matplotlib.pyplot.figure = figure_wrapper

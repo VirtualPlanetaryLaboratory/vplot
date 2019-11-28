@@ -1,0 +1,4 @@
+docs/notebooks/* linguist-documentation
+
+*.ipynb filter=nbstripout
+*.ipynb diff=ipynb

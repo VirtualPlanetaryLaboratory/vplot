@@ -14,6 +14,7 @@ Documentation
    :maxdepth: 2
 
    install
+   examples
    Github <https://github.com/VirtualPlanetaryLaboratory/vplot>
    Submit an issue <https://github.com/VirtualPlanetaryLaboratory/vplot/issues>
    Coverage report <coverage/index.html>
