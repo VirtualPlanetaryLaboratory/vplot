@@ -15,7 +15,8 @@ Documentation
 
    install
    Github <https://github.com/VirtualPlanetaryLaboratory/vplot>
-   Coverage Report <coverage/index.html>
+   Submit an issue <https://github.com/VirtualPlanetaryLaboratory/vplot/issues>
+   Coverage report <coverage/index.html>
 
 
 Indices and tables

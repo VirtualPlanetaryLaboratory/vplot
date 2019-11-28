@@ -12,8 +12,8 @@
       <img src="https://img.shields.io/azure-devops/tests/rodluger/vplot/9/dev"/>
     </a>
     <!-- main coveragee -->
-    <a href="https://rodluger.github.io/starry/v1.0.0.dev6/coverage/">
-      <img src="https://rodluger.github.io/starry/v1.0.0.dev6/coverage/coverage.svg"/>
+    <a href="https://virtualplanetarylaboratory.github.io/vplot/coverage/">
+      <img src="https://virtualplanetarylaboratory.github.io/vplot/coverage/coverage.svg"/>
     </a>
     <!-- read the docss -->
     <a href="https://virtualplanetarylaboratory.github.io/vplot/">
