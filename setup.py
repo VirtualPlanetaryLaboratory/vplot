@@ -3,22 +3,16 @@ from setuptools import setup
 import sys
 import os
 
+# Get the current version
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "vplot"))
 from vplot_version import __version__  # NOQA
-
-
-def readme():
-    """Get the long description from the README."""
-    with open("README.rst") as f:
-        return f.read()
 
 
 # Setup!
 setup(
     name="vplot",
     version=__version__,
-    description="VPLANET Plotting Tools",
-    long_description=readme(),
+    description="plotting tools for vplanet",
     classifiers=[
         "Development Status :: 4 - Beta",
         "License :: OSI Approved :: MIT License",
