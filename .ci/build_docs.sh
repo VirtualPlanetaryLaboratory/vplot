@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+#set -e
 
 # Load the environment
 if [[ -n $CONDA ]]; then
@@ -15,7 +15,7 @@ pip install -U sphinx_rtd_theme
 make -C docs html
 
 # Copy the coverage over
-cp coverage docs/_build/html/
+cp -r coverage docs/_build/html/
 
 # Force push if not pull request
 if [[ -n $BUILDREASON ]] && [[ $BUILDREASON != "PullRequest" ]]; then
