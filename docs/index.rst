@@ -1,15 +1,21 @@
-.. vplot documentation master file, created by
-   sphinx-quickstart on Wed Nov 27 19:24:36 2019.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. raw:: html
 
-Welcome to vplot's documentation!
-=================================
+   <div align="center">
+   <img src="https://github.com/VirtualPlanetaryLaboratory/vplot/blob/dev/docs/vplot.png?raw=true" width="200px">
+   </img>
+   <br/>
+   </div>
+   <br/><br/>
+
+Documentation
+=============
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
+   install
+   Github <https://github.com/VirtualPlanetaryLaboratory/vplot>
+   Coverage Report <coverage/index.html>
 
 
 Indices and tables

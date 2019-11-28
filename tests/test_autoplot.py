@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
 import vplot
 
-# TODO
+
+def test_autplot():
+    # TODO
+    pass
