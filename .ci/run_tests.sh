@@ -7,6 +7,7 @@ if [[ -n $CONDA ]]; then
 fi
 
 # Install dependencies
+pip install -U parameterized nose pytest pytest-cov
 pip install -U coverage-badge
 
 # Run tests
