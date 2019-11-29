@@ -90,3 +90,8 @@ napoleon_use_ivar = True
 todo_include_todos = True
 autosummary_generate = True
 autodoc_docstring_signature = True
+
+# Copy the logo over
+import shutil
+
+shutil.copy("vplot.svg", "_build/html/vplot.svg")

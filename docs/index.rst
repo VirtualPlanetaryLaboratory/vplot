@@ -1,7 +1,7 @@
 .. raw:: html
 
    <div align="center">
-   <img src="https://github.com/VirtualPlanetaryLaboratory/vplot/blob/dev/docs/vplot.png?raw=true" width="200px">
+   <img src="vplot.svg" width="200px">
    </img>
    <br/>
    </div>

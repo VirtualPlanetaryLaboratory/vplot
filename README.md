@@ -1,5 +1,5 @@
 <p align="center">
-  <img width = "200" src="https://github.com/VirtualPlanetaryLaboratory/vplot/blob/dev/docs/vplot.png?raw=true"/>
+  <img width = "200" src="https://github.com/VirtualPlanetaryLaboratory/vplot/blob/dev/docs/vplot.svg?raw=true"/>
   <br/>
   <b>vplot |</b> plotting utilities for <a href="https://github.com/VirtualPlanetaryLaboratory/vplanet">vplanet</a>
   <p align="center">
