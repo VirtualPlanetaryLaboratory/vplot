@@ -12,12 +12,7 @@ matplotlib.use("Agg")
 
 
 # Grab the output
-path = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    "examples",
-    "CircumbinaryOrbit",
-)
-output = vpl.get_output(path=path)
+output = vpl.get_output(path="CircumbinaryOrbit")
 
 
 class FigureTester(object):
