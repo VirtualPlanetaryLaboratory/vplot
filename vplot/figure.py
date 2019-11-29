@@ -61,9 +61,13 @@ class VPLOTFigure(Figure):
         super().__init__(*args, **kwargs)
 
         # Watch the axes
+        self._update_on_draw = True
         self.add_axobserver(self._ax_observer)
 
     def _ax_observer(self, *args):
+
+        # Force an update next time we draw
+        self._update_on_draw = True
 
         # HACK: Override `ax.scatter` so that we preserve the
         # metadata in the Quantity arrays.
@@ -278,8 +282,22 @@ class VPLOTFigure(Figure):
                 if make_legend:
                     ax.legend(loc="best")
 
+    def _format_axes(self):
+        for ax in self.axes:
+
+            # Force time axis margins to be zero
+            if "Time" in ax.get_xlabel():
+                ax.margins(0, ax.margins()[1])
+
+            # TODO: Better legend positioning
+            if ax.get_legend() is not None:
+                pass
+
     def draw(self, *args, **kwargs):
-        self._add_labels()
+        if self._update_on_draw:
+            self._add_labels()
+            self._format_axes()
+            self._update_on_draw = False
         super().draw(*args, **kwargs)
 
 

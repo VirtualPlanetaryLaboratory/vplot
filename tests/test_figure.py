@@ -12,7 +12,7 @@ matplotlib.use("Agg")
 
 
 # Grab the output
-output = vpl.get_output(path="CircumbinaryOrbit")
+output = vpl.get_output(path="../examples/CircumbinaryOrbit")
 
 
 class FigureTester(object):
@@ -30,6 +30,7 @@ class FigureTester(object):
     def __exit__(self, type, value, traceback):
         self.fig._add_labels()
 
+        # Check labels and legend
         assert self.ax.get_xlabel() == self.xlabel
         assert self.ax.get_ylabel() == self.ylabel
         legend = self.ax.get_legend()

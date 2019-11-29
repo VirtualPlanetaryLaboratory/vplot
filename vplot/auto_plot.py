@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def auto_plot(sysname=None, path=".", group="param", show=True):
+def auto_plot(path=".", sysname=None, group="param", show=True):
     """Automatically plot the results of a :py:obj:`vplanet` run.
     
     Args:
@@ -99,4 +99,5 @@ def auto_plot(sysname=None, path=".", group="param", show=True):
     if show:
         plt.show()
     else:
+        plt.close("all")
         return figs
