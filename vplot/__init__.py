@@ -34,9 +34,6 @@ plt.style.use(
     )
 )
 
-# from matplotlib import rcParams
-# rcParams["font.family"] = "Palatino Linotype"
-
 
 # Import user-facing stuff
 from .log import Log, LogBody, LogStage

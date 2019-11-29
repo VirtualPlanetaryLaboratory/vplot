@@ -292,9 +292,14 @@ class VPLOTFigure(Figure):
             if "Time" in ax.get_xlabel():
                 ax.margins(0, ax.margins()[1])
 
-            # TODO: Better legend positioning?
-            if ax.get_legend() is not None:
-                pass
+            # TODO: Here's how we'd change the fonts:
+            """
+            from matplotlib import font_manager as fm
+            prop = fm.FontProperties(
+                fname="path/to/font.ttf"
+            )
+            ax.set_xlabel(ax.get_xlabel(), fontproperties=prop)
+            """
 
     def draw(self, *args, **kwargs):
         if self._update_on_draw:
