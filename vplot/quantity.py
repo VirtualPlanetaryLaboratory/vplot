@@ -4,7 +4,12 @@ import re
 import numbers
 import astropy
 import astropy.units as u
-from astropy.units.core import Unit, dimensionless_unscaled
+from astropy.units.core import (
+    Unit,
+    UnitBase,
+    dimensionless_unscaled,
+    UnitsError,
+)
 from astropy.utils.misc import isiterable
 
 
@@ -83,7 +88,7 @@ class VPLOTQuantity(u.Quantity):
         cls,
         value,
         unit=None,
-        tags=None,
+        tags={},
         dtype=None,
         copy=True,
         order=None,
@@ -160,7 +165,7 @@ class VPLOTQuantity(u.Quantity):
             elif (
                 isiterable(value)
                 and len(value) > 0
-                and all(isinstance(v, Quantity) for v in value)
+                and all(isinstance(v, VPLOTQuantity) for v in value)
             ):
                 # Convert all quantities to the same unit.
                 if unit is None:
@@ -251,8 +256,5 @@ class VPLOTQuantity(u.Quantity):
             self.info = obj.info
 
         # Custom tags for vplot
-        self.tags = getattr(obj, "tags", None)
+        self.tags = getattr(obj, "tags", {})
 
-
-# HACK: Override `Quantity` so this will work seamlessly in the background
-astropy.units.Quantity = VPLOTQuantity

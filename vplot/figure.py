@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+from .quantity import VPLOTQuantity
 import matplotlib
 import matplotlib.pyplot
 from matplotlib.figure import Figure
+from matplotlib.axes import Axes
 import astropy.units as u
 import sys
 
@@ -12,14 +14,26 @@ def _get_array_info(array, long_label=True):
     else:
         label_type = "name"
     if hasattr(array, "unit") and hasattr(array, "tags"):
-        unit = str(array.unit)
-        if unit == "":
-            unit = None
-        body = array.tags.get("body", None)
-        label = array.tags.get(label_type, None)
-        physical_type = array.unit.physical_type.title()
-        if physical_type == "Dimensionless":
-            physical_type = None
+        if array.unit.physical_type != array.tags["physical_type"]:
+            # The physical type of this array changed, so this is
+            # no longer the original VPLANET quantity!
+            unit = str(array.unit)
+            if unit == "":
+                unit = None
+            body = None
+            label = None
+            physical_type = array.unit.physical_type.title()
+            if physical_type == "Dimensionless":
+                physical_type = None
+        else:
+            unit = str(array.unit)
+            if unit == "":
+                unit = None
+            body = array.tags.get("body", None)
+            label = array.tags.get(label_type, None)
+            physical_type = array.unit.physical_type.title()
+            if physical_type == "Dimensionless":
+                physical_type = None
     else:
         unit = None
         body = None
@@ -46,13 +60,42 @@ class VPLOTFigure(Figure):
 
         super().__init__(*args, **kwargs)
 
+        # Watch the axes
+        self.add_axobserver(self._ax_observer)
+
+    def _ax_observer(self, *args):
+
+        # HACK: Override `ax.scatter` so that we preserve the
+        # metadata in the Quantity arrays.
+
+        for ax in self.axes:
+
+            if hasattr(ax.scatter, "__vplot__"):
+                continue
+
+            old_scatter = ax.scatter
+
+            def new_scatter(x, y, *args, **kwargs):
+                collection = old_scatter(x, y, *args, **kwargs)
+
+                def get_data():
+                    return VPLOTQuantity(x), VPLOTQuantity(y)
+
+                get_data.__vplot__ = True
+
+                collection.get_data = get_data
+
+                return collection
+
+            ax.scatter = new_scatter
+
     def _add_labels(self):
 
         # Get the labels for each axis
         for k, ax in enumerate(self.axes):
 
             # Skip if there's no data to parse
-            if len(ax.lines) == 0:
+            if len(ax.lines) == 0 and len(ax.collections) == 0:
                 continue
 
             # Check if there are labels already
@@ -76,7 +119,10 @@ class VPLOTFigure(Figure):
             ylabels = []
             ytypes = []
             bodies = []
-            for line in ax.lines:
+            for line in ax.lines + ax.collections:
+
+                if not (hasattr(line, "get_data")):
+                    continue
 
                 # Get the data
                 x, y = line.get_data()
@@ -203,11 +249,12 @@ class VPLOTFigure(Figure):
 
                 make_legend = False
 
-                for k, line in enumerate(ax.lines):
+                for k, line in enumerate(ax.lines + ax.collections):
                     if (
                         line.get_label() is None
                         or line.get_label() == ""
                         or line.get_label().startswith("_line")
+                        or line.get_label().startswith("_collection")
                     ):
 
                         label = ""

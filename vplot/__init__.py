@@ -21,10 +21,6 @@ logger.addHandler(ch)
 from . import figure
 
 
-# Override astropy.units.Quantity
-from . import quantity
-
-
 # Set up the matplotlib stylesheet
 import os
 import matplotlib.pyplot as plt

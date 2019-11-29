@@ -2,6 +2,7 @@
 from . import logger
 from . import custom_units
 from .log import get_log
+from .quantity import VPLOTQuantity as Quantity
 import logging
 import numpy as np
 import re
@@ -9,7 +10,7 @@ import os
 import subprocess
 import warnings
 import astropy.units as u
-from astropy.units import Quantity
+import json
 
 
 class Output(object):
@@ -58,8 +59,10 @@ def get_param_descriptions():
     try:
         subprocess.check_output(["vplanet", "-h"])
     except (FileNotFoundError, OSError):
-        logging.error("Unable to call VPLANET. Is it in your PATH?")
-        return {}
+        # Return the cached version
+        logging.warning("Unable to call VPLANET. Is it in your PATH?")
+        with open("description.json", "r") as f:
+            return json.load(f)
 
     # Get the help message, which contains all the parameters
     help = subprocess.getoutput("vplanet -h")
@@ -81,6 +84,10 @@ def get_param_descriptions():
         else:
             n, d = re.search("(.*) -- (.*).", out).groups()
             description.update({n: d})
+
+    # Cache it
+    with open("description.json", "w") as f:
+        return json.dump(description, f)
 
     return description
 
@@ -135,14 +142,15 @@ def get_params(outputorder, file, body=None, color=None):
             array.append(float(line.split()[j]))
 
         # Give it units and `tags`
-        tags = dict(
+        array = Quantity(np.array(array) * unit)
+
+        # Tag it for plotting
+        array.tags = dict(
             name=name,
             description=description.get(name, name),
             body=body,
-            color=color,
+            physical_type=unit.physical_type,
         )
-
-        array = Quantity(np.array(array) * unit, tags=tags)
 
         # Add to the list
         params.append(array)
@@ -236,7 +244,7 @@ def get_arrays(log):
     return output
 
 
-def get_output(sysname=None, path="."):
+def get_output(path=".", sysname=None):
     """Parse all of the output from a :py:obj:`vplanet` run.
     
     Args:

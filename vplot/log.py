@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from . import logger
 from . import custom_units
+from .quantity import VPLOTQuantity as Quantity
 import re
 import os
 from glob import glob
 import astropy.units as u
-from astropy.units import Quantity
 import logging
 import numpy as np
 import warnings
@@ -165,7 +165,7 @@ class LogBody(object):
         return "<VPLOT Log Object: %s>" % self._name
 
 
-def get_log(sysname=None, path=".", ext="log"):
+def get_log(path=".", sysname=None, ext="log"):
     """
 
     """
