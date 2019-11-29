@@ -177,10 +177,16 @@ def get_log(path=".", sysname=None, ext="log"):
     if sysname is None:
         lf = glob(os.path.join(path, "*.%s" % (ext)))
         if len(lf) > 1:
-            raise Exception("There are multiple log files in this directory.")
+            raise Exception(
+                "There are multiple log files matching {}.".format(
+                    os.path.join(path, "*.%s" % (ext))
+                )
+            )
         elif len(lf) == 0:
             raise Exception(
-                "There doesn't seem to be a log file in this directory."
+                "Could not find a log file matching {}.".format(
+                    os.path.join(path, "*.%s" % (ext))
+                )
             )
         else:
             lf = lf[0]
@@ -189,7 +195,9 @@ def get_log(path=".", sysname=None, ext="log"):
         lf = glob(os.path.join(path, "%s.%s" % (sysname, ext)))
         if len(lf) == 0:
             raise Exception(
-                "There doesn't seem to be a log file in this directory."
+                "Could not find a log file matching {}.".format(
+                    os.path.join(path, "%s.%s" % (sysname, ext))
+                )
             )
         else:
             lf = lf[0]
