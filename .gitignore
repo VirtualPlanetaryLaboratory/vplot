@@ -3,6 +3,7 @@
 .vscode
 *.forward
 *.backward
+docs/notebooks/examples
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

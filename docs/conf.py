@@ -48,7 +48,13 @@ templates_path = ["_templates"]
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
+exclude_patterns = [
+    "_build",
+    "Thumbs.db",
+    ".DS_Store",
+    "**.ipynb_checkpoints",
+    "notebooks/examples/*",
+]
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -84,3 +90,9 @@ napoleon_use_ivar = True
 todo_include_todos = True
 autosummary_generate = True
 autodoc_docstring_signature = True
+
+# Copy the examples folder into the notebooks folder
+import shutil
+
+if not os.path.exists("notebooks/examples"):
+    shutil.copytree("../examples", "notebooks/examples")
