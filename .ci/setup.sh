@@ -20,6 +20,7 @@ pip install -U -r requirements.txt
 # Install vplanet & add to path
 git clone https://github.com/VirtualPlanetaryLaboratory/vplanet.git
 pushd vplanet
+make
 VPLANETPATH=pwd
 echo "##vso[task.prependpath]$(pwd)"
 popd
