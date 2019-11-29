@@ -70,7 +70,10 @@ class VPLOTFigure(Figure):
         self._update_on_draw = True
 
         # HACK: Override `ax.scatter` so that we preserve the
-        # metadata in the Quantity arrays.
+        # metadata in the Quantity arrays, as `scatter` converts
+        # them to numpy masked arrays. I couldn't find a
+        # simple way to subclass `Axes` or `Subplots` to directly
+        # replace the `scatter` method, so we'll go with this for now.
 
         for ax in self.axes:
 
@@ -289,7 +292,7 @@ class VPLOTFigure(Figure):
             if "Time" in ax.get_xlabel():
                 ax.margins(0, ax.margins()[1])
 
-            # TODO: Better legend positioning
+            # TODO: Better legend positioning?
             if ax.get_legend() is not None:
                 pass
 
