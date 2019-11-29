@@ -4,6 +4,9 @@ __copyright__ = "Copyright 2018, 2019 Rodrigo Luger"
 
 # Import the version
 from .vplot_version import __version__
+import os
+
+_path = os.path.dirname(os.path.abspath(__file__))
 
 
 # Set up the logger

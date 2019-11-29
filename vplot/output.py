@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from . import _path
 from . import logger
 from . import custom_units
 from .log import get_log
@@ -61,7 +62,7 @@ def get_param_descriptions():
     except (FileNotFoundError, OSError):
         # Return the cached version
         logging.warning("Unable to call VPLANET. Is it in your PATH?")
-        with open("description.json", "r") as f:
+        with open(os.path.join(_path, "description.json"), "r") as f:
             return json.load(f)
 
     # Get the help message, which contains all the parameters
@@ -86,13 +87,13 @@ def get_param_descriptions():
             description.update({n: d})
 
     # Cache it
-    with open("description.json", "w") as f:
-        return json.dump(description, f)
+    with open(os.path.join(_path, "description.json"), "w") as f:
+        json.dump(description, f)
 
     return description
 
 
-def get_params(outputorder, file, body=None, color=None):
+def get_params(outputorder, file, body=None):
     """
 
     """
@@ -187,9 +188,6 @@ def get_arrays(log):
         if not os.path.exists(os.path.join(output.path, body.climfile)):
             body.climfile = ""
 
-        # Grab the body color
-        body.color = getattr(log.initial, body.name).Color
-
         # Grab the forward arrays. Note that they may not exist for this body
         try:
             with open(os.path.join(output.path, body.fwfile), "r") as f:
@@ -207,13 +205,9 @@ def get_arrays(log):
         # Now grab the output order and the params
         outputorder = getattr(log.initial, body.name).OutputOrder
         if fwfile != [""]:
-            body._params = get_params(
-                outputorder, fwfile, body=body.name, color=body.color
-            )
+            body._params = get_params(outputorder, fwfile, body=body.name)
         elif bwfile != [""]:
-            body._params = get_params(
-                outputorder, bwfile, body=body.name, color=body.color
-            )
+            body._params = get_params(outputorder, bwfile, body=body.name)
 
         # Climate file
         if body.climfile != "":
@@ -228,7 +222,7 @@ def get_arrays(log):
             try:
                 gridorder = getattr(log.initial, body.name).GridOutputOrder
                 body._gridparams = get_params(
-                    gridorder, climfile, body=body.name, color=body.color
+                    gridorder, climfile, body=body.name
                 )
             except:
                 logger.error(
