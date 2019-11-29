@@ -12,12 +12,19 @@ jobs:
   - bash: .ci/setup.sh
     displayName: 'Setup'
 
+  - bash: .ci/run_vplanet.sh
+    displayName: 'Run VPLANET'
+
   - bash: .ci/run_tests.sh
     displayName: 'Run tests'
+
+  - bash: .ci/update_json.sh
+    displayName: 'Update parameter descriptions JSON file'
     env:
       BUILDREASON: $(Build.Reason)
       GHUSER: $(GITHUB_USER)
       GHKEY: $(GITHUB_API_KEY)
+      GHBRANCH: $(Build.SourceBranchName)
 
   - bash: .ci/build_docs.sh
     displayName: 'Build docs'

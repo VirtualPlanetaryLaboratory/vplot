@@ -90,9 +90,3 @@ napoleon_use_ivar = True
 todo_include_todos = True
 autosummary_generate = True
 autodoc_docstring_signature = True
-
-# Copy the examples folder into the notebooks folder
-import shutil
-
-if not os.path.exists("notebooks/examples"):
-    shutil.copytree("../examples", "notebooks/examples")

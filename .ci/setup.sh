@@ -17,5 +17,12 @@ pip install -U pip
 pip install -U setuptools
 pip install -U -r requirements.txt
 
+# Install vplanet & add to path
+git clone https://github.com/VirtualPlanetaryLaboratory/vplanet.git
+pushd vplanet
+VPLANETPATH=pwd
+echo "##vso[task.prependpath]$(pwd)"
+popd
+
 # Install vplot
 python setup.py develop
