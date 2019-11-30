@@ -13,6 +13,7 @@
 import os
 import sys
 
+sys.path.insert(0, os.path.abspath("."))
 sys.path.insert(0, os.path.abspath(".."))
 
 
@@ -54,6 +55,7 @@ exclude_patterns = [
     ".DS_Store",
     "**.ipynb_checkpoints",
     "notebooks/examples/*",
+    "notebooks/*_template.ipynb",
 ]
 
 # -- Options for HTML output -------------------------------------------------
@@ -62,11 +64,14 @@ exclude_patterns = [
 # a list of builtin themes.
 #
 html_theme = "sphinx_rtd_theme"
+html_theme_options = {"display_version": True}
+html_last_updated_fmt = "%Y %b %d at %H:%M:%S UTC"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
+html_css_files = ["css/hide_input.css"]
 
 
 # -- Extension settings ------------------------------------------------------

@@ -14,7 +14,6 @@ conda install -y -q nb_conda nb_conda_kernels
 conda install -y -q -c conda-forge nb_anacondacloud
 pip install -U sphinx
 pip install -U "nbconvert>=5.5"
-pip install -U sphinx_rtd_theme
 pip install -U jupyter_client
 git clone https://github.com/rodluger/nbsphinx
 pushd nbsphinx
