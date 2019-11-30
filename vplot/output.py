@@ -88,7 +88,7 @@ def get_param_descriptions():
 
     # Cache it
     with open(os.path.join(_path, "description.json"), "w") as f:
-        json.dump(description, f)
+        json.dump(description, f, indent=4, sort_keys=True)
 
     return description
 

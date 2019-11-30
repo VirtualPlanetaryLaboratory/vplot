@@ -1,4 +1,5 @@
 {
+    "debug": "DEBUG",
     "232ThEnFlux": "Surface Energy Flux from 232Th",
     "232ThMassCore": "Total Mass of 232Th",
     "232ThMassCrust": "Total Mass of 232Th",
