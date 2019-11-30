@@ -10,7 +10,7 @@ class FigureGrid(object):
     Based on https://stackoverflow.com/a/49566213
     """
 
-    def __init__(self, figs):
+    def __init__(self, figs, **kwargs):
         # string buffer for the HTML: initially some CSS; images to be appended
         self.sHtml = """
         <style>
@@ -24,7 +24,7 @@ class FigureGrid(object):
         """
 
         for fig in figs:
-            self.add_figure(fig)
+            self.add_figure(fig, **kwargs)
 
     def add_figure(self, fig, width=280):
         """ Saves a PNG representation of a Matplotlib Axes object """
