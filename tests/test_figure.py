@@ -67,8 +67,8 @@ def test_two_quantities():
     with FigureTester(
         ylabel="cbp: Angle [deg]",
         legend_texts=[
-            "Body's Longitude of ascending node",
-            "Body's Longitude of pericenter",
+            "Longitude of ascending node",
+            "Longitude of pericenter",
         ],
     ):
         plt.plot(output.cbp.Time, output.cbp.LongA)
@@ -87,8 +87,8 @@ def test_two_quantities_two_bodies():
     with FigureTester(
         ylabel="Angle [deg]",
         legend_texts=[
-            "cbp: Body's Longitude of ascending node",
-            "earth: Body's Longitude of pericenter",
+            "cbp: Longitude of ascending node",
+            "earth: Longitude of pericenter",
         ],
     ):
         plt.plot(output.cbp.Time, output.cbp.LongA)
@@ -99,8 +99,8 @@ def test_degrees_radians():
     with FigureTester(
         ylabel="cbp: Angle [deg]",
         legend_texts=[
-            "Body's Longitude of ascending node",
-            "Body's Longitude of pericenter",
+            "Longitude of ascending node",
+            "Longitude of pericenter",
         ],
     ):
         plt.plot(output.cbp.Time, output.cbp.LongA)
@@ -110,7 +110,7 @@ def test_degrees_radians():
 def test_mixed_y_units():
     with FigureTester(
         ylabel="Angle [deg]",
-        legend_texts=["cbp: Body's Longitude of ascending node", "Angle"],
+        legend_texts=["cbp: Longitude of ascending node", "Angle"],
     ):
         plt.plot(output.cbp.Time, output.cbp.LongA)
         plt.plot(output.cbp.Time, np.ones(len(output.cbp.LongA)))
@@ -120,7 +120,7 @@ def test_mixed_xy_units():
     with FigureTester(
         xlabel="Time [yr]",
         ylabel="Angle [deg]",
-        legend_texts=["cbp: Body's Longitude of ascending node", "Angle"],
+        legend_texts=["cbp: Longitude of ascending node", "Angle"],
     ):
         plt.plot(output.cbp.Time, output.cbp.LongA)
         plt.plot(
