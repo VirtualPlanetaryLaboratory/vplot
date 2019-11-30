@@ -24,7 +24,7 @@ if [[ -n $BUILDREASON ]] && [[ $BUILDREASON != "PullRequest" ]]; then
             git add vplot/description.json
             git -c user.name='rodluger' -c user.email='rodluger@gmail.com' \
                 commit -m "update parameter descriptions"
-            git push origin $GHBRANCH
+            git push https://$GHUSER:$GHKEY@github.com/VirtualPlanetaryLaboratory/vplot $GHBRANCH
         popd
         rm -rf tmp_vplot
 
