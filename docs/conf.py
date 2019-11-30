@@ -12,6 +12,7 @@
 #
 import os
 import sys
+import shutil
 
 sys.path.insert(0, os.path.abspath("."))
 sys.path.insert(0, os.path.abspath(".."))
@@ -54,7 +55,6 @@ exclude_patterns = [
     "Thumbs.db",
     ".DS_Store",
     "**.ipynb_checkpoints",
-    "notebooks/examples/*",
     "notebooks/*_template.ipynb",
 ]
 
@@ -87,7 +87,5 @@ autosummary_generate = True
 autodoc_docstring_signature = True
 
 # Copy the logo over
-import shutil
-
 os.makedirs("_build/html", exist_ok=True)
 shutil.copy("vplot.svg", "_build/html/vplot.svg")

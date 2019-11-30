@@ -3,7 +3,12 @@
 .vscode
 *.forward
 *.backward
+
+
+# Notebooks
 docs/notebooks/examples
+docs/notebooks/*.ipynb
+!docs/notebooks/*_template.ipynb
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
