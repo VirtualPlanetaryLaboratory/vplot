@@ -94,4 +94,5 @@ autodoc_docstring_signature = True
 # Copy the logo over
 import shutil
 
+os.makedirs("_build/html", exist_ok=True)
 shutil.copy("vplot.svg", "_build/html/vplot.svg")
