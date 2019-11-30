@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def auto_plot(path=".", sysname=None, group="param", show=True):
+def auto_plot(path=".", sysname=None, group="param", show=True, **kwargs):
     """Automatically plot the results of a :py:obj:`vplanet` run.
     
     Args:
@@ -20,6 +20,8 @@ def auto_plot(path=".", sysname=None, group="param", show=True):
             file). Defaults to "param".
         show (bool, optional): Show the plots? Defaults to True. If False,
             returns the figures instead.
+        kwargs (optional): Extra keyword arguments passed to 
+            :py:class:`vplot.figure.VPLOTFigure`.
     
     Returns:
         If :py:obj:`show` is False, returns a list of figures.
@@ -68,7 +70,7 @@ def auto_plot(path=".", sysname=None, group="param", show=True):
                 for param in params
                 if param.unit.physical_type == physical_type
             ]
-            fig, ax = plt.subplots(1)
+            fig, ax = plt.subplots(1, **kwargs)
             for array in arrays:
                 ax.plot(time, array)
             figs.append(fig)
@@ -83,7 +85,7 @@ def auto_plot(path=".", sysname=None, group="param", show=True):
                 for param in params
                 if param.tags.get("name", None) == parameter_name
             ]
-            fig, ax = plt.subplots(1)
+            fig, ax = plt.subplots(1, **kwargs)
             for array in arrays:
                 ax.plot(time, array)
             figs.append(fig)
@@ -92,7 +94,7 @@ def auto_plot(path=".", sysname=None, group="param", show=True):
     else:
 
         for param in params:
-            fig, ax = plt.subplots(1)
+            fig, ax = plt.subplots(1, **kwargs)
             ax.plot(time, param)
             figs.append(fig)
 

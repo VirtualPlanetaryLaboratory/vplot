@@ -56,39 +56,59 @@ def get_param_descriptions():
     """
 
     """
-    # Check if vplanet is callable
     try:
+
+        # Check if vplanet is callable
         subprocess.check_output(["vplanet", "-h"])
+
+        # Get the help message, which contains all the parameters
+        help = subprocess.getoutput("vplanet -h")
+
+        # Remove bold tags
+        help = help.replace("\x1b[1m", "")
+        help = help.replace("\x1b[0m", "")
+
+        # Get only the output params
+        stroutput = help.split(
+            "These options follow the argument saOutputOrder."
+        )[1]
+        stroutput = [x for x in stroutput.split("\n") if len(x)]
+        description = {}
+        for out in stroutput:
+            if out.startswith("[-]"):
+                n, d, _ = re.search(
+                    r"\[-\](.*) -- (.*). \[(.*)\]", out
+                ).groups()
+                description.update({n: d})
+            else:
+                n, d = re.search("(.*) -- (.*).", out).groups()
+                description.update({n: d})
+
+        # Cache it
+        with open(os.path.join(_path, "params.json"), "w") as f:
+            json.dump(description, f, indent=4, sort_keys=True)
+
     except (FileNotFoundError, OSError):
-        # Return the cached version
+
+        # Use the cached version
         logging.warning("Unable to call VPLANET. Is it in your PATH?")
-        with open(os.path.join(_path, "description.json"), "r") as f:
-            return json.load(f)
+        with open(os.path.join(_path, "params.json"), "r") as f:
+            description = json.load(f)
 
-    # Get the help message, which contains all the parameters
-    help = subprocess.getoutput("vplanet -h")
+    # Format the entries a bit
+    for key, value in description.items():
 
-    # Remove bold tags
-    help = help.replace("\x1b[1m", "")
-    help = help.replace("\x1b[0m", "")
+        # Remove periods
+        if value.endswith("."):
+            description[key] = value[:-1]
 
-    # Get only the output params
-    stroutput = help.split("These options follow the argument saOutputOrder.")[
-        1
-    ]
-    stroutput = [x for x in stroutput.split("\n") if len(x)]
-    description = {}
-    for out in stroutput:
-        if out.startswith("[-]"):
-            n, d, _ = re.search(r"\[-\](.*) -- (.*). \[(.*)\]", out).groups()
-            description.update({n: d})
-        else:
-            n, d = re.search("(.*) -- (.*).", out).groups()
-            description.update({n: d})
+        # Change "Time Rate of Change" to "Rate of Change"
+        if value.lower().startswith("time rate of change"):
+            description[key] = value[5:]
 
-    # Cache it
-    with open(os.path.join(_path, "description.json"), "w") as f:
-        json.dump(description, f, indent=4, sort_keys=True)
+        # Remove "Body's"
+        if value.lower().startswith("body's"):
+            description[key] = value[7:]
 
     return description
 

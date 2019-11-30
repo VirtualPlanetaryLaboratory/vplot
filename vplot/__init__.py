@@ -36,6 +36,7 @@ plt.style.use(
 
 
 # Import user-facing stuff
+from .figure import VPLOTFigure
 from .log import Log, LogBody, LogStage
 from .output import get_output, Output, Body
 from .auto_plot import auto_plot
@@ -50,4 +51,5 @@ __all__ = [
     "LogStage",
     "Output",
     "Body",
+    "VPLOTFigure",
 ]

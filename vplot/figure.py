@@ -8,11 +8,7 @@ import astropy.units as u
 import sys
 
 
-def _get_array_info(array, long_label=True):
-    if long_label:
-        label_type = "description"
-    else:
-        label_type = "name"
+def _get_array_info(array, max_label_length=40):
     if hasattr(array, "unit") and hasattr(array, "tags"):
         if array.unit.physical_type != array.tags["physical_type"]:
             # The physical type of this array changed, so this is
@@ -30,7 +26,9 @@ def _get_array_info(array, long_label=True):
             if unit == "":
                 unit = None
             body = array.tags.get("body", None)
-            label = array.tags.get(label_type, None)
+            label = array.tags.get("description", None)
+            if len(label) > max_label_length:
+                label = array.tags.get("name", None)
             physical_type = array.unit.physical_type.title()
             if physical_type == "Dimensionless":
                 physical_type = None
@@ -47,10 +45,10 @@ class VPLOTFigure(Figure):
     
     """
 
-    def __init__(self, *args, long_labels=True, mpl_units=True, **kwargs):
+    def __init__(self, *args, max_label_length=40, mpl_units=True, **kwargs):
 
-        # Axes labels: name or description?
-        self.long_labels = long_labels
+        # Parameters
+        self.max_label_length = max_label_length
 
         # Enable astropy/matplotlib quantity support? (Recommended)
         if mpl_units:
@@ -136,7 +134,7 @@ class VPLOTFigure(Figure):
 
                 # Grab the x metadata
                 unit, _, label, physical_type = _get_array_info(
-                    x, self.long_labels
+                    x, self.max_label_length
                 )
                 xunits.append(unit)
                 xlabels.append(label)
@@ -144,7 +142,7 @@ class VPLOTFigure(Figure):
 
                 # Grab the y metadata
                 unit, body, label, physical_type = _get_array_info(
-                    y, self.long_labels
+                    y, self.max_label_length
                 )
                 yunits.append(unit)
                 ylabels.append(label)
@@ -291,15 +289,6 @@ class VPLOTFigure(Figure):
             # Force time axis margins to be zero
             if "Time" in ax.get_xlabel():
                 ax.margins(0, ax.margins()[1])
-
-            # TODO: Here's how we'd change the fonts:
-            """
-            from matplotlib import font_manager as fm
-            prop = fm.FontProperties(
-                fname="path/to/font.ttf"
-            )
-            ax.set_xlabel(ax.get_xlabel(), fontproperties=prop)
-            """
 
     def draw(self, *args, **kwargs):
         if self._update_on_draw:

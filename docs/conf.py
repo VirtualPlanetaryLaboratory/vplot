@@ -74,16 +74,6 @@ html_static_path = ["_static"]
 # Get current git branch
 branch = os.getenv("GHBRANCH", "master")
 
-# Add a heading to notebooks
-nbsphinx_prolog = """
-{%s set docname = env.doc2path(env.docname, base=None) %s}
-.. note:: This tutorial was generated from a Jupyter notebook that can be
-          downloaded `here <https://github.com/VirtualPlanetaryLaboratory/vplot/blob/%s/{{ docname }}>`_.
-""" % (
-    "%",
-    "%",
-    branch,
-)
 nbsphinx_prompt_width = 0
 nbsphinx_timeout = 600
 napoleon_use_ivar = True

@@ -15,11 +15,17 @@ conda install -y -q -c conda-forge nb_anacondacloud
 pip install -U sphinx
 pip install -U "nbconvert>=5.5"
 pip install -U sphinx_rtd_theme
-pip install -U nbsphinx
 pip install -U jupyter_client
+git clone https://github.com/rodluger/nbsphinx
+pushd nbsphinx
+python setup.py develop
+popd
 
 # List available kernels
 jupyter kernelspec list
+
+# Run the notebooks
+python .ci/run_notebooks.py
 
 # Build the docs
 make -C docs html

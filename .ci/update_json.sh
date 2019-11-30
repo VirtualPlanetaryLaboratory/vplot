@@ -14,7 +14,7 @@ python -c "import vplot; vplot.output.get_param_descriptions()"
 if [[ -n $BUILDREASON ]] && [[ $BUILDREASON != "PullRequest" ]]; then
 
     # Check if the JSON file changed
-    if [[ $(git diff --name-only) == *"vplot/description.json"* ]]; then
+    if [[ $(git diff --name-only) == *"vplot/params.json"* ]]; then
 
         # Clone the repo, update the file, and push it back
         mkdir tmp_vplot
@@ -22,8 +22,8 @@ if [[ -n $BUILDREASON ]] && [[ $BUILDREASON != "PullRequest" ]]; then
         pushd tmp_vplot
             git checkout $GHBRANCH
             git pull
-            cp ../vplot/description.json vplot/description.json
-            git add vplot/description.json
+            cp ../vplot/params.json vplot/params.json
+            git add vplot/params.json
             git -c user.name='rodluger' -c user.email='rodluger@gmail.com' \
                 commit -m "update parameter descriptions"
             git push https://$GHUSER:$GHKEY@github.com/VirtualPlanetaryLaboratory/vplot HEAD:$GHBRANCH
