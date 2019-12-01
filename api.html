@@ -1,0 +1,410 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API &mdash; vplot 0.4.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/hide_input.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Plotting vplanet runs" href="notebooks/Plotting.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> vplot
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples and tutorials</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/VirtualPlanetaryLaboratory/vplot">Github</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/VirtualPlanetaryLaboratory/vplot/issues">Submit an issue</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">vplot</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-vplot">
+<span id="api"></span><h1>API<a class="headerlink" href="#module-vplot" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="vplot.get_output">
+<code class="sig-prename descclassname">vplot.</code><code class="sig-name descname">get_output</code><span class="sig-paren">(</span><em class="sig-param">path='.'</em>, <em class="sig-param">sysname=None</em><span class="sig-paren">)</span><a class="headerlink" href="#vplot.get_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse all of the output from a <code class="xref py py-obj docutils literal notranslate"><span class="pre">vplanet</span></code> run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sysname</strong> (<em>str</em><em>, </em><em>optional</em>) – System name. This is determined automatically,
+unless there are multiple runs in the same <code class="xref py py-obj docutils literal notranslate"><span class="pre">path</span></code>. Defaults
+to None.</p></li>
+<li><p><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to the directory containing the results of
+the <code class="xref py py-obj docutils literal notranslate"><span class="pre">vplanet</span></code> run. Defaults to the current directory.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A <a class="reference internal" href="#vplot.Output" title="vplot.Output"><code class="xref py py-class docutils literal notranslate"><span class="pre">Output</span></code></a> instance containing all the information from the
+<code class="docutils literal notranslate"><span class="pre">.log</span></code>, <code class="docutils literal notranslate"><span class="pre">.forward</span></code>, and <code class="docutils literal notranslate"><span class="pre">.backward</span></code> output files.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="vplot.auto_plot">
+<code class="sig-prename descclassname">vplot.</code><code class="sig-name descname">auto_plot</code><span class="sig-paren">(</span><em class="sig-param">path='.'</em>, <em class="sig-param">sysname=None</em>, <em class="sig-param">group='param'</em>, <em class="sig-param">bodies=[]</em>, <em class="sig-param">params=[]</em>, <em class="sig-param">show=True</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#vplot.auto_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatically plot the results of a <code class="xref py py-obj docutils literal notranslate"><span class="pre">vplanet</span></code> run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sysname</strong> (<em>str</em><em>, </em><em>optional</em>) – System name. This is determined automatically,
+unless there are multiple runs in the same <code class="xref py py-obj docutils literal notranslate"><span class="pre">path</span></code>. Defaults
+to None.</p></li>
+<li><p><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to the directory containing the results of
+the <code class="xref py py-obj docutils literal notranslate"><span class="pre">vplanet</span></code> run. Defaults to the current directory.</p></li>
+<li><p><strong>group</strong> (<em>str</em><em>, </em><em>optional</em>) – How to group plots. Options are “param”
+(one plot per parameter), “type” (one plot per physical type, such
+as angle, length, etc.), or “none” (one plot per column in the output
+file). Defaults to “param”.</p></li>
+<li><p><strong>bodies</strong> (<em>list</em><em>, </em><em>optional</em>) – Which bodies to generate plots for. These
+should be specified as a list of strings (case-insensitive). Defaults
+to <code class="docutils literal notranslate"><span class="pre">[]</span></code>, in which case all available bodies are plotted.</p></li>
+<li><p><strong>params</strong> (<em>list</em><em>, </em><em>optional</em>) – Which parameters to generate plots for. These
+should be specified as a list of strings (case-insensitive). Defaults
+to <code class="docutils literal notranslate"><span class="pre">[]</span></code>, in which case all available parameters are plotted.</p></li>
+<li><p><strong>show</strong> (<em>bool</em><em>, </em><em>optional</em>) – Show the plots? Defaults to True. If False,
+returns the figures instead.</p></li>
+<li><p><strong>kwargs</strong> (<em>optional</em>) – Extra keyword arguments passed directly to
+<a class="reference internal" href="#vplot.VPLOTFigure" title="vplot.VPLOTFigure"><code class="xref py py-class docutils literal notranslate"><span class="pre">vplot.VPLOTFigure</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>If <code class="xref py py-obj docutils literal notranslate"><span class="pre">show</span></code> is False, returns a list of figures.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="vplot.Log">
+<em class="property">class </em><code class="sig-prename descclassname">vplot.</code><code class="sig-name descname">Log</code><a class="headerlink" href="#vplot.Log" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class containing the information of a <code class="docutils literal notranslate"><span class="pre">vplanet</span></code> <code class="docutils literal notranslate"><span class="pre">.log</span></code> output file.</p>
+<dl class="method">
+<dt id="vplot.Log.final">
+<em class="property">property </em><code class="sig-name descname">final</code><a class="headerlink" href="#vplot.Log.final" title="Permalink to this definition">¶</a></dt>
+<dd><p>Container for the information about the final conditions of the system,
+an instance of <a class="reference internal" href="#vplot.LogStage" title="vplot.LogStage"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogStage</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vplot.Log.header">
+<em class="property">property </em><code class="sig-name descname">header</code><a class="headerlink" href="#vplot.Log.header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Container for the information in the header of the log file,
+an instance of <a class="reference internal" href="#vplot.LogStage" title="vplot.LogStage"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogStage</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vplot.Log.initial">
+<em class="property">property </em><code class="sig-name descname">initial</code><a class="headerlink" href="#vplot.Log.initial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Container for the information about the initial conditions of the system,
+an instance of <a class="reference internal" href="#vplot.LogStage" title="vplot.LogStage"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogStage</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="vplot.Log.members">
+<em class="property">property </em><code class="sig-name descname">members</code><a class="headerlink" href="#vplot.Log.members" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of all the properties of this object.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="vplot.LogBody">
+<em class="property">class </em><code class="sig-prename descclassname">vplot.</code><code class="sig-name descname">LogBody</code><a class="headerlink" href="#vplot.LogBody" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class containing all of the properties of a body at a certain
+stage in a <code class="docutils literal notranslate"><span class="pre">vplanet</span></code> <code class="docutils literal notranslate"><span class="pre">.log</span></code> output file.</p>
+<dl class="method">
+<dt id="vplot.LogBody.members">
+<em class="property">property </em><code class="sig-name descname">members</code><a class="headerlink" href="#vplot.LogBody.members" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of all the properties of this object.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="vplot.LogStage">
+<em class="property">class </em><code class="sig-prename descclassname">vplot.</code><code class="sig-name descname">LogStage</code><a class="headerlink" href="#vplot.LogStage" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class containing the information of a particular stage of
+a <code class="docutils literal notranslate"><span class="pre">vplanet</span></code> <code class="docutils literal notranslate"><span class="pre">.log</span></code> output file.</p>
+<dl class="method">
+<dt id="vplot.LogStage.members">
+<em class="property">property </em><code class="sig-name descname">members</code><a class="headerlink" href="#vplot.LogStage.members" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of all the properties of this object.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="vplot.Output">
+<em class="property">class </em><code class="sig-prename descclassname">vplot.</code><code class="sig-name descname">Output</code><a class="headerlink" href="#vplot.Output" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class containing all of the information of a <code class="docutils literal notranslate"><span class="pre">vplanet</span></code> run.</p>
+<dl class="method">
+<dt id="vplot.Output.members">
+<em class="property">property </em><code class="sig-name descname">members</code><a class="headerlink" href="#vplot.Output.members" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of all the properties of this object.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="vplot.Body">
+<em class="property">class </em><code class="sig-prename descclassname">vplot.</code><code class="sig-name descname">Body</code><a class="headerlink" href="#vplot.Body" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class containing the parameter arrays of a body in a <code class="docutils literal notranslate"><span class="pre">vplanet</span></code> run.</p>
+<p>These are populated from either a <code class="docutils literal notranslate"><span class="pre">.forward</span></code>, a <code class="docutils literal notranslate"><span class="pre">.backward</span></code>, or a
+<code class="docutils literal notranslate"><span class="pre">.Climate</span></code> file.</p>
+<dl class="method">
+<dt id="vplot.Body.members">
+<em class="property">property </em><code class="sig-name descname">members</code><a class="headerlink" href="#vplot.Body.members" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of all the properties of this object.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="vplot.VPLOTFigure">
+<em class="property">class </em><code class="sig-prename descclassname">vplot.</code><code class="sig-name descname">VPLOTFigure</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">max_label_length=40</em>, <em class="sig-param">mpl_units=True</em>, <em class="sig-param">xlog=False</em>, <em class="sig-param">ylog=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#vplot.VPLOTFigure" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <code class="docutils literal notranslate"><span class="pre">vplot</span></code> figure object, a subclass of <code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.figure.Figure</span></code>.</p>
+<p>This class adds certain functionality to the default <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> figure
+object, in particular the ability to recognize when <code class="docutils literal notranslate"><span class="pre">vplanet</span></code> quantities
+are plotted. When showing / drawing / saving the figure, this class will
+automatically label the axes and/or add a legend with the appropriate
+parameter names, types, units, and corresponding <code class="docutils literal notranslate"><span class="pre">vplanet</span></code> body. All of
+these can be overridden by setting the axes or legend labels explcitly.</p>
+<p>This class accepts all args and kwargs as <code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.figure.Figure</span></code>,
+with support for the following additional keywords:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_label_length</strong> (<em>int</em><em>, </em><em>optional</em>) – If the parameter description is longer
+than this value, the axis will be labeled with the shorter parameter
+name instead. Default 40.</p></li>
+<li><p><strong>mpl_units</strong> (<em>bool</em><em>, </em><em>optional</em>) – Enable matplotlib units functionality? Default
+is True. This allows quantities of the same physical type but different
+units (such as <code class="docutils literal notranslate"><span class="pre">yr</span></code> and <code class="docutils literal notranslate"><span class="pre">Gyr</span></code>) to be plotted on the same axis;
+this class will handle unit conversions as needed. An error will be
+raised if the unit conversion fails.</p></li>
+<li><p><strong>xlog</strong> (<em>bool</em><em>, </em><em>optional</em>) – Set the x axis scale to be logarithmic? Default False.</p></li>
+<li><p><strong>ylog</strong> (<em>bool</em><em>, </em><em>optional</em>) – Set the y axis scale to be logarithmic? Default False.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+  <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+    
+    
+    <a href="notebooks/Plotting.html" class="btn btn-neutral float-left" title="Plotting vplanet runs" accesskey="p"
+      rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+    
+  </div>
+  
+
+  <hr />
+
+  <div role="contentinfo">
+    <p>
+      
+      &copy; Copyright 2019, Rodrigo Luger.
+      <span class="lastupdated">
+        Last updated on 2019 Dec 01 at 21:48:55 UTC.
+      </span>
+
+    </p>
+  </div>
+  
+  
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a
+    href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by
+  <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

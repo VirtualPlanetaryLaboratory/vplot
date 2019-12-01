@@ -1,0 +1,650 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# The `get_output` function"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "tags": [
+     "hide_input"
+    ]
+   },
+   "outputs": [],
+   "source": [
+    "#hide_input\n",
+    "%matplotlib inline"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Overview"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "The :py:obj:`vplot` package makes it easy to interact with :py:obj:`vplanet` simulation results. The main function for doing this is :py:class:`vplot.get_output`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "tags": [
+     "hide_input"
+    ]
+   },
+   "outputs": [],
+   "source": [
+    "#hide_input\n",
+    "# Tar up the example folder\n",
+    "import glob\n",
+    "import tarfile\n",
+    "import os\n",
+    "\n",
+    "with tarfile.open(\"examples/CircumbinaryOrbit.tar.gz\", \"w:gz\") as tar:\n",
+    "    for file in glob.glob(\"examples/CircumbinaryOrbit/*.in\"):\n",
+    "        tar.add(file, arcname=os.path.basename(file))"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Let's run :py:class:`vplot.get_output` on the :download:`CircumbinaryOrbit <examples/CircumbinaryOrbit.tar.gz>` example."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import vplot as vpl"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "When we call :py:class:`vplot.get_output`, we pass the directory to the :py:obj:`vplanet` run:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<VPLOT Output: kepler16>"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "output = vpl.get_output(\"examples/CircumbinaryOrbit\")\n",
+    "output"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "The variable :py:obj:`output` is an instance of :py:class:`vplot.Output`. We can peek at its contents by accessing the :py:class:`members <vplot.Output.members>` attribute:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['sysname', 'bodies', 'log', 'path', 'primary', 'secondary', 'cbp', 'earth']"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "output.members"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "The properties :py:obj:`sysname`, :py:obj:`bodies`, and :py:obj:`path` are just strings, but :py:obj:`log` is a :py:class:`vplot.Log` instance and the remaining four are :py:class:`vplot.Body` instances."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## The log file"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Let's peek at :py:obj:`log`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<VPLOT Log File: kepler16>"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "log = output.log\n",
+    "log"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Again, let's look at the :py:class:`members <vplot.Log.members>` attribute:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['sysname', 'path', 'header', 'initial', 'final']"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "log.members"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "The :py:obj:`header`, :py:obj:`initial`, and :py:obj:`final` properties are instances of :py:class:`vplot.LogStage`, containing information about specific stages of the simulation. Let's check out everything in the header of the log file:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Executable: vplanet\n",
+      "Version: v1.0.0-156-gbf72f0672fda2ff266b855d7829d880a67a16a05\n",
+      "SystemName: kepler16\n",
+      "PrimaryInputFile: vpl.in\n",
+      "BodyFile1: primary.in\n",
+      "BodyFile2: secondary.in\n",
+      "BodyFile3: cbp.in\n",
+      "BodyFile4: earth.in\n",
+      "AllowFilesToBeOverwitten: True\n",
+      "MassUnits: Kilograms\n",
+      "LengthUnits: Meters\n",
+      "TimeUnits: Seconds\n",
+      "AngleUnits: Radians\n",
+      "VerbosityLevel: 5\n",
+      "CrossoverDecadeForScientificNotation: 4\n",
+      "NumberOfDigitsAfterDecimal: 6\n",
+      "IntegrationMethod: Runge-Kutta4\n",
+      "Direction: Forward\n",
+      "TimeStep: 31557600.0\n",
+      "StopTime: 3155760000.0\n",
+      "OutputInterval: 315576.0\n",
+      "UseVariableTimestep: True\n",
+      "dEta: 0.01\n",
+      "MinimumValueOfEccAndObl: 1e-10\n"
+     ]
+    }
+   ],
+   "source": [
+    "for member in log.header.members:\n",
+    "    print(\"{}: {}\".format(member, getattr(log.header, member)))"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Note that all of these can, of course, be accessed as regular properties:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'vplanet'"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "log.header.Executable"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Next, let's inspect the :py:obj:`initial` stage of the log file:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['system', 'primary', 'secondary', 'cbp', 'earth']"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "log.initial.members"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "There is one attribute per body, plus one for the system. Here's what's in :py:obj:`earth`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "ActiveModules: BINARY\n",
+      "ModuleBitSum: 1025\n",
+      "Color: 0\n",
+      "Mass: 5.972186e+24 kg\n",
+      "Radius: 6378100.0 m\n",
+      "RadGyra: 0.5\n",
+      "RotAngMom: 4.416946e+33 kg m2 / sec\n",
+      "BodyType: 0.0\n",
+      "HZLimitDryRunaway: -1.0 m\n",
+      "Instellation: -1.0\n",
+      "Eccentricity: 0.009302\n",
+      "OrbEnergy: 0.0 kg m2 / sec2\n",
+      "MeanMotion: 1.877507e-07 1 / sec\n",
+      "OrbPeriod: 33905420.0 sec\n",
+      "SemiMajorAxis: 150905800000.0 m\n",
+      "CriticalSemiMajorAxis: -1.0 m\n",
+      "OrbAngMom: 0.0 kg m2 / sec\n",
+      "ArgP: 3.970693 rad\n",
+      "Inc: 0.005425 rad\n",
+      "LongA: 3.112206 rad\n",
+      "TotOrbEnergy: 0.0 kg m2 / sec2\n",
+      "OrbPotEnergy: 0.0 kg m2 / sec2\n",
+      "FreeEcc: 0.03\n",
+      "FreeInc: 0.005381 rad\n",
+      "LL13N0: 1.88385e-07 sec\n",
+      "LL13K0: 1.870849e-07 sec\n",
+      "LL13V0: 1.896763e-07 sec\n",
+      "CBPR: 149950500000.0 m\n",
+      "CBPZ: 0.03614 m\n",
+      "CBPPhi: 6.253799 rad\n",
+      "CBPRDot: -191.811805 m / sec\n",
+      "CBPZDot: -152.682529 m / sec\n",
+      "CBPPhiDot: 1.87673e-07 1 / sec\n",
+      "R0: 149597900000.0 m\n",
+      "CBPInsol: -1.0 F/F_Earth\n",
+      "BinPriR: 8366404000.0 m\n",
+      "BinPriPhi: 0.658853 rad\n",
+      "BinSecR: 28406370000.0 m\n",
+      "BinSecPhi: 3.800446 rad\n",
+      "OutputOrder: Time[year] CBPR[AU] ArgP[deg] LongA[deg] Eccentricity[] Inc[deg] LongP[deg]\n",
+      "GridOutputOrder: None\n"
+     ]
+    }
+   ],
+   "source": [
+    "for member in log.initial.earth.members:\n",
+    "    print(\"{}: {}\".format(member, getattr(log.initial.earth, member)))"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "The other attributes similarly list all of the initial properties of each body (or the system)."
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Before we move on, note the type of each of these properties:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "vplot.quantity.VPLOTQuantity"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "type(log.initial.earth.Inc)"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "This isn't a regular number, but an instance of :py:class:`vplot.VPLOTQuantity`, which is a subclasss of :py:class:`astropy.units.Quantity`. These objects have numerical values (either scalars or arrays) *and* units; plus, they automatically handle unit conversions when operated on."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "0.005425 rad\n",
+      "0.31082960385847164 deg\n"
+     ]
+    }
+   ],
+   "source": [
+    "inc = log.initial.earth.Inc\n",
+    "print(inc)\n",
+    "print(inc.to(\"deg\"))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "5.972186e+24 kg\n",
+      "0.9999700737600866 earthMass\n"
+     ]
+    }
+   ],
+   "source": [
+    "mass = log.initial.earth.Mass\n",
+    "print(mass)\n",
+    "print(mass.to(\"Mearth\"))"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Check out the `astropy documentation <https://docs.astropy.org/en/stable/units/>`_ for more information on supported units."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## The bodies"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Going back to the :py:obj:`output` object, let's inspect its :py:obj:`earth` member:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<VPLOT Body: earth>"
+      ]
+     },
+     "execution_count": 15,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "output.earth"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "This object contains the information of the arrays computed during the simulation, which are specified in the :py:obj:`saOutputOrder` line of the input files."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['infile',\n",
+       " 'fwfile',\n",
+       " 'bwfile',\n",
+       " 'climfile',\n",
+       " 'Time',\n",
+       " 'CBPR',\n",
+       " 'ArgP',\n",
+       " 'LongA',\n",
+       " 'Eccentricity',\n",
+       " 'Inc',\n",
+       " 'LongP']"
+      ]
+     },
+     "execution_count": 16,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "output.earth.members"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Let's check out one of them:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/latex": [
+       "$[0.310855,~0.311045,~0.311036,~\\dots,~0.310957,~0.310998,~0.311019] \\; \\mathrm{{}^{\\circ}}$"
+      ],
+      "text/plain": [
+       "<VPLOTQuantity [0.310855, 0.311045, 0.311036, ..., 0.310957, 0.310998,\n",
+       "                0.311019] deg>"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "output.earth.Inc"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "As before, these are :py:class:`vplot.VPLOTQuantity` instances, which behave like :py:class:`numpy` arrays except they have units attached."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[0.00542544 0.00542876 0.0054286  ... 0.00542722 0.00542794 0.00542831] rad\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(output.earth.Inc.to(\"rad\"))"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "That's it for this tutorial! Check out the `plotting tutorial <Plotting.ipynb>`_ for information on how to easily visualize all of these quantities."
+   ]
+  }
+ ],
+ "metadata": {
+  "celltoolbar": "Tags",
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
