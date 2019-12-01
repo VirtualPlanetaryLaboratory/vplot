@@ -210,7 +210,7 @@ class VPLOTFigure(Figure):
                     )
                 )
 
-            # Figure out the y unit
+            # Figure out the x unit
             if len(set(xunits)) == 1:
                 if xunits[0] is None:
                     xunit = None

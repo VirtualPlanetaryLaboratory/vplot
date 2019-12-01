@@ -89,7 +89,7 @@ def auto_plot(
         logger.error("No parameters found for plotting.")
         return
     elif time is None:
-        logger.error("No time array found for any of the bodies.")
+        logger.error("No Time array found for any of the bodies.")
         return
 
     # One plot per physical type
