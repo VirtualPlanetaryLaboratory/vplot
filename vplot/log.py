@@ -125,44 +125,96 @@ def get_param_value(val, unit, file, line):
 
 
 class Log(object):
-    """
+    """A class containing the information of a ``vplanet`` ``.log`` output file.
 
     """
 
-    def __init__(self, sysname=""):
-        self.sysname = sysname
-        self.header = LogStage("Header")
-        self.initial = LogStage("Initial")
-        self.final = LogStage("Final")
+    def __init__(self):
+        self.sysname = ""
+        self._header = LogStage()
+        self._header._name = "Header"
+        self._initial = LogStage()
+        self._initial._name = "Initial"
+        self._final = LogStage()
+        self._final._name = "Final"
         self._body_names = []
         self.path = ""
+
+    @property
+    def header(self):
+        """
+        Container for the information in the header of the log file,
+        an instance of :py:class:`LogStage`.
+        
+        """
+        return self._header
+
+    @property
+    def initial(self):
+        """
+        Container for the information about the initial conditions of the system,
+        an instance of :py:class:`LogStage`.
+
+        """
+
+        return self._initial
+
+    @property
+    def final(self):
+        """
+        Container for the information about the final conditions of the system,
+        an instance of :py:class:`LogStage`.
+
+        """
+        return self._final
 
     def __repr__(self):
         return "<VPLOT Log File: %s>" % self.sysname
 
+    @property
+    def members(self):
+        """A list of all the properties of this object."""
+        keys = list(self.__dict__.keys())
+        keys += ["header", "initial", "final"]
+        return [key for key in keys if not key.startswith("_")]
+
 
 class LogStage(object):
-    """
+    """A class containing the information of a particular stage of
+    a ``vplanet`` ``.log`` output file.
 
     """
 
-    def __init__(self, name="Header"):
-        self._name = name
+    def __init__(self):
+        self._name = ""
 
     def __repr__(self):
         return "<VPLOT Log Object: %s>" % self._name
+
+    @property
+    def members(self):
+        """A list of all the properties of this object."""
+        keys = list(self.__dict__.keys())
+        return [key for key in keys if not key.startswith("_")]
 
 
 class LogBody(object):
-    """
+    """A class containing all of the properties of a body at a certain
+    stage in a ``vplanet`` ``.log`` output file.
 
     """
 
-    def __init__(self, name=""):
-        self._name = name
+    def __init__(self):
+        self._name = ""
 
     def __repr__(self):
         return "<VPLOT Log Object: %s>" % self._name
+
+    @property
+    def members(self):
+        """A list of all the properties of this object."""
+        keys = list(self.__dict__.keys())
+        return [key for key in keys if not key.startswith("_")]
 
 
 def get_log(path=".", sysname=None, ext="log"):
@@ -238,7 +290,8 @@ def get_log(path=".", sysname=None, ext="log"):
                     final.append((i + 1, line))
 
     # Instantiate a `Log` object
-    log = Log(sysname)
+    log = Log()
+    log.sysname = sysname
     log.path = os.path.abspath(path)
 
     # Process the header
@@ -256,7 +309,9 @@ def get_log(path=".", sysname=None, ext="log"):
 
     # Process the initial conditions
     body = "system"
-    setattr(log.initial, body, LogBody(body))
+    logbody = LogBody()
+    logbody._name = body
+    setattr(log.initial, body, logbody)
     for i, line in initial:
         if "BODY:" not in line:
             try:
@@ -279,12 +334,16 @@ def get_log(path=".", sysname=None, ext="log"):
                     + "Cannot understand body name."
                     + line
                 )
-            setattr(log.initial, body, LogBody(body))
+            logbody = LogBody()
+            logbody._name = body
+            setattr(log.initial, body, logbody)
             log._body_names.append(body)
 
     # Process the final conditions
     body = "system"
-    setattr(log.final, body, LogBody(body))
+    logbody = LogBody()
+    logbody._name = body
+    setattr(log.final, body, logbody)
     for i, line in final:
         if "BODY:" not in line:
             try:
@@ -307,6 +366,8 @@ def get_log(path=".", sysname=None, ext="log"):
                     + "Cannot understand body name."
                     + line
                 )
-            setattr(log.final, body, LogBody(body))
+            logbody = LogBody()
+            logbody._name = body
+            setattr(log.final, body, logbody)
 
     return log

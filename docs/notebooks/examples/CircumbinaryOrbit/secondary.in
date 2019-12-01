@@ -2,7 +2,7 @@
 # Parameters from Leung & Lee (2013)
 
 # Settings
-sName               Secondary               # Body's name
+sName               secondary               # Body's name
 saModules           binary
 
 # Physical

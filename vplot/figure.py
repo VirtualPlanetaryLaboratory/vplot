@@ -6,6 +6,7 @@ from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 import astropy.units as u
 import sys
+import numpy as np
 
 
 def _get_array_info(array, max_label_length=40):
@@ -41,14 +42,46 @@ def _get_array_info(array, max_label_length=40):
 
 
 class VPLOTFigure(Figure):
-    """
+    """A ``vplot`` figure object, a subclass of :py:class:`matplotlib.figure.Figure`.
     
+    This class adds certain functionality to the default ``matplotlib`` figure
+    object, in particular the ability to recognize when ``vplanet`` quantities
+    are plotted. When showing / drawing / saving the figure, this class will
+    automatically label the axes and/or add a legend with the appropriate 
+    parameter names, types, units, and corresponding ``vplanet`` body. All of
+    these can be overridden by setting the axes or legend labels explcitly.
+
+    This class accepts all args and kwargs as :py:class:`matplotlib.figure.Figure`,
+    with support for the following additional keywords:
+
+    Args:
+        max_label_length (int, optional): If the parameter description is longer
+            than this value, the axis will be labeled with the shorter parameter
+            name instead. Default 40.
+        mpl_units (bool, optional): Enable matplotlib units functionality? Default
+            is True. This allows quantities of the same physical type but different
+            units (such as ``yr`` and ``Gyr``) to be plotted on the same axis; 
+            this class will handle unit conversions as needed. An error will be 
+            raised if the unit conversion fails.
+        xlog (bool, optional): Set the x axis scale to be logarithmic? Default False.
+        ylog (bool, optional): Set the y axis scale to be logarithmic? Default False.
+
     """
 
-    def __init__(self, *args, max_label_length=40, mpl_units=True, **kwargs):
+    def __init__(
+        self,
+        *args,
+        max_label_length=40,
+        mpl_units=True,
+        xlog=False,
+        ylog=False,
+        **kwargs
+    ):
 
         # Parameters
         self.max_label_length = max_label_length
+        self.xlog = xlog
+        self.ylog = ylog
 
         # Enable astropy/matplotlib quantity support? (Recommended)
         if mpl_units:
@@ -289,6 +322,16 @@ class VPLOTFigure(Figure):
             # Force time axis margins to be zero
             if "Time" in ax.get_xlabel():
                 ax.margins(0, ax.margins()[1])
+
+            # Make axes logarithmic?
+            if self.xlog:
+                ax.set_xscale("log")
+            else:
+                ax.set_xscale("linear")
+            if self.ylog:
+                ax.set_yscale("log")
+            else:
+                ax.set_yscale("linear")
 
     def draw(self, *args, **kwargs):
         if self._update_on_draw:

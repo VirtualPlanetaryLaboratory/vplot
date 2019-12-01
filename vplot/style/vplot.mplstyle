@@ -18,3 +18,7 @@ ytick.minor.width: 0.4
 
 xtick.major.pad: 5.6
 ytick.major.pad: 5.6
+
+text.usetex: False
+font.family: stixgeneral
+mathtext.fontset: stix

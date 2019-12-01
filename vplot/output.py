@@ -15,7 +15,7 @@ import json
 
 
 class Output(object):
-    """
+    """A class containing all of the information of a ``vplanet`` run.
 
     """
 
@@ -32,14 +32,23 @@ class Output(object):
     def __repr__(self):
         return "<VPLOT Output: %s>" % self.sysname
 
+    @property
+    def members(self):
+        """A list of all the properties of this object."""
+        keys = list(self.__dict__.keys())
+        return [key for key in keys if not key.startswith("_")]
+
 
 class Body(object):
-    """
+    """A class containing the parameter arrays of a body in a ``vplanet`` run.
+
+    These are populated from either a ``.forward``, a ``.backward``, or a 
+    ``.Climate`` file.
 
     """
 
     def __init__(self):
-        self.name = ""
+        self._name = ""
         self._params = []
 
     def __getitem__(self, i):
@@ -49,7 +58,13 @@ class Body(object):
         return len(self._params)
 
     def __repr__(self):
-        return "<VPLOT Body: %s>" % self.name
+        return "<VPLOT Body: %s>" % self._name
+
+    @property
+    def members(self):
+        """A list of all the properties of this object."""
+        keys = list(self.__dict__.keys())
+        return [key for key in keys if not key.startswith("_")]
 
 
 def get_param_descriptions():
@@ -196,15 +211,19 @@ def get_arrays(log):
 
         # Create a body
         body = Body()
-        body.name = body_name
+        body._name = body_name
 
         # Grab the input file name
         body.infile = getattr(log.header, "BodyFile%d" % (i + 1))
 
         # Grab the output file names
-        body.fwfile = "%s.%s.forward" % (output.sysname, body.name)
-        body.bwfile = "%s.%s.backward" % (output.sysname, body.name)
-        body.climfile = "%s.%s.Climate" % (output.sysname, body.name)
+        body.fwfile = "%s.%s.forward" % (output.sysname, body._name)
+        if not os.path.exists(os.path.join(output.path, body.fwfile)):
+            body.fwfile = ""
+        body.bwfile = "%s.%s.backward" % (output.sysname, body._name)
+        if not os.path.exists(os.path.join(output.path, body.bwfile)):
+            body.bwfile = ""
+        body.climfile = "%s.%s.Climate" % (output.sysname, body._name)
         if not os.path.exists(os.path.join(output.path, body.climfile)):
             body.climfile = ""
 
@@ -222,12 +241,20 @@ def get_arrays(log):
         except IOError:
             bwfile = [""]
 
+        # TODO: Add support for *both* fwfile and bwfile at the same time?
+        if fwfile != [""] and bwfile != [""]:
+            logger.error(
+                "Both a fwfile and a bwfile were detected. "
+                + "Currently, vplot can only handle one at a time. "
+                + "Continuing, but ignoring the bwfile..."
+            )
+
         # Now grab the output order and the params
-        outputorder = getattr(log.initial, body.name).OutputOrder
+        outputorder = getattr(log.initial, body._name).OutputOrder
         if fwfile != [""]:
-            body._params = get_params(outputorder, fwfile, body=body.name)
+            body._params = get_params(outputorder, fwfile, body=body._name)
         elif bwfile != [""]:
-            body._params = get_params(outputorder, bwfile, body=body.name)
+            body._params = get_params(outputorder, bwfile, body=body._name)
 
         # Climate file
         if body.climfile != "":
@@ -240,9 +267,9 @@ def get_arrays(log):
 
             # ... and the grid order
             try:
-                gridorder = getattr(log.initial, body.name).GridOutputOrder
+                gridorder = getattr(log.initial, body._name).GridOutputOrder
                 body._gridparams = get_params(
-                    gridorder, climfile, body=body.name
+                    gridorder, climfile, body=body._name
                 )
             except:
                 logger.error(
@@ -279,23 +306,23 @@ def get_output(path=".", sysname=None):
     for body in output.bodies:
 
         # Make the body accessible as an attribute
-        setattr(output, body.name, body)
+        setattr(output, body._name, body)
 
         # Make all the arrays accessible as attributes
-        for array in getattr(output, body.name)._params:
-            setattr(getattr(output, body.name), array.tags["name"], array)
+        for array in getattr(output, body._name)._params:
+            setattr(getattr(output, body._name), array.tags["name"], array)
 
         # Grid params
-        if len(getattr(output, body.name)._gridparams):
+        if len(getattr(output, body._name)._gridparams):
 
             # Get the time array
             iTime = np.argmax(
                 [
-                    array.name == "Time"
-                    for array in getattr(output, body.name)._gridparams
+                    array._name == "Time"
+                    for array in getattr(output, body._name)._gridparams
                 ]
             )
-            Time = getattr(output, body.name)._gridparams[iTime]
+            Time = getattr(output, body._name)._gridparams[iTime]
 
             # Get 2d array dimensions
             J = np.where(Time[1:] > Time[:-1])[0][0] + 1
@@ -303,13 +330,13 @@ def get_output(path=".", sysname=None):
             if r != 0:
                 raise Exception(
                     "Irregular time grid detected for {}. VPLOT is confused!".format(
-                        body.name
+                        body._name
                     )
                 )
 
-            for array in getattr(output, body.name)._gridparams:
-                if array.name != "Time":
+            for array in getattr(output, body._name)._gridparams:
+                if array._name != "Time":
                     # We don't want to overwrite the time array!
-                    setattr(getattr(output, body.name), array.name, array)
+                    setattr(getattr(output, body._name), array._name, array)
 
     return output

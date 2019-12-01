@@ -5,7 +5,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def auto_plot(path=".", sysname=None, group="param", show=True, **kwargs):
+def auto_plot(
+    path=".",
+    sysname=None,
+    group="param",
+    bodies=[],
+    params=[],
+    show=True,
+    **kwargs
+):
     """Automatically plot the results of a :py:obj:`vplanet` run.
     
     Args:
@@ -18,10 +26,16 @@ def auto_plot(path=".", sysname=None, group="param", show=True, **kwargs):
             (one plot per parameter), "type" (one plot per physical type, such
             as angle, length, etc.), or "none" (one plot per column in the output
             file). Defaults to "param".
+        bodies (list, optional): Which bodies to generate plots for. These
+            should be specified as a list of strings (case-insensitive). Defaults
+            to ``[]``, in which case all available bodies are plotted.
+        params (list, optional): Which parameters to generate plots for. These
+            should be specified as a list of strings (case-insensitive). Defaults
+            to ``[]``, in which case all available parameters are plotted.
         show (bool, optional): Show the plots? Defaults to True. If False,
             returns the figures instead.
-        kwargs (optional): Extra keyword arguments passed to 
-            :py:class:`vplot.figure.VPLOTFigure`.
+        kwargs (optional): Extra keyword arguments passed directly to 
+            :py:class:`vplot.VPLOTFigure`.
     
     Returns:
         If :py:obj:`show` is False, returns a list of figures.
@@ -33,31 +47,50 @@ def auto_plot(path=".", sysname=None, group="param", show=True, **kwargs):
         ", ".join(group_allowed)
     )
 
+    if type(bodies) is str:
+        bodies = [bodies]
+    assert type(bodies) is list, "Kewyord `bodies` must be a list."
+    for i, body in enumerate(bodies):
+        assert type(body) is str, "Items in `bodies` must be strings."
+        bodies[i] = body.lower()
+    body_names = bodies
+
+    if type(params) is str:
+        params = [params]
+    assert type(params) is list, "Kewyord `params` must be a list."
+    for i, param in enumerate(params):
+        assert type(param) is str, "Items in `params` must be strings."
+        params[i] = param.lower()
+    param_names = [param for param in params if param.lower() != "time"]
+
     # Grab the output
     output = get_output(sysname=sysname, path=path)
 
     # Grab all params
     params = []
+    time = None
     for body in output.bodies:
-        params += body._params
+        if len(body_names) == 0 or body._name.lower() in body_names:
+            for param in body._params:
+                if param.tags.get("name", "").lower() == "time":
+                    if time is None:
+                        time = param
+                    else:
+                        assert np.array_equal(
+                            time.to("yr"), param.to("yr")
+                        ), "Mismatch in the time arrays for two of the bodies."
+                elif (
+                    len(param_names) == 0
+                    or param.tags.get("name", "").lower() in param_names
+                ):
+                    params.append(param)
 
-    # Get the time array in years
-    time = [
-        param for param in params if param.tags.get("name", None) == "Time"
-    ]
-    if len(time) == 0:
-        time = time[0]
-    else:
-        for k in range(1, len(time)):
-            assert np.array_equal(
-                time[0].to("yr"), time[k].to("yr")
-            ), "Mismatch in the time arrays for two of the bodies."
-        time = time[0]
-
-    # Remove it from the params
-    params = [
-        param for param in params if param.tags.get("name", None) != "Time"
-    ]
+    if len(params) == 0:
+        logger.error("No parameters found for plotting.")
+        return
+    elif time is None:
+        logger.error("No time array found for any of the bodies.")
+        return
 
     # One plot per physical type
     figs = []

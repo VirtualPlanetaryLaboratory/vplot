@@ -2,6 +2,9 @@ Examples and tutorials
 ======================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
+   notebooks/CommandLine.ipynb
    notebooks/AutoPlot.ipynb
+   notebooks/GetOutput.ipynb
+   notebooks/Plotting.ipynb
