@@ -257,4 +257,3 @@ class VPLOTQuantity(u.Quantity):
 
         # Custom tags for vplot
         self.tags = getattr(obj, "tags", {})
-

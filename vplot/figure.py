@@ -11,7 +11,9 @@ import numpy as np
 
 def _get_array_info(array, max_label_length=40):
     if hasattr(array, "unit") and hasattr(array, "tags"):
-        if array.unit.physical_type != array.tags["physical_type"]:
+        if array.unit.physical_type != array.tags.get(
+            "physical_type", array.unit.physical_type
+        ):
             # The physical type of this array changed, so this is
             # no longer the original VPLANET quantity!
             unit = str(array.unit)
@@ -28,7 +30,7 @@ def _get_array_info(array, max_label_length=40):
                 unit = None
             body = array.tags.get("body", None)
             label = array.tags.get("description", None)
-            if len(label) > max_label_length:
+            if label is not None and len(label) > max_label_length:
                 label = array.tags.get("name", None)
             physical_type = array.unit.physical_type.title()
             if physical_type == "Dimensionless":
@@ -157,10 +159,12 @@ class VPLOTFigure(Figure):
             ylabels = []
             ytypes = []
             bodies = []
-            for line in ax.lines + ax.collections:
-
-                if not (hasattr(line, "get_data")):
-                    continue
+            lines = [
+                line
+                for line in ax.lines + ax.collections
+                if hasattr(line, "get_data")
+            ]
+            for line in lines:
 
                 # Get the data
                 x, y = line.get_data()
@@ -183,7 +187,9 @@ class VPLOTFigure(Figure):
                 bodies.append(body)
 
             # Figure out the x physical type
-            if len(set(xtypes)) == 1:
+            if len(set(xtypes)) == 0:
+                xtype = None
+            elif len(set(xtypes)) == 1:
                 xtype = xtypes[0]
             elif len(set(xtypes)) == 2 and None in xtypes:
                 # Allow unitless quantities to be shown on the same
@@ -197,7 +203,9 @@ class VPLOTFigure(Figure):
                 )
 
             # Figure out the y physical type
-            if len(set(ytypes)) == 1:
+            if len(set(ytypes)) == 0:
+                ytype = None
+            elif len(set(ytypes)) == 1:
                 ytype = ytypes[0]
             elif len(set(ytypes)) == 2 and None in ytypes:
                 # Allow unitless quantities to be shown on the same
@@ -211,7 +219,9 @@ class VPLOTFigure(Figure):
                 )
 
             # Figure out the x unit
-            if len(set(xunits)) == 1:
+            if len(set(xunits)) == 0:
+                xunit = None
+            elif len(set(xunits)) == 1:
                 if xunits[0] is None:
                     xunit = None
                 else:
@@ -225,7 +235,9 @@ class VPLOTFigure(Figure):
                             break
 
             # Figure out the y unit
-            if len(set(yunits)) == 1:
+            if len(set(yunits)) == 0:
+                yunit = None
+            elif len(set(yunits)) == 1:
                 if yunits[0] is None:
                     yunit = None
                 else:
@@ -287,7 +299,7 @@ class VPLOTFigure(Figure):
 
                 make_legend = False
 
-                for k, line in enumerate(ax.lines + ax.collections):
+                for j, line in enumerate(lines):
                     if (
                         line.get_label() is None
                         or line.get_label() == ""
@@ -297,12 +309,12 @@ class VPLOTFigure(Figure):
 
                         label = ""
 
-                        if not single_body and bodies[k] is not None:
-                            label += "{}: ".format(bodies[k])
+                        if not single_body and bodies[j] is not None:
+                            label += "{}: ".format(bodies[j])
 
                         if not single_yparam:
-                            if ylabels[k] is not None:
-                                label += "{}".format(ylabels[k])
+                            if ylabels[j] is not None:
+                                label += "{}".format(ylabels[j])
                             elif ytype is not None:
                                 label += "{}".format(ytype)
 
@@ -326,12 +338,12 @@ class VPLOTFigure(Figure):
             # Make axes logarithmic?
             if self.xlog:
                 ax.set_xscale("log")
-            else:
-                ax.set_xscale("linear")
+            # else:
+            #    ax.set_xscale("linear")
             if self.ylog:
                 ax.set_yscale("log")
-            else:
-                ax.set_yscale("linear")
+            # else:
+            #    ax.set_yscale("linear")
 
     def draw(self, *args, **kwargs):
         if self._update_on_draw:

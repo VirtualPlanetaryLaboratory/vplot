@@ -33,7 +33,7 @@ from .figure import VPLOTFigure
 from .log import Log, LogBody, LogStage
 from .output import get_output, Output, Body
 from .auto_plot import auto_plot
-
+from .quantity import VPLOTQuantity as Quantity
 
 # User-facing stuff
 __all__ = [
