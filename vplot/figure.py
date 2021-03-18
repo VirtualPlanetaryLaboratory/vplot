@@ -338,12 +338,8 @@ class VPLOTFigure(Figure):
             # Make axes logarithmic?
             if self.xlog:
                 ax.set_xscale("log")
-            # else:
-            #    ax.set_xscale("linear")
             if self.ylog:
                 ax.set_yscale("log")
-            # else:
-            #    ax.set_yscale("linear")
 
     def draw(self, *args, **kwargs):
         if self._update_on_draw:
