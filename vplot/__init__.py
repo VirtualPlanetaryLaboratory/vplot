@@ -35,6 +35,7 @@ from .output import get_output, Output, Body
 from .auto_plot import auto_plot
 from .quantity import VPLOTQuantity as Quantity
 
+
 # User-facing stuff
 __all__ = [
     "get_output",
@@ -46,3 +47,17 @@ __all__ = [
     "Body",
     "VPLOTFigure",
 ]
+
+# Backwards-compatibility hacks
+GetOutput = get_output
+
+
+class colors(object):
+    red = "#c91111"
+    orange = "#e09401"
+    pale_blue = "#13aed5"
+    dark_blue = "#1321d8"
+    purple = "#642197"
+
+
+__all__ += ["colors", "GetOutput"]

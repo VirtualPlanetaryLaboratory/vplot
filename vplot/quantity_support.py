@@ -39,6 +39,8 @@ class quantity_support(units.ConversionInterface):
     def convert(val, unit, axis):
         if isinstance(val, u.Quantity):
             return val.to_value(unit)
+        elif hasattr(val, "__len__") and len(val) == 0:
+            return []
         elif isinstance(val, list) and isinstance(val[0], u.Quantity):
             return [v.to_value(unit) for v in val]
         else:

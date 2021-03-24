@@ -212,7 +212,7 @@ class VPLOTQuantity(u.Quantity):
             and isinstance(value.item(0), numbers.Number)
         ):
             raise TypeError(
-                "The value must be a valid Python or " "Numpy numeric type."
+                "The value must be a valid Python or Numpy numeric type."
             )
 
         # by default, cast any integer, boolean, etc., to float
@@ -257,3 +257,31 @@ class VPLOTQuantity(u.Quantity):
 
         # Custom tags for vplot
         self.tags = getattr(obj, "tags", {})
+
+
+class NumpyQuantity(np.ndarray):
+    """
+    A custom subclass of numpy ndarray with tags.
+    
+    """
+
+    def __new__(cls, input_array, tags={}, unit=None):
+        # Input array is an already formed ndarray instance
+        # We first cast to be our class type
+        obj = np.asarray(input_array).view(cls)
+        # add the new attribute to the created instance
+        obj.tags = tags
+        obj.unit = unit
+        # Finally, we must return the newly created object:
+        return obj
+
+    def __array_finalize__(self, obj):
+        # see InfoArray.__array_finalize__ for comments
+        if obj is None:
+            return
+        self.tag = getattr(obj, "tags", {})
+        self.unit = getattr(obj, "unit", None)
+
+    def __array_wrap__(self, out_arr, context=None):
+        # Call the parent
+        return np.ndarray.__array_wrap__(self, out_arr, context)

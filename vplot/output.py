@@ -4,6 +4,7 @@ from . import logger
 from . import custom_units
 from .log import get_log
 from .quantity import VPLOTQuantity as Quantity
+from .quantity import NumpyQuantity
 import logging
 import numpy as np
 import re
@@ -128,26 +129,28 @@ def get_param_descriptions():
     return description
 
 
-def get_params(outputorder, file, body=None):
+def get_params(outputorder, file, units=True, body=None):
     """
 
     """
     # Get parameter descriptions from the vplanet help
     description = get_param_descriptions()
 
-    # Remove spaces from units
-    units = re.search(r"\[(.*?)\]", outputorder)
-    if units is not None:
-        for unit in units.group():
-            outputorder = outputorder.replace(unit, unit.replace(" ", ""))
+    # Get params and units
+    params_and_units = re.findall(r"(.*?)\[(.*?)\]", outputorder)
 
     # Populate the params
-    outputorder = outputorder.split()
     params = []
-    for j, param in enumerate(outputorder):
+    for j, param in enumerate(params_and_units):
+
+        # Grab the array in the fwfile/bwfile
+        array = []
+        for line in file:
+            array.append(float(line.split()[j]))
 
         # Get the name and units
-        name, unit_str = re.search(r"(.*?)\[(.*?)\]", param).groups()
+        name = param[0].replace(" ", "")
+        unit_str = param[1].replace(" ", "")
 
         # If the param name starts with a number,
         # add an underscore so we can make it a
@@ -156,36 +159,43 @@ def get_params(outputorder, file, body=None):
             name = "_" + name
 
         # Process the unit
-        with warnings.catch_warnings(record=True) as w:
-            try:
-                unit = u.Unit(unit_str)
-                assert len(w) == 0
-            except ValueError as e:
-                logger.error(
-                    "Error processing unit {}: ".format(unit_str) + (str(e))
-                )
-                unit = u.Unit("")
-            except AssertionError:
-                logger.warn(
-                    "Error processing unit {}: ".format(unit_str)
-                    + str(w[0].message)
-                )
-                unit = u.Unit("")
+        if units:
+            with warnings.catch_warnings(record=True) as w:
+                try:
+                    unit = u.Unit(unit_str)
+                    assert len(w) == 0
+                except ValueError as e:
+                    logger.error(
+                        "Error processing unit {}: ".format(unit_str)
+                        + (str(e))
+                    )
+                    unit = u.Unit("")
+                except AssertionError:
+                    logger.warn(
+                        "Error processing unit {}: ".format(unit_str)
+                        + str(w[0].message)
+                    )
+                    unit = u.Unit("")
 
-        # Grab the array in the fwfile/bwfile
-        array = []
-        for line in file:
-            array.append(float(line.split()[j]))
+            # Make it into an astropy quantity with units
+            array = Quantity(np.array(array), unit=unit)
+            physical_type = unit.physical_type
 
-        # Give it units and `tags`
-        array = Quantity(np.array(array) * unit)
+        else:
+
+            # Keep it as a numpy array with tags. We'll
+            # still keep track of the unit, but it's only
+            # a passive tag!
+            array = NumpyQuantity(np.array(array))
+            array.unit = unit_str
+            physical_type = None
 
         # Tag it for plotting
         array.tags = dict(
             name=name,
             description=description.get(name, name),
             body=body,
-            physical_type=unit.physical_type,
+            physical_type=physical_type,
         )
 
         # Add to the list
@@ -194,7 +204,7 @@ def get_params(outputorder, file, body=None):
     return params
 
 
-def get_arrays(log):
+def get_arrays(log, units=True):
     """
 
     """
@@ -212,6 +222,7 @@ def get_arrays(log):
         # Create a body
         body = Body()
         body._name = body_name
+        body.name = body_name
 
         # Grab the input file name
         body.infile = getattr(log.header, "BodyFile%d" % (i + 1))
@@ -252,9 +263,13 @@ def get_arrays(log):
         # Now grab the output order and the params
         outputorder = getattr(log.initial, body._name).OutputOrder
         if fwfile != [""]:
-            body._params = get_params(outputorder, fwfile, body=body._name)
+            body._params = get_params(
+                outputorder, fwfile, units=units, body=body._name
+            )
         elif bwfile != [""]:
-            body._params = get_params(outputorder, bwfile, body=body._name)
+            body._params = get_params(
+                outputorder, bwfile, units=units, body=body._name
+            )
 
         # Climate file
         if body.climfile != "":
@@ -269,7 +284,7 @@ def get_arrays(log):
             try:
                 gridorder = getattr(log.initial, body._name).GridOutputOrder
                 body._gridparams = get_params(
-                    gridorder, climfile, body=body._name
+                    gridorder, climfile, units=units, body=body._name
                 )
             except:
                 logger.error(
@@ -285,7 +300,7 @@ def get_arrays(log):
     return output
 
 
-def get_output(path=".", sysname=None):
+def get_output(path=".", sysname=None, units=True):
     """Parse all of the output from a :py:obj:`vplanet` run.
     
     Args:
@@ -294,6 +309,8 @@ def get_output(path=".", sysname=None):
             to None.
         path (str, optional): Path to the directory containing the results of 
             the :py:obj:`vplanet` run. Defaults to the current directory.
+        units (bool, optional): Whether or not the quantities returned by this 
+            method have astropy units. Default is True.
     
     Returns:
         A :py:class:`Output` instance containing all the information from the
@@ -301,7 +318,7 @@ def get_output(path=".", sysname=None):
     """
     # Get the log file and the arrays
     log = get_log(sysname=sysname, path=path)
-    output = get_arrays(log)
+    output = get_arrays(log, units=units)
 
     for body in output.bodies:
 
@@ -318,7 +335,7 @@ def get_output(path=".", sysname=None):
             # Get the time array
             iTime = np.argmax(
                 [
-                    array._name == "Time"
+                    array.tags["name"] == "Time"
                     for array in getattr(output, body._name)._gridparams
                 ]
             )
@@ -335,8 +352,10 @@ def get_output(path=".", sysname=None):
                 )
 
             for array in getattr(output, body._name)._gridparams:
-                if array._name != "Time":
+                if array.tags["name"] != "Time":
                     # We don't want to overwrite the time array!
-                    setattr(getattr(output, body._name), array._name, array)
+                    setattr(
+                        getattr(output, body._name), array.tags["name"], array
+                    )
 
     return output

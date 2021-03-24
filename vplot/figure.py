@@ -110,8 +110,11 @@ class VPLOTFigure(Figure):
 
         for ax in self.axes:
 
-            if hasattr(ax.scatter, "__vplot__"):
+            # Mark it so we don't do it repeatedly
+            if hasattr(ax, "__vplot__"):
                 continue
+            else:
+                ax.__vplot__ = True
 
             old_scatter = ax.scatter
 
@@ -128,6 +131,9 @@ class VPLOTFigure(Figure):
                 return collection
 
             ax.scatter = new_scatter
+
+        # TODO: Override ax.imshow as well so we can
+        # automatically add units to colorbars.
 
     def _add_labels(self):
 
