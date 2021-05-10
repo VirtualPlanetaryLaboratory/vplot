@@ -77,6 +77,7 @@ class VPLOTFigure(Figure):
         mpl_units=True,
         xlog=False,
         ylog=False,
+        auto_legend=True,
         **kwargs
     ):
 
@@ -84,6 +85,7 @@ class VPLOTFigure(Figure):
         self.max_label_length = max_label_length
         self.xlog = xlog
         self.ylog = ylog
+        self.auto_legend = auto_legend
 
         # Enable astropy/matplotlib quantity support? (Recommended)
         if mpl_units:
@@ -301,7 +303,7 @@ class VPLOTFigure(Figure):
                 ax.set_ylabel(ylabel)
 
             # Add the legend
-            if not legend_exists:
+            if self.auto_legend and not legend_exists:
 
                 make_legend = False
 
