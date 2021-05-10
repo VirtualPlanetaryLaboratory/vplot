@@ -222,7 +222,7 @@ def GetParamDescriptions():
 
     # Call vplanet help (it better be in the path!)
     try:
-        help = subprocess.check_output(["vplanet", "-h"], cwd=os.path.expanduser("~"))
+        help = subprocess.check_output(["vplanet", "-h"], cwd=os.path.expanduser("~")).decode("utf-8")
     except OSError:
         raise Exception("Unable to call VPLANET. Is it in your PATH?")
 

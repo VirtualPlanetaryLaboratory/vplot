@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import division, print_function, absolute_import, \
-     unicode_literals
+from __future__ import division, print_function, absolute_import, unicode_literals
 
-__version__ = "0.3.3"
+__version__ = "0.3.5"
 __author__ = "Rodrigo Luger (rodluger@uw.edu)"
 __copyright__ = "Copyright 2018 Rodrigo Luger"
 
@@ -19,9 +18,10 @@ if not __VPLOT_SETUP__:
     # Set up the matplotlib stylesheet
     import os
     import matplotlib.pyplot as pl
-    pl.style.use(os.path.join(os.path.dirname(
-                 os.path.abspath(__file__)),
-        'vplot.mplstyle'))
+
+    pl.style.use(
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "vplot.mplstyle")
+    )
 
     # Import main stuff
     from . import plot, quickplot, utils, log
