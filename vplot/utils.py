@@ -222,10 +222,7 @@ def GetParamDescriptions():
 
     # Call vplanet help (it better be in the path!)
     try:
-        if sys.version_info >= (3, 0):
-            help = subprocess.getoutput("vplanet -h")
-        else:
-            help = subprocess.check_output(["vplanet", "-h"])
+        help = subprocess.check_output(["vplanet", "-h"], cwd=os.path.expanduser("~"))
     except OSError:
         raise Exception("Unable to call VPLANET. Is it in your PATH?")
 
