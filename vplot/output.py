@@ -4,7 +4,6 @@ from . import custom_units
 from .log import get_log
 from .quantity import VPLOTQuantity as Quantity
 from .quantity import NumpyQuantity
-import vplanet
 import logging
 import numpy as np
 import re
@@ -13,6 +12,20 @@ import subprocess
 import warnings
 import astropy.units as u
 import json
+
+
+# Delayed error if `vplanet` is missing
+try:
+    import vplanet
+except ModuleNotFoundError:
+
+    class VPLANET:
+        def help(self):
+            raise ModuleNotFoundError(
+                "Please install `vplanet` to use `vplot`."
+            )
+
+    vplanet = VPLANET()
 
 
 class Output(object):

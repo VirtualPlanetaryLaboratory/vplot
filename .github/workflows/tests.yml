@@ -26,7 +26,7 @@ jobs:
         with:
           repository: VirtualPlanetaryLaboratory/vplanet-private
           token: ${{ secrets.ACCESS_TOKEN }}
-          ref: pip
+          ref: 28a12d832054e1580f386d080bd78531583a22ea
           path: vplanet
 
       - name: Install vplanet

@@ -19,12 +19,7 @@ setup(
         "write_to": os.path.join("vplot", "vplot_version.py"),
         "write_to_template": '__version__ = "{version}"\n',
     },
-    install_requires=[
-        "numpy>=1.19.4",
-        "matplotlib>=3.4.2",
-        "astropy>=4.2.1",
-        # "vplanet",  # TODO! Add this in production
-    ],
+    install_requires=["numpy>=1.19.4", "matplotlib>=3.4.2", "astropy>=4.2.1"],
     entry_points={
         "console_scripts": ["vplot=vplot.command_line:_entry_point"]
     },
