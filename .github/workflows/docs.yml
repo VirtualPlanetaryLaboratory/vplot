@@ -60,7 +60,7 @@ jobs:
       - name: Run notebooks
         shell: bash -l {0}
         run: |
-          python run_notebooks.py
+          python .github/workflows/run_notebooks.py
 
       - name: Build the docs
         shell: bash -l {0}
