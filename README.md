@@ -3,17 +3,13 @@
   <br/>
   <b>vplot |</b> plotting utilities for <a href="https://github.com/VirtualPlanetaryLaboratory/vplanet">vplanet</a>
   <p align="center">
-    <!-- build code -->
-    <a href="https://dev.azure.com/rodluger/vplot/_build">
-      <img src="https://img.shields.io/azure-devops/build/rodluger/vplot/9/dev"/>
-    </a>
     <!-- main tests -->
-    <a href="https://dev.azure.com/rodluger/vplot/_build">
-      <img src="https://img.shields.io/azure-devops/tests/rodluger/vplot/9/dev"/>
+    <a href="https://github.com/VirtualPlanetaryLaboratory/vplot/actions/workflows/tests.yml">
+      <img src="https://github.com/VirtualPlanetaryLaboratory/vplot/actions/workflows/tests.yml/badge.svg"/>
     </a>
-    <!-- main coveragee -->
-    <a href="https://virtualplanetarylaboratory.github.io/vplot/coverage/">
-      <img src="https://virtualplanetarylaboratory.github.io/vplot/coverage/coverage.svg"/>
+    <!-- build docs -->
+    <a href="https://github.com/VirtualPlanetaryLaboratory/vplot/actions/workflows/docs.yml">
+      <img src="https://github.com/VirtualPlanetaryLaboratory/vplot/actions/workflows/docs.yml/badge.svg"/>
     </a>
     <!-- read the docs -->
     <a href="https://virtualplanetarylaboratory.github.io/vplot/">

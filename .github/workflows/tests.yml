@@ -17,16 +17,32 @@ jobs:
           activate-environment: vplot
           environment-file: environment.yml
 
-      - name: Install
-        id: install
+      - uses: actions/checkout@v2
+        with:
+          repository: VirtualPlanetaryLaboratory/vplanet-private
+          token: ${{ secrets.ACCESS_TOKEN }}
+          ref: pip
+          path: vplanet
+
+      - name: Install vplanet
+        id: install_vplanet
         if: steps.setup_python.outcome == 'success'
+        working-directory: vplanet
+        shell: bash -l {0}
+        run: |
+          python -m pip install .
+          python -m pip uninstall -y vplot
+
+      - name: Install vplot
+        id: install_vplot
+        if: steps.install_vplanet.outcome == 'success'
         shell: bash -l {0}
         run: |
           python -m pip install -U pip
-          python -m pip install -e .
+          python -m pip install .
 
       - name: Run tests
-        if: steps.install.outcome == 'success'
+        if: steps.install_vplot.outcome == 'success'
         shell: bash -l {0}
         run: python -m pytest -v tests --junitxml=junit/test-results.xml
 

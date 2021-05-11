@@ -16,4 +16,3 @@ dependencies:
     - pytest-env>=0.6.2
     - pytest-cov>=2.11.1
     - sphinx>=4.0.1
-    - git+https://github.com/VirtualPlanetaryLaboratory/vplanet-private.git@pip # TODO! Remove this in production
