@@ -8,16 +8,21 @@ jobs:
     name: "Run tests"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Clone vplot repo
+        uses: actions/checkout@v2
 
       - name: Set up Python
-        id: setup_python
         uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: vplot
           environment-file: environment.yml
 
-      - uses: actions/checkout@v2
+      # TODO: Remove these steps in production, as 
+      # vplanet will be a dependency of vplot.
+      # -------------------------------------------------------------
+
+      - name: Clone vplanet repo
+        uses: actions/checkout@v2
         with:
           repository: VirtualPlanetaryLaboratory/vplanet-private
           token: ${{ secrets.ACCESS_TOKEN }}
@@ -25,34 +30,33 @@ jobs:
           path: vplanet
 
       - name: Install vplanet
-        id: install_vplanet
-        if: steps.setup_python.outcome == 'success'
         working-directory: vplanet
         shell: bash -l {0}
         run: |
           python -m pip install .
           python -m pip uninstall -y vplot
 
+      # ------------------------------------------------------------
+
+      - name: Run vplanet
+        shell: bash -l {0}
+        run: |
+          for f in docs/notebooks/examples/*/vpl.in 
+          do 
+              pushd ${f%/*}
+                  vplanet vpl.in
+              popd
+          done
+
       - name: Install vplot
-        id: install_vplot
-        if: steps.install_vplanet.outcome == 'success'
         shell: bash -l {0}
         run: |
           python -m pip install -U pip
-          python -m pip install .
+          python -m pip install -e .
 
       - name: Run tests
-        if: steps.install_vplot.outcome == 'success'
         shell: bash -l {0}
         run: python -m pytest -v tests --junitxml=junit/test-results.xml
-
-      - name: Get unique id
-        id: unique-id
-        env:
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-        run: |
-          export JOB_ID=`echo $STRATEGY_CONTEXT | md5sum`
-          echo "::set-output name=id::$JOB_ID"
 
       - name: Publish unit test results
         uses: EnricoMi/publish-unit-test-result-action@v1

@@ -11,25 +11,37 @@ jobs:
     name: "Build docs"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Clone vplot repo
+        uses: actions/checkout@v2
 
       - name: Set up Python
-        id: setup_python
         uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: vplot
           environment-file: environment.yml
 
-      - name: Install
-        id: install
-        if: steps.setup_python.outcome == 'success'
+      # TODO: Remove these steps in production, as 
+      # vplanet will be a dependency of vplot.
+      # -------------------------------------------------------------
+
+      - name: Clone vplanet repo
+        uses: actions/checkout@v2
+        with:
+          repository: VirtualPlanetaryLaboratory/vplanet-private
+          token: ${{ secrets.ACCESS_TOKEN }}
+          ref: pip
+          path: vplanet
+
+      - name: Install vplanet
+        working-directory: vplanet
         shell: bash -l {0}
         run: |
-          python -m pip install -U pip
-          python -m pip install -e .
-      
-      - name: Run VPLANET
-        id: run_vplanet
+          python -m pip install .
+          python -m pip uninstall -y vplot
+
+      # ------------------------------------------------------------
+
+      - name: Run vplanet
         shell: bash -l {0}
         run: |
           for f in docs/notebooks/examples/*/vpl.in 
@@ -39,22 +51,25 @@ jobs:
               popd
           done
 
+      - name: Install vplot
+        shell: bash -l {0}
+        run: |
+          python -m pip install -U pip
+          python -m pip install -e .
+
       - name: Run notebooks
-        id: run_notebooks
         shell: bash -l {0}
         run: |
           python run_notebooks.py
 
-      - name: Build
-        id: build
-        if: steps.install.outcome == 'success'
+      - name: Build the docs
         shell: bash -l {0}
         run: |
           cd docs
           make html
           touch .build/html/.nojekyll
 
-      - name: Publish
+      - name: Publish the docs
         uses: JamesIves/github-pages-deploy-action@4.1.2
         # NOTE: Triggered only when the PR is *merged* (event_name == 'push')
         if: steps.build.outcome == 'success' && github.event_name == 'push'
