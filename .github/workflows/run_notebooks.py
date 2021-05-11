@@ -43,7 +43,7 @@ def run(infile, outfile, timeout=1200):
 
 
 if __name__ == "__main__":
-    # Run the notebookss
+    # Run the notebooks
     files = glob.glob(
         os.path.join(ROOT, "docs", "notebooks", "*_template.ipynb")
     )
