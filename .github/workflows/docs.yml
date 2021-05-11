@@ -63,6 +63,7 @@ jobs:
           python .github/workflows/run_notebooks.py
 
       - name: Build the docs
+        id: build
         shell: bash -l {0}
         run: |
           cd docs
