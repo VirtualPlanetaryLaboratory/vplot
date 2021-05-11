@@ -37,7 +37,7 @@ from .quantity import VPLOTQuantity as Quantity
 GetOutput = get_output
 
 
-class colors(object):
+class colors:
     red = "#c91111"
     orange = "#e09401"
     pale_blue = "#13aed5"

@@ -5,7 +5,9 @@ import nbformat
 from nbconvert.preprocessors import ExecutePreprocessor
 
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+)
 
 
 def run(infile, outfile, timeout=1200):
