@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from . import _path
 from . import logger
 from . import custom_units
 from .log import get_log
 from .quantity import VPLOTQuantity as Quantity
 from .quantity import NumpyQuantity
+import vplanet
 import logging
 import numpy as np
 import re
@@ -72,44 +72,23 @@ def get_param_descriptions():
     """
 
     """
-    try:
 
-        # Check if vplanet is callable
-        subprocess.check_output(["vplanet", "-h"])
+    # Get the help message
+    help = str(vplanet.help())
 
-        # Get the help message, which contains all the parameters
-        help = subprocess.getoutput("vplanet -h")
-
-        # Remove bold tags
-        help = help.replace("\x1b[1m", "")
-        help = help.replace("\x1b[0m", "")
-
-        # Get only the output params
-        stroutput = help.split(
-            "These options follow the argument saOutputOrder."
-        )[1]
-        stroutput = [x for x in stroutput.split("\n") if len(x)]
-        description = {}
-        for out in stroutput:
-            if out.startswith("[-]"):
-                n, d, _ = re.search(
-                    r"\[-\](.*) -- (.*). \[(.*)\]", out
-                ).groups()
-                description.update({n: d})
-            else:
-                n, d = re.search("(.*) -- (.*).", out).groups()
-                description.update({n: d})
-
-        # Cache it
-        with open(os.path.join(_path, "params.json"), "w") as f:
-            json.dump(description, f, indent=4, sort_keys=True)
-
-    except (FileNotFoundError, OSError):
-
-        # Use the cached version
-        logging.warning("Unable to call VPLANET. Is it in your PATH?")
-        with open(os.path.join(_path, "params.json"), "r") as f:
-            description = json.load(f)
+    # Get only the output params
+    stroutput = help.split("These options follow the argument saOutputOrder.")[
+        1
+    ]
+    stroutput = [x for x in stroutput.split("\n") if len(x)]
+    description = {}
+    for out in stroutput:
+        if out.startswith("[-]"):
+            n, d, _ = re.search(r"\[-\](.*) -- (.*). \[(.*)\]", out).groups()
+            description.update({n: d})
+        else:
+            n, d = re.search("(.*) -- (.*).", out).groups()
+            description.update({n: d})
 
     # Format the entries a bit
     for key, value in description.items():

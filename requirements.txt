@@ -1,3 +1,0 @@
-numpy>=1.13.0
-astropy>=3.1
-matplotlib>=3.1.1

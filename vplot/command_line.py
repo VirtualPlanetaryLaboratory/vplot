@@ -1,8 +1,8 @@
-#!/usr/bin/env python
-import vplot as vpl
+from . import auto_plot
 import argparse
 
-if __name__ == "__main__":
+
+def _entry_point():
     parser = argparse.ArgumentParser(prog="vplot", add_help=True)
     parser.add_argument(
         "-g",
@@ -33,6 +33,5 @@ if __name__ == "__main__":
         default=None,
         help="Figure size in inches",
     )
-
     args = parser.parse_args()
-    vpl.auto_plot(**args.__dict__)
+    auto_plot(**args.__dict__)

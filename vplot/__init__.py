@@ -4,9 +4,6 @@ __copyright__ = "Copyright 2018, 2019 Rodrigo Luger"
 
 # Import the version
 from .vplot_version import __version__
-import os
-
-_path = os.path.dirname(os.path.abspath(__file__))
 
 
 # Set up the logger
@@ -36,18 +33,6 @@ from .auto_plot import auto_plot
 from .quantity import VPLOTQuantity as Quantity
 
 
-# User-facing stuff
-__all__ = [
-    "get_output",
-    "auto_plot",
-    "Log",
-    "LogBody",
-    "LogStage",
-    "Output",
-    "Body",
-    "VPLOTFigure",
-]
-
 # Backwards-compatibility hacks
 GetOutput = get_output
 
@@ -60,4 +45,16 @@ class colors(object):
     purple = "#642197"
 
 
-__all__ += ["colors", "GetOutput"]
+# User-facing stuff
+__all__ = [
+    "get_output",
+    "auto_plot",
+    "Log",
+    "LogBody",
+    "LogStage",
+    "Output",
+    "Body",
+    "VPLOTFigure",
+    "colors",
+    "GetOutput",
+]

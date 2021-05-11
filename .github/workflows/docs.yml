@@ -1,0 +1,63 @@
+name: docs
+
+on:
+  push:
+    branches: [master, dev] # TODO: Remove `dev  in production
+  pull_request:
+    branches: [master]
+
+jobs:
+  tests:
+    name: "Build docs"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        id: setup_python
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: vplot
+          environment-file: environment.yml
+
+      - name: Install
+        id: install
+        if: steps.setup_python.outcome == 'success'
+        shell: bash -l {0}
+        run: |
+          python -m pip install -U pip
+          python -m pip install -e .
+      
+      - name: Run VPLANET
+        id: run_vplanet
+        shell: bash -l {0}
+        run: |
+          for f in docs/notebooks/examples/*/vpl.in 
+          do 
+              pushd ${f%/*}
+                  vplanet vpl.in
+              popd
+          done
+
+      - name: Run notebooks
+        id: run_notebooks
+        shell: bash -l {0}
+        run: |
+          python run_notebooks.py
+
+      - name: Build
+        id: build
+        if: steps.install.outcome == 'success'
+        shell: bash -l {0}
+        run: |
+          cd docs
+          make html
+          touch .build/html/.nojekyll
+
+      - name: Publish
+        uses: JamesIves/github-pages-deploy-action@4.1.2
+        # NOTE: Triggered only when the PR is *merged* (event_name == 'push')
+        if: steps.build.outcome == 'success' && github.event_name == 'push'
+        with:
+          branch: gh-pages
+          folder: docs/.build/html
