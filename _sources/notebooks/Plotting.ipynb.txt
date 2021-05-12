@@ -12,10 +12,10 @@
    "execution_count": 1,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2021-05-11T20:31:50.791447Z",
-     "iopub.status.busy": "2021-05-11T20:31:50.790885Z",
-     "iopub.status.idle": "2021-05-11T20:31:52.804582Z",
-     "shell.execute_reply": "2021-05-11T20:31:52.803772Z"
+     "iopub.execute_input": "2021-05-12T12:47:19.291863Z",
+     "iopub.status.busy": "2021-05-12T12:47:19.291266Z",
+     "iopub.status.idle": "2021-05-12T12:47:23.461069Z",
+     "shell.execute_reply": "2021-05-12T12:47:23.460491Z"
     },
     "tags": [
      "hide_input"
@@ -23,7 +23,6 @@
    },
    "outputs": [],
    "source": [
-    "#hide_input\n",
     "%matplotlib inline\n",
     "\n",
     "from IPython.display import set_matplotlib_formats\n",
@@ -43,10 +42,10 @@
    "execution_count": 2,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2021-05-11T20:31:52.808256Z",
-     "iopub.status.busy": "2021-05-11T20:31:52.807849Z",
-     "iopub.status.idle": "2021-05-11T20:31:52.813769Z",
-     "shell.execute_reply": "2021-05-11T20:31:52.813040Z"
+     "iopub.execute_input": "2021-05-12T12:47:23.466044Z",
+     "iopub.status.busy": "2021-05-12T12:47:23.465507Z",
+     "iopub.status.idle": "2021-05-12T12:47:23.471733Z",
+     "shell.execute_reply": "2021-05-12T12:47:23.471150Z"
     },
     "tags": [
      "hide_input"
@@ -54,7 +53,6 @@
    },
    "outputs": [],
    "source": [
-    "#hide_input\n",
     "# Tar up the example folder\n",
     "import glob\n",
     "import tarfile\n",
@@ -79,10 +77,10 @@
    "execution_count": 3,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2021-05-11T20:31:52.816428Z",
-     "iopub.status.busy": "2021-05-11T20:31:52.816053Z",
-     "iopub.status.idle": "2021-05-11T20:31:53.154472Z",
-     "shell.execute_reply": "2021-05-11T20:31:53.154841Z"
+     "iopub.execute_input": "2021-05-12T12:47:23.476653Z",
+     "iopub.status.busy": "2021-05-12T12:47:23.476111Z",
+     "iopub.status.idle": "2021-05-12T12:47:23.941871Z",
+     "shell.execute_reply": "2021-05-12T12:47:23.941371Z"
     }
    },
    "outputs": [],
@@ -106,10 +104,10 @@
    "execution_count": 4,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2021-05-11T20:31:53.158735Z",
-     "iopub.status.busy": "2021-05-11T20:31:53.158337Z",
-     "iopub.status.idle": "2021-05-11T20:31:53.161594Z",
-     "shell.execute_reply": "2021-05-11T20:31:53.160869Z"
+     "iopub.execute_input": "2021-05-12T12:47:23.946568Z",
+     "iopub.status.busy": "2021-05-12T12:47:23.946042Z",
+     "iopub.status.idle": "2021-05-12T12:47:23.952280Z",
+     "shell.execute_reply": "2021-05-12T12:47:23.951488Z"
     }
    },
    "outputs": [],
@@ -133,10 +131,10 @@
    "execution_count": 5,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2021-05-11T20:31:53.165990Z",
-     "iopub.status.busy": "2021-05-11T20:31:53.165613Z",
-     "iopub.status.idle": "2021-05-11T20:31:53.167952Z",
-     "shell.execute_reply": "2021-05-11T20:31:53.168268Z"
+     "iopub.execute_input": "2021-05-12T12:47:23.960125Z",
+     "iopub.status.busy": "2021-05-12T12:47:23.959609Z",
+     "iopub.status.idle": "2021-05-12T12:47:23.966943Z",
+     "shell.execute_reply": "2021-05-12T12:47:23.962863Z"
     }
    },
    "outputs": [],
@@ -149,17 +147,17 @@
    "execution_count": 6,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2021-05-11T20:31:53.171871Z",
-     "iopub.status.busy": "2021-05-11T20:31:53.170865Z",
-     "iopub.status.idle": "2021-05-11T20:31:53.542044Z",
-     "shell.execute_reply": "2021-05-11T20:31:53.542380Z"
+     "iopub.execute_input": "2021-05-12T12:47:23.971240Z",
+     "iopub.status.busy": "2021-05-12T12:47:23.970463Z",
+     "iopub.status.idle": "2021-05-12T12:47:24.506755Z",
+     "shell.execute_reply": "2021-05-12T12:47:24.506159Z"
     }
    },
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "[<matplotlib.lines.Line2D at 0x7f1140791908>]"
+       "[<matplotlib.lines.Line2D at 0x7f9113399a58>]"
       ]
      },
      "execution_count": 1,

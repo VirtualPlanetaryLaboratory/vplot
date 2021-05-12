@@ -445,36 +445,9 @@ div.rendered_html tbody tr:hover {
 </style>
 <section id="The-get_output-function">
 <h1>The <code class="docutils literal notranslate"><span class="pre">get_output</span></code> function<a class="headerlink" href="#The-get_output-function" title="Permalink to this headline">¶</a></h1>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1">#hide_input</span>
-<span class="o">%</span><span class="k">matplotlib</span> inline
-</pre></div>
-</div>
-</div>
 <section id="Overview">
 <h2>Overview<a class="headerlink" href="#Overview" title="Permalink to this headline">¶</a></h2>
 <p>The <a class="reference internal" href="../api.html#module-vplot" title="vplot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vplot</span></code></a> package makes it easy to interact with <code class="xref py py-obj docutils literal notranslate"><span class="pre">vplanet</span></code> simulation results. The main function for doing this is <a class="reference internal" href="../api.html#vplot.get_output" title="vplot.get_output"><code class="xref py py-class docutils literal notranslate"><span class="pre">vplot.get_output</span></code></a>.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1">#hide_input</span>
-<span class="c1"># Tar up the example folder</span>
-<span class="kn">import</span> <span class="nn">glob</span>
-<span class="kn">import</span> <span class="nn">tarfile</span>
-<span class="kn">import</span> <span class="nn">os</span>
-
-<span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;examples/CircumbinaryOrbit.tar.gz&quot;</span><span class="p">,</span> <span class="s2">&quot;w:gz&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tar</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;examples/CircumbinaryOrbit/*.in&quot;</span><span class="p">):</span>
-        <span class="n">tar</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">arcname</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">file</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
 <p>Let’s run <a class="reference internal" href="../api.html#vplot.get_output" title="vplot.get_output"><code class="xref py py-class docutils literal notranslate"><span class="pre">vplot.get_output</span></code></a> on the <a class="reference download internal" download="" href="../_downloads/13d405f24f4c6dfaa7ac4f1f6dc4452b/CircumbinaryOrbit.tar.gz"><code class="xref download docutils literal notranslate"><span class="pre">CircumbinaryOrbit</span></code></a> example.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
@@ -892,7 +865,7 @@ $[0.310855,~0.311045,~0.311036,~\dots,~0.310957,~0.310998,~0.311019] \; \mathrm{
       
       &copy; Copyright 2019, Rodrigo Luger.
       <span class="lastupdated">
-        Last updated on 2021 May 11 at 20:32:16 UTC.
+        Last updated on 2021 May 12 at 12:47:55 UTC.
       </span>
 
     </p>
