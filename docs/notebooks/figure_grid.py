@@ -37,9 +37,7 @@ class FigureGrid(object):
         )
         # Give the figure some padding
         fig.subplots_adjust(left=0.2, right=0.9, bottom=0.2, top=0.9)
-        fig.canvas.print_png(
-            Bio, dpi=500
-        )  # make a png of the plot in the buffer
+        fig.canvas.print_png(Bio)  # make a png of the plot in the buffer
         # Undo the changes
         fig.subplots_adjust(**kwargs)
         # encode the bytes as string using base 64

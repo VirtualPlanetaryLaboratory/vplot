@@ -13,9 +13,25 @@
 import os
 import sys
 import shutil
+import nbsphinx
 
+
+# -- Hacks -------------------------------------------------------------------
+
+# PATH stuff
 sys.path.insert(0, os.path.abspath("."))
 sys.path.insert(0, os.path.abspath(".."))
+
+
+# Hack `nbsphinx` to enable us to hide certain input cells in the
+# jupyter notebooks. This works with nbsphinx==0.5.0
+nbsphinx.RST_TEMPLATE = nbsphinx.RST_TEMPLATE.replace(
+    "{% block input -%}",
+    '{% block input -%}\n{%- if not "hide_input" in cell.metadata.tags %}',
+)
+nbsphinx.RST_TEMPLATE = nbsphinx.RST_TEMPLATE.replace(
+    "{% endblock input %}", "{% endif %}\n{% endblock input %}"
+)
 
 
 # -- Project information -----------------------------------------------------
