@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &mdash; vplot 0.4.0 documentation</title>
+  <title>Installation &mdash; vplot 1.0.1.dev24+ge079a2a documentation</title>
   
 
   
@@ -184,21 +184,15 @@
 </style>
 <section id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>To install the development version of <a class="reference internal" href="api.html#module-vplot" title="vplot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vplot</span></code></a>, clone the
-<code class="xref py py-obj docutils literal notranslate"><span class="pre">dev</span></code> branch of the repository,</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone -b dev --single-branch https://github.com/VirtualPlanetaryLaboratory/vplot.git
+<p>From <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install vplot
 </pre></div>
 </div>
-<p>and run the setup script:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> vplot
-python setup.py develop
+<p>From source:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/VirtualPlanetaryLaboratory/vplot
+<span class="nb">cd</span> vplot
+python -m pip install .
 </pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Make sure you don’t have an old version of <a class="reference internal" href="api.html#module-vplot" title="vplot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vplot</span></code></a> installed.
-You might want to run <code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">uninstall</span> <span class="pre">vplot</span></code> before installing
-the <code class="xref py py-obj docutils literal notranslate"><span class="pre">dev</span></code> version.</p>
 </div>
 </section>
 
@@ -227,7 +221,7 @@ the <code class="xref py py-obj docutils literal notranslate"><span class="pre">
       
       &copy; Copyright 2019, Rodrigo Luger.
       <span class="lastupdated">
-        Last updated on 2021 May 13 at 19:13:43 UTC.
+        Last updated on 2021 May 13 at 19:28:33 UTC.
       </span>
 
     </p>

@@ -18,12 +18,3 @@ Documentation
    api
    Github <https://github.com/VirtualPlanetaryLaboratory/vplot>
    Submit an issue <https://github.com/VirtualPlanetaryLaboratory/vplot/issues>
-   Coverage report <coverage/index.html>
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
