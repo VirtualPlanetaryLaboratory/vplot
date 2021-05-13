@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>The get_output function &mdash; vplot 0.4.0 documentation</title>
+  <title>Running vplanet &mdash; vplot 0.4.0 documentation</title>
   
 
   
@@ -94,7 +94,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples and tutorials</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="CommandLine.html">The command line interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="AutoPlot.html">The <code class="docutils literal notranslate"><span class="pre">auto_plot</span></code> function</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">The <code class="docutils literal notranslate"><span class="pre">get_output</span></code> function</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Running <code class="docutils literal notranslate"><span class="pre">vplanet</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Overview">Overview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#The-log-file">The log file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#The-bodies">The bodies</a></li>
@@ -154,7 +154,7 @@
         
           <li><a href="../examples.html">Examples and tutorials</a> &raquo;</li>
         
-      <li>The <code class="docutils literal notranslate"><span class="pre">get_output</span></code> function</li>
+      <li>Running <code class="docutils literal notranslate"><span class="pre">vplanet</span></code></li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -443,28 +443,26 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<section id="The-get_output-function">
-<h1>The <code class="docutils literal notranslate"><span class="pre">get_output</span></code> function<a class="headerlink" href="#The-get_output-function" title="Permalink to this headline">¶</a></h1>
+<section id="Running-vplanet">
+<h1>Running <code class="docutils literal notranslate"><span class="pre">vplanet</span></code><a class="headerlink" href="#Running-vplanet" title="Permalink to this headline">¶</a></h1>
 <section id="Overview">
 <h2>Overview<a class="headerlink" href="#Overview" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference internal" href="../api.html#module-vplot" title="vplot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vplot</span></code></a> package makes it easy to interact with <code class="xref py py-obj docutils literal notranslate"><span class="pre">vplanet</span></code> simulation results. The main function for doing this is <a class="reference internal" href="../api.html#vplot.get_output" title="vplot.get_output"><code class="xref py py-class docutils literal notranslate"><span class="pre">vplot.get_output</span></code></a>.</p>
-<p>Let’s run <a class="reference internal" href="../api.html#vplot.get_output" title="vplot.get_output"><code class="xref py py-class docutils literal notranslate"><span class="pre">vplot.get_output</span></code></a> on the <a class="reference download internal" download="" href="../_downloads/13d405f24f4c6dfaa7ac4f1f6dc4452b/CircumbinaryOrbit.tar.gz"><code class="xref download docutils literal notranslate"><span class="pre">CircumbinaryOrbit</span></code></a> example.</p>
+<p>Let’s run <code class="xref py py-class docutils literal notranslate"><span class="pre">vplanet</span></code> on the <a class="reference download internal" download="" href="../_downloads/13d405f24f4c6dfaa7ac4f1f6dc4452b/CircumbinaryOrbit.tar.gz"><code class="xref download docutils literal notranslate"><span class="pre">CircumbinaryOrbit</span></code></a> example.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">vplot</span> <span class="k">as</span> <span class="nn">vpl</span>
+<span></span><span class="kn">import</span> <span class="nn">vplanet</span>
 </pre></div>
 </div>
 </div>
-<p>When we call <a class="reference internal" href="../api.html#vplot.get_output" title="vplot.get_output"><code class="xref py py-class docutils literal notranslate"><span class="pre">vplot.get_output</span></code></a>, we pass the directory to the <code class="xref py py-obj docutils literal notranslate"><span class="pre">vplanet</span></code> run:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">output</span> <span class="o">=</span> <span class="n">vpl</span><span class="o">.</span><span class="n">get_output</span><span class="p">(</span><span class="s2">&quot;examples/CircumbinaryOrbit&quot;</span><span class="p">)</span>
+<span></span><span class="n">output</span> <span class="o">=</span> <span class="n">vplanet</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;examples/CircumbinaryOrbit/vpl.in&quot;</span><span class="p">)</span>
 <span class="n">output</span>
 </pre></div>
 </div>
@@ -475,10 +473,10 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;VPLOT Output: kepler16&gt;
+&lt;vplanet.Output: kepler16&gt;
 </pre></div></div>
 </div>
-<p>The variable <code class="xref py py-obj docutils literal notranslate"><span class="pre">output</span></code> is an instance of <a class="reference internal" href="../api.html#vplot.Output" title="vplot.Output"><code class="xref py py-class docutils literal notranslate"><span class="pre">vplot.Output</span></code></a>. We can peek at its contents by accessing the <a class="reference internal" href="../api.html#vplot.Output.members" title="vplot.Output.members"><code class="xref py py-class docutils literal notranslate"><span class="pre">members</span></code></a> attribute:</p>
+<p>The variable <code class="xref py py-obj docutils literal notranslate"><span class="pre">output</span></code> is an instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">vplanet.Output</span></code>. We can peek at its contents by accessing the <code class="xref py py-class docutils literal notranslate"><span class="pre">members</span></code> attribute:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
@@ -497,7 +495,7 @@ div.rendered_html tbody tr:hover {
 [&#39;sysname&#39;, &#39;bodies&#39;, &#39;log&#39;, &#39;path&#39;, &#39;primary&#39;, &#39;secondary&#39;, &#39;cbp&#39;, &#39;earth&#39;]
 </pre></div></div>
 </div>
-<p>The properties <code class="xref py py-obj docutils literal notranslate"><span class="pre">sysname</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">bodies</span></code>, and <code class="xref py py-obj docutils literal notranslate"><span class="pre">path</span></code> are just strings, but <code class="xref py py-obj docutils literal notranslate"><span class="pre">log</span></code> is a <a class="reference internal" href="../api.html#vplot.Log" title="vplot.Log"><code class="xref py py-class docutils literal notranslate"><span class="pre">vplot.Log</span></code></a> instance and the remaining four are <a class="reference internal" href="../api.html#vplot.Body" title="vplot.Body"><code class="xref py py-class docutils literal notranslate"><span class="pre">vplot.Body</span></code></a> instances.</p>
+<p>The properties <code class="xref py py-obj docutils literal notranslate"><span class="pre">sysname</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">bodies</span></code>, and <code class="xref py py-obj docutils literal notranslate"><span class="pre">path</span></code> are just strings, but <code class="xref py py-obj docutils literal notranslate"><span class="pre">log</span></code> is a <code class="xref py py-class docutils literal notranslate"><span class="pre">vplanet.Log</span></code> instance and the remaining four are <code class="xref py py-class docutils literal notranslate"><span class="pre">vplanet.Body</span></code> instances.</p>
 </section>
 <section id="The-log-file">
 <h2>The log file<a class="headerlink" href="#The-log-file" title="Permalink to this headline">¶</a></h2>
@@ -518,10 +516,10 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;VPLOT Log File: kepler16&gt;
+&lt;vplanet.Log: kepler16&gt;
 </pre></div></div>
 </div>
-<p>Again, let’s look at the <a class="reference internal" href="../api.html#vplot.Log.members" title="vplot.Log.members"><code class="xref py py-class docutils literal notranslate"><span class="pre">members</span></code></a> attribute:</p>
+<p>Again, let’s look at the <code class="xref py py-class docutils literal notranslate"><span class="pre">members</span></code> attribute:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
@@ -540,7 +538,7 @@ div.rendered_html tbody tr:hover {
 [&#39;sysname&#39;, &#39;path&#39;, &#39;header&#39;, &#39;initial&#39;, &#39;final&#39;]
 </pre></div></div>
 </div>
-<p>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">header</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">initial</span></code>, and <code class="xref py py-obj docutils literal notranslate"><span class="pre">final</span></code> properties are instances of <a class="reference internal" href="../api.html#vplot.LogStage" title="vplot.LogStage"><code class="xref py py-class docutils literal notranslate"><span class="pre">vplot.LogStage</span></code></a>, containing information about specific stages of the simulation. Let’s check out everything in the header of the log file:</p>
+<p>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">header</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">initial</span></code>, and <code class="xref py py-obj docutils literal notranslate"><span class="pre">final</span></code> properties are instances of <code class="xref py py-class docutils literal notranslate"><span class="pre">vplanet.LogStage</span></code>, containing information about specific stages of the simulation. Let’s check out everything in the header of the log file:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
@@ -703,10 +701,10 @@ GridOutputOrder: None
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-vplot.quantity.VPLOTQuantity
+vplanet.quantity.VPLANETQuantity
 </pre></div></div>
 </div>
-<p>This isn’t a regular number, but an instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">vplot.VPLOTQuantity</span></code>, which is a subclasss of <code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.units.Quantity</span></code>. These objects have numerical values (either scalars or arrays) <em>and</em> units; plus, they automatically handle unit conversions when operated on.</p>
+<p>This isn’t a regular number, but an instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">vplanet.Quantity</span></code>, which is a subclasss of <code class="xref py py-class docutils literal notranslate"><span class="pre">astropy.units.Quantity</span></code>. These objects have numerical values (either scalars or arrays) <em>and</em> units; plus, they automatically handle unit conversions when operated on.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
@@ -767,7 +765,7 @@ vplot.quantity.VPLOTQuantity
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;VPLOT Body: earth&gt;
+&lt;vplanet.Body: earth&gt;
 </pre></div></div>
 </div>
 <p>This object contains the information of the arrays computed during the simulation, which are specified in the <code class="xref py py-obj docutils literal notranslate"><span class="pre">saOutputOrder</span></code> line of the input files.</p>
@@ -818,7 +816,7 @@ vplot.quantity.VPLOTQuantity
 <div class="math notranslate nohighlight">
 $[0.310855,~0.311045,~0.311036,~\dots,~0.310957,~0.310998,~0.311019] \; \mathrm{{}^{\circ}}$</div></div>
 </div>
-<p>As before, these are <code class="xref py py-class docutils literal notranslate"><span class="pre">vplot.VPLOTQuantity</span></code> instances, which behave like <code class="xref py py-class docutils literal notranslate"><span class="pre">numpy</span></code> arrays except they have units attached.</p>
+<p>As before, these are <code class="xref py py-class docutils literal notranslate"><span class="pre">vplanet.Quantity</span></code> instances, which behave like <code class="xref py py-class docutils literal notranslate"><span class="pre">numpy</span></code> arrays except they have units attached.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
@@ -865,7 +863,7 @@ $[0.310855,~0.311045,~0.311036,~\dots,~0.310957,~0.310998,~0.311019] \; \mathrm{
       
       &copy; Copyright 2019, Rodrigo Luger.
       <span class="lastupdated">
-        Last updated on 2021 May 12 at 12:47:55 UTC.
+        Last updated on 2021 May 13 at 19:13:43 UTC.
       </span>
 
     </p>
