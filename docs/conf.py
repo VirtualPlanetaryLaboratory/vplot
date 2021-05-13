@@ -14,7 +14,7 @@ import os
 import sys
 import shutil
 import nbsphinx
-
+import vplot
 
 # -- Hacks -------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ copyright = "2019, Rodrigo Luger"
 author = "Rodrigo Luger"
 
 # The full version, including alpha/beta/rc tags
-release = "0.4.0"
+release = vplot.__version__
 
 
 # -- General configuration ---------------------------------------------------
