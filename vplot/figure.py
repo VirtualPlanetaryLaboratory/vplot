@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from vplanet.quantity import VPLANETQuantity
+from vplanet import Quantity
 import matplotlib
 import matplotlib.pyplot
 from matplotlib.figure import Figure
@@ -122,7 +122,7 @@ class VPLOTFigure(Figure):
                 collection = old_scatter(x, y, *args, **kwargs)
 
                 def get_data():
-                    return VPLANETQuantity(x), VPLANETQuantity(y)
+                    return Quantity(x), Quantity(y)
 
                 get_data.__vplot__ = True
 

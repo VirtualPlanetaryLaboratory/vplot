@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Clone vplot repo
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: conda-incubator/setup-miniconda@v2
@@ -20,26 +22,14 @@ jobs:
           activate-environment: vplot
           environment-file: environment.yml
 
-      # TODO: Remove these steps in production, as 
-      # vplanet will be a dependency of vplot.
-      # -------------------------------------------------------------
-
-      - name: Clone vplanet repo
-        uses: actions/checkout@v2
-        with:
-          repository: VirtualPlanetaryLaboratory/vplanet-private
-          token: ${{ secrets.ACCESS_TOKEN }}
-          ref: 28a12d832054e1580f386d080bd78531583a22ea
-          path: vplanet
-
-      - name: Install vplanet
-        working-directory: vplanet
+      # TODO: Remove this step in production
+      - name: Install vplanet-private pre-release
         shell: bash -l {0}
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: |
-          python -m pip install .
+          python -m pip install git+https://$ACCESS_TOKEN@github.com/VirtualPlanetaryLaboratory/vplanet-private.git@28a12d832054e1580f386d080bd78531583a22ea#egg=vplanet
           python -m pip uninstall -y vplot
-
-      # ------------------------------------------------------------
 
       - name: Run vplanet
         shell: bash -l {0}
