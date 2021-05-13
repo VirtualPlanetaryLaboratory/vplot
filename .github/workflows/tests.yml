@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Clone vplot repo
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: conda-incubator/setup-miniconda@v2
@@ -28,6 +30,7 @@ jobs:
           token: ${{ secrets.ACCESS_TOKEN }}
           ref: 28a12d832054e1580f386d080bd78531583a22ea
           path: vplanet
+          fetch-depth: 0
 
       - name: Install vplanet
         working-directory: vplanet
