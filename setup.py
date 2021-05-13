@@ -24,7 +24,7 @@ setup(
         "numpy>=1.19.4",
         "matplotlib>=3.4.2",
         "astropy>=4.2.1",
-        "vplanet",  # TODO: pin to >= some minimum version
+        # "vplanet",  # TODO: pin to >= some minimum version
     ],
     entry_points={
         "console_scripts": ["vplot=vplot.command_line:_entry_point"]
