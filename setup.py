@@ -20,6 +20,7 @@ setup(
         "write_to_template": '__version__ = "{version}"\n',
     },
     install_requires=[
+        "setuptools_scm",
         "numpy>=1.19.4",
         "matplotlib>=3.4.2",
         "astropy>=4.2.1",
@@ -28,5 +29,6 @@ setup(
     entry_points={
         "console_scripts": ["vplot=vplot.command_line:_entry_point"]
     },
+    setup_requires=["setuptools_scm"],
     zip_safe=False,
 )
