@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-from .quantity import VPLOTQuantity
+from vplanet.quantity import VPLANETQuantity
 import matplotlib
 import matplotlib.pyplot
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 import astropy.units as u
-import sys
-import numpy as np
 
 
 def _get_array_info(array, max_label_length=40):
@@ -89,7 +87,7 @@ class VPLOTFigure(Figure):
 
         # Enable astropy/matplotlib quantity support? (Recommended)
         if mpl_units:
-            from .quantity_support import quantity_support
+            from vplanet.quantity_support import quantity_support
 
             quantity_support()
 
@@ -124,7 +122,7 @@ class VPLOTFigure(Figure):
                 collection = old_scatter(x, y, *args, **kwargs)
 
                 def get_data():
-                    return VPLOTQuantity(x), VPLOTQuantity(y)
+                    return VPLANETQuantity(x), VPLANETQuantity(y)
 
                 get_data.__vplot__ = True
 
@@ -353,6 +351,7 @@ class VPLOTFigure(Figure):
         if self._update_on_draw:
             self._add_labels()
             self._format_axes()
+            self.tight_layout()
             self._update_on_draw = False
         super().draw(*args, **kwargs)
 

@@ -1,0 +1,5 @@
+red = "#c91111"
+orange = "#e09401"
+pale_blue = "#13aed5"
+dark_blue = "#1321d8"
+purple = "#642197"

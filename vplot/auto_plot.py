@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from . import logger
-from .output import get_output
+from vplanet import get_output
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -86,11 +85,9 @@ def auto_plot(
                     params.append(param)
 
     if len(params) == 0:
-        logger.error("No parameters found for plotting.")
-        return
+        raise RuntimeError("No parameters found for plotting.")
     elif time is None:
-        logger.error("No Time array found for any of the bodies.")
-        return
+        raise RuntimeError("No `Time` array found for any of the bodies.")
 
     # One plot per physical type
     figs = []
