@@ -45,7 +45,7 @@ jobs:
           venv-wheel/bin/python -m pip install git+https://$ACCESS_TOKEN@github.com/VirtualPlanetaryLaboratory/vplanet-private.git@0b1125eff782a0750ab0701be9edeb2620dba409#egg=vplanet
           venv-wheel/bin/python -m pip uninstall -y vplot
           venv-wheel/bin/python -m pip install dist/vplot*.whl
-          venv-wheel/bin/python -c "import vplot; print(starry_process.__version__)"
+          venv-wheel/bin/python -c "import vplot; print(vplot.__version__)"
 
       - uses: actions/upload-artifact@v2
         with:
