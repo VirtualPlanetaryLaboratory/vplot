@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import vplot as vpl
+import vplot
 import matplotlib
 import os
 
@@ -19,6 +19,6 @@ path = os.path.join(
 
 
 def test_autplot():
-    figs = vpl.auto_plot(path, show=False)
+    figs = vplot.auto_plot(path, show=False)
 
     # TODO: run tests here

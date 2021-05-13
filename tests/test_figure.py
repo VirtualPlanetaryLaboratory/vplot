@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import vplot as vpl
+import vplanet
+import vplot
 import matplotlib
 import matplotlib.pyplot as plt
 import os
@@ -19,7 +20,7 @@ path = os.path.join(
     "examples",
     "CircumbinaryOrbit",
 )
-output = vpl.get_output(path=path)
+output = vplanet.run(os.path.join(path, "vpl.in"))
 
 
 class FigureTester(object):
