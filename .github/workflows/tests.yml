@@ -1,0 +1,66 @@
+name: tests
+
+on:
+  push:
+
+jobs:
+  tests:
+    name: "Run tests"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone vplot repo
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: vplot
+          environment-file: environment.yml
+
+      # TODO: Remove these steps in production, as 
+      # vplanet will be a dependency of vplot.
+      # -------------------------------------------------------------
+
+      - name: Clone vplanet repo
+        uses: actions/checkout@v2
+        with:
+          repository: VirtualPlanetaryLaboratory/vplanet-private
+          token: ${{ secrets.ACCESS_TOKEN }}
+          ref: 28a12d832054e1580f386d080bd78531583a22ea
+          path: vplanet
+
+      - name: Install vplanet
+        working-directory: vplanet
+        shell: bash -l {0}
+        run: |
+          python -m pip install .
+          python -m pip uninstall -y vplot
+
+      # ------------------------------------------------------------
+
+      - name: Run vplanet
+        shell: bash -l {0}
+        run: |
+          for f in docs/notebooks/examples/*/vpl.in 
+          do 
+              pushd ${f%/*}
+                  vplanet vpl.in
+              popd
+          done
+
+      - name: Install vplot
+        shell: bash -l {0}
+        run: |
+          python -m pip install -U pip
+          python -m pip install -e .
+
+      - name: Run tests
+        shell: bash -l {0}
+        run: python -m pytest -v tests --junitxml=junit/test-results.xml
+
+      - name: Publish unit test results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: junit/test-*.xml
+          comment_mode: update last
