@@ -21,9 +21,9 @@ setup(
     },
     install_requires=[
         "setuptools_scm",
-        "numpy>=1.19.4",
-        "matplotlib>=3.4.2",
-        "astropy>=4.2.1",
+        "numpy>=1.19.2",
+        "matplotlib>=3.3.4",
+        "astropy>=4.1",
         "vplanet>=2.0.0",
     ],
     entry_points={
