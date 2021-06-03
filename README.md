@@ -1,7 +1,7 @@
 <p align="center">
   <img width = "200" src="https://github.com/VirtualPlanetaryLaboratory/vplot/blob/dev/docs/vplot.svg"/>
   <br/>
-  <b>vplot |</b> plotting utilities for <a href="https://github.com/VirtualPlanetaryLaboratory/vplanet">vplanet</a>
+  <b>vplot |</b> plotting utilities for <a href="https://github.com/VirtualPlanetaryLaboratory/vplanet">VPLanet</a>
   <p align="center">
     <!-- main tests -->
     <a href="https://github.com/VirtualPlanetaryLaboratory/vplot/actions/workflows/tests.yml">
