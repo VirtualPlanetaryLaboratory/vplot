@@ -311,6 +311,7 @@ class VPLOTFigure(Figure):
                         or line.get_label() == ""
                         or line.get_label().startswith("_line")
                         or line.get_label().startswith("_collection")
+                        or line.get_label().startswith("_child")
                     ):
 
                         label = ""
