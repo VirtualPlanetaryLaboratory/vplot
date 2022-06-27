@@ -25,7 +25,7 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: |
-          python -m pip install --no-deps git+https://$ACCESS_TOKEN@github.com/VirtualPlanetaryLaboratory/vplanet-private.git@b1594c1c8b714803248762ab7a4ea5a034c25c39#egg=vplanet
+          python -m pip install --no-deps vplanet
 
       - name: Install vplot
         shell: bash -l {0}
