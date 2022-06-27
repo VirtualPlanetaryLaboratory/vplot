@@ -19,7 +19,6 @@ jobs:
           activate-environment: vplot
           environment-file: environment.yml
 
-      # TODO: Remove this step in production
       - name: Install vplanet-private pre-release
         shell: bash -l {0}
         env:
