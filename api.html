@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API &mdash; vplot 1.0.2.dev1+ga24dfaa documentation</title>
+  <title>API &mdash; vplot 1.0.3.dev7+gd2297c8 documentation</title>
   
 
   
@@ -157,31 +157,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="module-vplot">
+  <section id="module-vplot">
 <span id="api"></span><h1>API<a class="headerlink" href="#module-vplot" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="vplot.VPLOTFigure">
@@ -211,6 +187,49 @@ raised if the unit conversion fails.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="vplot.VPLOTFigure.set">
+<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">agg_filter=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">alpha=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">animated=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">canvas=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">clip_box=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">clip_on=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">clip_path=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">constrained_layout=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">constrained_layout_pads=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">dpi=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">edgecolor=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">facecolor=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">figheight=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">figwidth=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">frameon=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">gid=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">in_layout=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">label=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">layout_engine=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">linewidth=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">mouseover=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">path_effects=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">picker=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">rasterized=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">size_inches=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">sketch_params=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">snap=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">tight_layout=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">transform=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">url=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">visible=&lt;UNSET&gt;</span></em>, <em class="sig-param"><span class="pre">zorder=&lt;UNSET&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#vplot.VPLOTFigure.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set multiple properties at once.</p>
+<p>Supported properties are</p>
+<dl class="simple">
+<dt>Properties:</dt><dd><p>agg_filter: a filter function, which takes a (m, n, 3) float array and a dpi value, and returns a (m, n, 3) array and two offsets from the bottom left corner of the image
+alpha: scalar or None
+animated: bool
+canvas: FigureCanvas
+clip_box: <cite>.Bbox</cite>
+clip_on: bool
+clip_path: Patch or (Path, Transform) or None
+constrained_layout: unknown
+constrained_layout_pads: unknown
+dpi: float
+edgecolor: color
+facecolor: color
+figheight: float
+figure: <cite>.Figure</cite>
+figwidth: float
+frameon: bool
+gid: str
+in_layout: bool
+label: object
+layout_engine: unknown
+linewidth: number
+mouseover: bool
+path_effects: <cite>.AbstractPathEffect</cite>
+picker: None or bool or float or callable
+rasterized: bool
+size_inches: (float, float) or float
+sketch_params: (scale: float, length: float, randomness: float)
+snap: bool or None
+tight_layout: unknown
+transform: <cite>.Transform</cite>
+url: str
+visible: bool
+zorder: float</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
@@ -271,7 +290,7 @@ returns the figures instead.</p></li>
       
       &copy; Copyright 2019, Rodrigo Luger.
       <span class="lastupdated">
-        Last updated on 2021 May 15 at 13:23:57 UTC.
+        Last updated on 2023 Mar 14 at 23:50:48 UTC.
       </span>
 
     </p>
