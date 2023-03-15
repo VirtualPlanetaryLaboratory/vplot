@@ -16,7 +16,8 @@
   <img src="https://img.shields.io/badge/Unit%20Tests-11-darkblue.svg"/></a>
   <a href="https://github.com/VirtualPlanetaryLaboratory/vplot/actions/workflows/tests.yml">
     <img src="https://github.com/VirtualPlanetaryLaboratory/vplot/actions/workflows/tests.yml/badge.svg"/>
-  </a>   
+  </a>
+  <img src="https://img.shields.io/badge/Python-3.6%20--%203.12-7d93c7.svg">
 </p>
 <br>
 VPLot simplifies plotting [VPLanet](https://github.com/VirtualPlanetaryLaboratory/vplanet) data through a command line option that instantly generates plots of a single simulation, as well as a Python module to generate consistent and accessible figures for your publications.
