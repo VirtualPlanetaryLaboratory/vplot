@@ -12,10 +12,10 @@
    "execution_count": 1,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:20:40.197522Z",
-     "iopub.status.busy": "2023-08-23T23:20:40.197097Z",
-     "iopub.status.idle": "2023-08-23T23:20:40.589617Z",
-     "shell.execute_reply": "2023-08-23T23:20:40.588949Z"
+     "iopub.execute_input": "2023-08-23T23:22:26.515140Z",
+     "iopub.status.busy": "2023-08-23T23:22:26.514752Z",
+     "iopub.status.idle": "2023-08-23T23:22:26.911831Z",
+     "shell.execute_reply": "2023-08-23T23:22:26.911158Z"
     },
     "tags": [
      "hide_input"
@@ -38,10 +38,10 @@
    "execution_count": 2,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:20:40.593283Z",
-     "iopub.status.busy": "2023-08-23T23:20:40.593007Z",
-     "iopub.status.idle": "2023-08-23T23:20:40.599906Z",
-     "shell.execute_reply": "2023-08-23T23:20:40.599362Z"
+     "iopub.execute_input": "2023-08-23T23:22:26.915309Z",
+     "iopub.status.busy": "2023-08-23T23:22:26.915011Z",
+     "iopub.status.idle": "2023-08-23T23:22:26.922521Z",
+     "shell.execute_reply": "2023-08-23T23:22:26.921987Z"
     },
     "tags": [
      "hide_input"
@@ -73,10 +73,10 @@
    "execution_count": 3,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:20:40.602580Z",
-     "iopub.status.busy": "2023-08-23T23:20:40.602187Z",
-     "iopub.status.idle": "2023-08-23T23:20:40.786185Z",
-     "shell.execute_reply": "2023-08-23T23:20:40.785297Z"
+     "iopub.execute_input": "2023-08-23T23:22:26.925178Z",
+     "iopub.status.busy": "2023-08-23T23:22:26.924788Z",
+     "iopub.status.idle": "2023-08-23T23:22:27.111555Z",
+     "shell.execute_reply": "2023-08-23T23:22:27.110839Z"
     }
    },
    "outputs": [],
@@ -89,10 +89,10 @@
    "execution_count": 4,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:20:40.789386Z",
-     "iopub.status.busy": "2023-08-23T23:20:40.789156Z",
-     "iopub.status.idle": "2023-08-23T23:20:41.455347Z",
-     "shell.execute_reply": "2023-08-23T23:20:41.454531Z"
+     "iopub.execute_input": "2023-08-23T23:22:27.114886Z",
+     "iopub.status.busy": "2023-08-23T23:22:27.114651Z",
+     "iopub.status.idle": "2023-08-23T23:22:27.785910Z",
+     "shell.execute_reply": "2023-08-23T23:22:27.785203Z"
     }
    },
    "outputs": [
@@ -126,10 +126,10 @@
    "execution_count": 5,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:20:41.458683Z",
-     "iopub.status.busy": "2023-08-23T23:20:41.458285Z",
-     "iopub.status.idle": "2023-08-23T23:20:41.464068Z",
-     "shell.execute_reply": "2023-08-23T23:20:41.463451Z"
+     "iopub.execute_input": "2023-08-23T23:22:27.789824Z",
+     "iopub.status.busy": "2023-08-23T23:22:27.788543Z",
+     "iopub.status.idle": "2023-08-23T23:22:27.795280Z",
+     "shell.execute_reply": "2023-08-23T23:22:27.794666Z"
     }
    },
    "outputs": [
@@ -178,10 +178,10 @@
    "execution_count": 6,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:20:41.466832Z",
-     "iopub.status.busy": "2023-08-23T23:20:41.466501Z",
-     "iopub.status.idle": "2023-08-23T23:20:41.470488Z",
-     "shell.execute_reply": "2023-08-23T23:20:41.469885Z"
+     "iopub.execute_input": "2023-08-23T23:22:27.798099Z",
+     "iopub.status.busy": "2023-08-23T23:22:27.797786Z",
+     "iopub.status.idle": "2023-08-23T23:22:27.803246Z",
+     "shell.execute_reply": "2023-08-23T23:22:27.802721Z"
     }
    },
    "outputs": [
@@ -215,10 +215,10 @@
    "execution_count": 7,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:20:41.473830Z",
-     "iopub.status.busy": "2023-08-23T23:20:41.473339Z",
-     "iopub.status.idle": "2023-08-23T23:20:41.477324Z",
-     "shell.execute_reply": "2023-08-23T23:20:41.476726Z"
+     "iopub.execute_input": "2023-08-23T23:22:27.806213Z",
+     "iopub.status.busy": "2023-08-23T23:22:27.805781Z",
+     "iopub.status.idle": "2023-08-23T23:22:27.811442Z",
+     "shell.execute_reply": "2023-08-23T23:22:27.810734Z"
     }
    },
    "outputs": [
@@ -251,10 +251,10 @@
    "execution_count": 8,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:20:41.480649Z",
-     "iopub.status.busy": "2023-08-23T23:20:41.480168Z",
-     "iopub.status.idle": "2023-08-23T23:20:41.484133Z",
-     "shell.execute_reply": "2023-08-23T23:20:41.483520Z"
+     "iopub.execute_input": "2023-08-23T23:22:27.814455Z",
+     "iopub.status.busy": "2023-08-23T23:22:27.814020Z",
+     "iopub.status.idle": "2023-08-23T23:22:27.818945Z",
+     "shell.execute_reply": "2023-08-23T23:22:27.818416Z"
     }
    },
    "outputs": [
@@ -308,10 +308,10 @@
    "execution_count": 9,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:20:41.487458Z",
-     "iopub.status.busy": "2023-08-23T23:20:41.487137Z",
-     "iopub.status.idle": "2023-08-23T23:20:41.490993Z",
-     "shell.execute_reply": "2023-08-23T23:20:41.490401Z"
+     "iopub.execute_input": "2023-08-23T23:22:27.821643Z",
+     "iopub.status.busy": "2023-08-23T23:22:27.821344Z",
+     "iopub.status.idle": "2023-08-23T23:22:27.826756Z",
+     "shell.execute_reply": "2023-08-23T23:22:27.826220Z"
     }
    },
    "outputs": [
@@ -344,10 +344,10 @@
    "execution_count": 10,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:20:41.494133Z",
-     "iopub.status.busy": "2023-08-23T23:20:41.493810Z",
-     "iopub.status.idle": "2023-08-23T23:20:41.497756Z",
-     "shell.execute_reply": "2023-08-23T23:20:41.497153Z"
+     "iopub.execute_input": "2023-08-23T23:22:27.829465Z",
+     "iopub.status.busy": "2023-08-23T23:22:27.829156Z",
+     "iopub.status.idle": "2023-08-23T23:22:27.834585Z",
+     "shell.execute_reply": "2023-08-23T23:22:27.834074Z"
     }
    },
    "outputs": [
@@ -380,10 +380,10 @@
    "execution_count": 11,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:20:41.500905Z",
-     "iopub.status.busy": "2023-08-23T23:20:41.500586Z",
-     "iopub.status.idle": "2023-08-23T23:20:41.504675Z",
-     "shell.execute_reply": "2023-08-23T23:20:41.504205Z"
+     "iopub.execute_input": "2023-08-23T23:22:27.837260Z",
+     "iopub.status.busy": "2023-08-23T23:22:27.836956Z",
+     "iopub.status.idle": "2023-08-23T23:22:27.842408Z",
+     "shell.execute_reply": "2023-08-23T23:22:27.841868Z"
     }
    },
    "outputs": [
@@ -471,10 +471,10 @@
    "execution_count": 12,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:20:41.507440Z",
-     "iopub.status.busy": "2023-08-23T23:20:41.506947Z",
-     "iopub.status.idle": "2023-08-23T23:20:41.510795Z",
-     "shell.execute_reply": "2023-08-23T23:20:41.510335Z"
+     "iopub.execute_input": "2023-08-23T23:22:27.845303Z",
+     "iopub.status.busy": "2023-08-23T23:22:27.844816Z",
+     "iopub.status.idle": "2023-08-23T23:22:27.850244Z",
+     "shell.execute_reply": "2023-08-23T23:22:27.849721Z"
     }
    },
    "outputs": [
@@ -507,10 +507,10 @@
    "execution_count": 13,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:20:41.513540Z",
-     "iopub.status.busy": "2023-08-23T23:20:41.513220Z",
-     "iopub.status.idle": "2023-08-23T23:20:41.516788Z",
-     "shell.execute_reply": "2023-08-23T23:20:41.516312Z"
+     "iopub.execute_input": "2023-08-23T23:22:27.852668Z",
+     "iopub.status.busy": "2023-08-23T23:22:27.852463Z",
+     "iopub.status.idle": "2023-08-23T23:22:27.856848Z",
+     "shell.execute_reply": "2023-08-23T23:22:27.856270Z"
     }
    },
    "outputs": [
@@ -534,10 +534,10 @@
    "execution_count": 14,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:20:41.519516Z",
-     "iopub.status.busy": "2023-08-23T23:20:41.519028Z",
-     "iopub.status.idle": "2023-08-23T23:20:41.522674Z",
-     "shell.execute_reply": "2023-08-23T23:20:41.522184Z"
+     "iopub.execute_input": "2023-08-23T23:22:27.859189Z",
+     "iopub.status.busy": "2023-08-23T23:22:27.858857Z",
+     "iopub.status.idle": "2023-08-23T23:22:27.863331Z",
+     "shell.execute_reply": "2023-08-23T23:22:27.862740Z"
     }
    },
    "outputs": [
@@ -586,10 +586,10 @@
    "execution_count": 15,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:20:41.525436Z",
-     "iopub.status.busy": "2023-08-23T23:20:41.524923Z",
-     "iopub.status.idle": "2023-08-23T23:20:41.528808Z",
-     "shell.execute_reply": "2023-08-23T23:20:41.528207Z"
+     "iopub.execute_input": "2023-08-23T23:22:27.865924Z",
+     "iopub.status.busy": "2023-08-23T23:22:27.865610Z",
+     "iopub.status.idle": "2023-08-23T23:22:27.869393Z",
+     "shell.execute_reply": "2023-08-23T23:22:27.868808Z"
     }
    },
    "outputs": [
@@ -622,10 +622,10 @@
    "execution_count": 16,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:20:41.531985Z",
-     "iopub.status.busy": "2023-08-23T23:20:41.531665Z",
-     "iopub.status.idle": "2023-08-23T23:20:41.535693Z",
-     "shell.execute_reply": "2023-08-23T23:20:41.535099Z"
+     "iopub.execute_input": "2023-08-23T23:22:27.872450Z",
+     "iopub.status.busy": "2023-08-23T23:22:27.872135Z",
+     "iopub.status.idle": "2023-08-23T23:22:27.876067Z",
+     "shell.execute_reply": "2023-08-23T23:22:27.875469Z"
     }
    },
    "outputs": [
@@ -669,10 +669,10 @@
    "execution_count": 17,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:20:41.538889Z",
-     "iopub.status.busy": "2023-08-23T23:20:41.538561Z",
-     "iopub.status.idle": "2023-08-23T23:20:41.543832Z",
-     "shell.execute_reply": "2023-08-23T23:20:41.543233Z"
+     "iopub.execute_input": "2023-08-23T23:22:27.879124Z",
+     "iopub.status.busy": "2023-08-23T23:22:27.878807Z",
+     "iopub.status.idle": "2023-08-23T23:22:27.883722Z",
+     "shell.execute_reply": "2023-08-23T23:22:27.883150Z"
     }
    },
    "outputs": [
@@ -709,10 +709,10 @@
    "execution_count": 18,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:20:41.547161Z",
-     "iopub.status.busy": "2023-08-23T23:20:41.546695Z",
-     "iopub.status.idle": "2023-08-23T23:20:41.550468Z",
-     "shell.execute_reply": "2023-08-23T23:20:41.549854Z"
+     "iopub.execute_input": "2023-08-23T23:22:27.886394Z",
+     "iopub.status.busy": "2023-08-23T23:22:27.886081Z",
+     "iopub.status.idle": "2023-08-23T23:22:27.889851Z",
+     "shell.execute_reply": "2023-08-23T23:22:27.889243Z"
     }
    },
    "outputs": [
