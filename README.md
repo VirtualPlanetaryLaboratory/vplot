@@ -2,7 +2,7 @@
   <img width = "200" src="https://github.com/VirtualPlanetaryLaboratory/vplot/blob/dev/docs/vplot.svg"/>
 </p>
 
-<h1 align="center">VPLot: Plotting Utilities for VPLanet</h1>
+<h1 align="center">vplot: Plotting Utilities for VPLanet</h1>
 
 <p align="center">
   <a href="https://virtualplanetarylaboratory.github.io/vplot/">
