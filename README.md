@@ -26,4 +26,4 @@
   <img src = "https://img.shields.io/badge/Platforms-Linux_|%20macOS-darkgreen.svg?style=flat">
 </p>
 <br>
-vplot simplifies plotting [VPLanet](https://github.com/VirtualPlanetaryLaboratory/vplanet) data through a command line option that instantly generates plots of a single simulation, as well as a Python module to generate consistent and accessible figures for your publications.
+`vplot` simplifies plotting [VPLanet](https://github.com/VirtualPlanetaryLaboratory/vplanet) data through a command line option that instantly generates plots of a single simulation, as well as a Python module to generate consistent and accessible figures for your publications.
