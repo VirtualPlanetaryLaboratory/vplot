@@ -12,10 +12,10 @@
    "execution_count": 1,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:19:11.338560Z",
-     "iopub.status.busy": "2023-08-23T23:19:11.338202Z",
-     "iopub.status.idle": "2023-08-23T23:19:12.032897Z",
-     "shell.execute_reply": "2023-08-23T23:19:12.032210Z"
+     "iopub.execute_input": "2023-08-23T23:20:27.390671Z",
+     "iopub.status.busy": "2023-08-23T23:20:27.390268Z",
+     "iopub.status.idle": "2023-08-23T23:20:28.109780Z",
+     "shell.execute_reply": "2023-08-23T23:20:28.102725Z"
     },
     "tags": [
      "hide_input"
@@ -26,7 +26,7 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "/tmp/ipykernel_5352/1180289843.py:5: DeprecationWarning: `set_matplotlib_formats` is deprecated since IPython 7.23, directly use `matplotlib_inline.backend_inline.set_matplotlib_formats()`\n",
+      "/tmp/ipykernel_5341/1180289843.py:5: DeprecationWarning: `set_matplotlib_formats` is deprecated since IPython 7.23, directly use `matplotlib_inline.backend_inline.set_matplotlib_formats()`\n",
       "  set_matplotlib_formats('retina')\n"
      ]
     }
@@ -51,10 +51,10 @@
    "execution_count": 2,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:19:12.073020Z",
-     "iopub.status.busy": "2023-08-23T23:19:12.072273Z",
-     "iopub.status.idle": "2023-08-23T23:19:12.081901Z",
-     "shell.execute_reply": "2023-08-23T23:19:12.081290Z"
+     "iopub.execute_input": "2023-08-23T23:20:28.142921Z",
+     "iopub.status.busy": "2023-08-23T23:20:28.142236Z",
+     "iopub.status.idle": "2023-08-23T23:20:28.150389Z",
+     "shell.execute_reply": "2023-08-23T23:20:28.149812Z"
     },
     "tags": [
      "hide_input"
@@ -86,10 +86,10 @@
    "execution_count": 3,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:19:12.084666Z",
-     "iopub.status.busy": "2023-08-23T23:19:12.084421Z",
-     "iopub.status.idle": "2023-08-23T23:19:12.984560Z",
-     "shell.execute_reply": "2023-08-23T23:19:12.983482Z"
+     "iopub.execute_input": "2023-08-23T23:20:28.153362Z",
+     "iopub.status.busy": "2023-08-23T23:20:28.152952Z",
+     "iopub.status.idle": "2023-08-23T23:20:29.046094Z",
+     "shell.execute_reply": "2023-08-23T23:20:29.045011Z"
     }
    },
    "outputs": [],
@@ -113,10 +113,10 @@
    "execution_count": 4,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:19:12.988382Z",
-     "iopub.status.busy": "2023-08-23T23:19:12.987883Z",
-     "iopub.status.idle": "2023-08-23T23:19:12.992791Z",
-     "shell.execute_reply": "2023-08-23T23:19:12.992215Z"
+     "iopub.execute_input": "2023-08-23T23:20:29.050126Z",
+     "iopub.status.busy": "2023-08-23T23:20:29.049655Z",
+     "iopub.status.idle": "2023-08-23T23:20:29.054548Z",
+     "shell.execute_reply": "2023-08-23T23:20:29.054002Z"
     }
    },
    "outputs": [],
@@ -140,10 +140,10 @@
    "execution_count": 5,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:19:12.995468Z",
-     "iopub.status.busy": "2023-08-23T23:19:12.995136Z",
-     "iopub.status.idle": "2023-08-23T23:19:13.004930Z",
-     "shell.execute_reply": "2023-08-23T23:19:13.004353Z"
+     "iopub.execute_input": "2023-08-23T23:20:29.057209Z",
+     "iopub.status.busy": "2023-08-23T23:20:29.056745Z",
+     "iopub.status.idle": "2023-08-23T23:20:29.066187Z",
+     "shell.execute_reply": "2023-08-23T23:20:29.065646Z"
     }
    },
    "outputs": [],
@@ -157,10 +157,10 @@
    "execution_count": 6,
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-08-23T23:19:13.007898Z",
-     "iopub.status.busy": "2023-08-23T23:19:13.007501Z",
-     "iopub.status.idle": "2023-08-23T23:19:13.546794Z",
-     "shell.execute_reply": "2023-08-23T23:19:13.546001Z"
+     "iopub.execute_input": "2023-08-23T23:20:29.068932Z",
+     "iopub.status.busy": "2023-08-23T23:20:29.068528Z",
+     "iopub.status.idle": "2023-08-23T23:20:29.591752Z",
+     "shell.execute_reply": "2023-08-23T23:20:29.591132Z"
     }
    },
    "outputs": [
