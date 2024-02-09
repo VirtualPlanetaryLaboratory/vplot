@@ -23,8 +23,8 @@ setup(
         "setuptools_scm",
         "numpy>=1.19.2",
         "matplotlib>=3.3.4",
-        "astropy>=4.1",
-        "vplanet>=2.0.0",
+        "astropy>=6.0.0",
+        "vplanet>=2.4.24",
     ],
     entry_points={
         "console_scripts": ["vplot=vplot.command_line:_entry_point"]

@@ -19,7 +19,7 @@ def _get_array_info(array, max_label_length=40):
                 unit = None
             body = None
             label = None
-            physical_type = array.unit.physical_type.title()
+            physical_type = array.unit.physical_type
             if physical_type == "Dimensionless":
                 physical_type = None
         else:
@@ -30,7 +30,7 @@ def _get_array_info(array, max_label_length=40):
             label = array.tags.get("description", None)
             if label is not None and len(label) > max_label_length:
                 label = array.tags.get("name", None)
-            physical_type = array.unit.physical_type.title()
+            physical_type = array.unit.physical_type
             if physical_type == "Dimensionless":
                 physical_type = None
     else:
