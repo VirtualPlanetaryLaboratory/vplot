@@ -49,13 +49,6 @@ jobs:
               popd
           done
 
-      - name: Run diagnostic test
-        timeout-minutes: 3
-        run: |
-          # First run a simple unit test to verify pytest works
-          echo "Running single unit test as diagnostic..."
-          python -m pytest tests/test_figure.py::test_basic -v -s
-
       - name: Enable subprocess coverage
         run: |
           # Install coverage subprocess support
