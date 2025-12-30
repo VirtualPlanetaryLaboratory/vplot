@@ -14,6 +14,7 @@ Documentation
    :maxdepth: 1
 
    install
+   quickstart
    examples
    api
    Github <https://github.com/VirtualPlanetaryLaboratory/vplot>
