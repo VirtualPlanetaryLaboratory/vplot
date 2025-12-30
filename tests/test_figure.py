@@ -12,7 +12,7 @@ import numpy as np
 matplotlib.use("Agg")
 
 
-# Grab the output
+# Path to example directory
 path = os.path.join(
     os.path.dirname(os.path.dirname(__file__)),
     "docs",
@@ -20,6 +20,8 @@ path = os.path.join(
     "examples",
     "CircumbinaryOrbit",
 )
+
+# Run vplanet (or load existing output if already run)
 output = vplanet.run(os.path.join(path, "vpl.in"))
 
 
