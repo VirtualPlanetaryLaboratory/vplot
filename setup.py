@@ -20,10 +20,10 @@ setup(
         "write_to_template": '__version__ = "{version}"\n',
     },
     install_requires=[
-        "setuptools_scm",
-        "numpy>=1.19.2",
-        "matplotlib>=3.3.4",
-        "astropy>=6.0.0",
+        "setuptools_scm>=8.0",
+        "numpy>=2.0.0",
+        "matplotlib>=3.9.0",
+        "astropy>=6.1.0",
         "vplanet>=2.4.24",
     ],
     entry_points={

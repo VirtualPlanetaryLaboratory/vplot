@@ -3,26 +3,23 @@ channels:
   - defaults
   - conda-forge
 dependencies:
-  - python=3.8
-  - numpy>=1.19.2
-  - pip>=20.3.3
-  - scipy>=1.5.2
-  - setuptools>=51.3.3
+  - python>=3.9,<3.15
+  - numpy>=2.0.0
+  - pip
+  - scipy
+  - setuptools
   - pandoc
   - ipykernel
   - nb_conda
   - nb_conda_kernels
   - nb_anacondacloud
   - pip:
-    - astropy>=4.1.0
-    - matplotlib>=3.3.4
-    - nose>=1.3.7
-    - parameterized>=0.8.1
-    - pytest>=6.2.4
-    - pytest-dependency>=0.5.1
-    - pytest-env>=0.6.2
-    - pytest-cov>=2.11.1
-    - sphinx==4.2.0
+    - astropy>=6.1.0
+    - matplotlib>=3.9.0
+    - pytest>=8.0.0
+    - pytest-cov>=4.1.0
+    - pytest-timeout>=2.1.0
+    - sphinx>=8.0.0
     - jupyter_client
-    - nbconvert>=5.5
+    - nbconvert
     - nbsphinx

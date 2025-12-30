@@ -6,6 +6,12 @@ build-backend = "setuptools.build_meta"
 write_to = "vplot/vplot_version.py"
 write_to_template = '__version__ = "{version}"'
 
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = "-v --strict-markers --cov=vplot --timeout=300"
+timeout = 300
+
 [tool.black]
 line-length = 79
 exclude = '''
