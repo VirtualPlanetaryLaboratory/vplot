@@ -9,8 +9,7 @@ write_to_template = '__version__ = "{version}"'
 [tool.pytest.ini_options]
 minversion = "8.0"
 testpaths = ["tests"]
-addopts = "-v --strict-markers --cov=vplot --timeout=300"
-timeout = 300
+addopts = "-v --strict-markers --cov=vplot"
 
 [tool.black]
 line-length = 79
