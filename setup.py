@@ -27,7 +27,7 @@ setup(
         "vplanet>=2.4.24",
     ],
     entry_points={
-        "console_scripts": ["vplot=vplot.command_line:_entry_point"]
+        "console_scripts": ["vplot=vplot.command_line:fnEntryPoint"]
     },
     setup_requires=["setuptools_scm"],
     zip_safe=False,

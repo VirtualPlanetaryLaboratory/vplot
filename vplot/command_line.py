@@ -1,37 +1,39 @@
-from . import auto_plot
+from . import flistAutoPlot
 import argparse
 
 
-def _entry_point():
-    parser = argparse.ArgumentParser(prog="vplot", add_help=True)
-    parser.add_argument(
+def fnEntryPoint():
+    parserArgs = argparse.ArgumentParser(prog="vplot", add_help=True)
+    parserArgs.add_argument(
         "-g",
-        "--group",
+        "--sGroup",
+        dest="sGroup",
         default="param",
         help="What to group plots by (param | type | none)",
     )
-    parser.add_argument(
-        "-b", "--bodies", nargs="*", default=[], help="Which bodies to plot",
+    parserArgs.add_argument(
+        "-b", "--listBodies", dest="listBodies", nargs="*", default=[], help="Which bodies to plot",
     )
-    parser.add_argument(
+    parserArgs.add_argument(
         "-p",
-        "--params",
+        "--listParams",
+        dest="listParams",
         nargs="*",
         default=[],
         help="Which parameters to plot",
     )
-    parser.add_argument(
+    parserArgs.add_argument(
         "--xlog", action="store_true", help="Logarithmic x axes?"
     )
-    parser.add_argument(
+    parserArgs.add_argument(
         "--ylog", action="store_true", help="Logarithmic y axes?"
     )
-    parser.add_argument(
+    parserArgs.add_argument(
         "--figsize",
         nargs=2,
         type=int,
         default=None,
         help="Figure size in inches",
     )
-    args = parser.parse_args()
-    auto_plot(**args.__dict__)
+    args = parserArgs.parse_args()
+    flistAutoPlot(**args.__dict__)

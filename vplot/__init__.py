@@ -17,4 +17,4 @@ from . import colors
 
 # Import user-facing stuff
 from .figure import VPLOTFigure
-from .auto_plot import auto_plot
+from .auto_plot import flistAutoPlot

@@ -7,38 +7,38 @@ from matplotlib.axes import Axes
 import astropy.units as u
 
 
-def _get_array_info(array, max_label_length=40):
+def ftupleGetArrayInfo(array, max_label_length=40):
     if hasattr(array, "unit") and hasattr(array, "tags"):
         if array.unit.physical_type != array.tags.get(
             "physical_type", array.unit.physical_type
         ):
             # The physical type of this array changed, so this is
             # no longer the original VPLANET quantity!
-            unit = str(array.unit)
-            if unit == "":
-                unit = None
-            body = None
-            label = None
-            physical_type = array.unit.physical_type
-            if physical_type == "Dimensionless":
-                physical_type = None
+            sUnit = str(array.unit)
+            if sUnit == "":
+                sUnit = None
+            sBody = None
+            sLabel = None
+            sPhysicalType = array.unit.physical_type
+            if sPhysicalType == "Dimensionless":
+                sPhysicalType = None
         else:
-            unit = str(array.unit)
-            if unit == "":
-                unit = None
-            body = array.tags.get("body", None)
-            label = array.tags.get("description", None)
-            if label is not None and len(label) > max_label_length:
-                label = array.tags.get("name", None)
-            physical_type = array.unit.physical_type
-            if physical_type == "Dimensionless":
-                physical_type = None
+            sUnit = str(array.unit)
+            if sUnit == "":
+                sUnit = None
+            sBody = array.tags.get("body", None)
+            sLabel = array.tags.get("description", None)
+            if sLabel is not None and len(sLabel) > max_label_length:
+                sLabel = array.tags.get("name", None)
+            sPhysicalType = array.unit.physical_type
+            if sPhysicalType == "Dimensionless":
+                sPhysicalType = None
     else:
-        unit = None
-        body = None
-        label = None
-        physical_type = None
-    return unit, body, label, physical_type
+        sUnit = None
+        sBody = None
+        sLabel = None
+        sPhysicalType = None
+    return sUnit, sBody, sLabel, sPhysicalType
 
 
 class VPLOTFigure(Figure):
@@ -95,217 +95,214 @@ class VPLOTFigure(Figure):
 
         # Watch the axes
         self._update_on_draw = True
-        self.add_axobserver(self._ax_observer)
+        self.add_axobserver(self.fnAxObserver)
 
-    def _ax_observer(self, *args):
+    def fnAxObserver(self, *args):
 
         # Force an update next time we draw
         self._update_on_draw = True
 
-        # HACK: Override `ax.scatter` so that we preserve the
-        # metadata in the Quantity arrays, as `scatter` converts
-        # them to numpy masked arrays. I couldn't find a
-        # simple way to subclass `Axes` or `Subplots` to directly
-        # replace the `scatter` method, so we'll go with this for now.
+        # Override ax.scatter to preserve metadata in Quantity arrays.
+        # Scatter converts Quantity arrays to numpy masked arrays, losing metadata.
 
-        for ax in self.axes:
+        for axCurrent in self.axes:
 
             # Mark it so we don't do it repeatedly
-            if hasattr(ax, "__vplot__"):
+            if hasattr(axCurrent, "__vplot__"):
                 continue
             else:
-                ax.__vplot__ = True
+                axCurrent.__vplot__ = True
 
-            old_scatter = ax.scatter
+            fnOldScatter = axCurrent.scatter
 
-            def new_scatter(x, y, *args, **kwargs):
-                collection = old_scatter(x, y, *args, **kwargs)
+            def fnNewScatter(x, y, *args, **kwargs):
+                collection = fnOldScatter(x, y, *args, **kwargs)
 
-                def get_data():
+                def ftupleGetData():
                     return Quantity(x), Quantity(y)
 
-                get_data.__vplot__ = True
+                ftupleGetData.__vplot__ = True
 
-                collection.get_data = get_data
+                collection.get_data = ftupleGetData
 
                 return collection
 
-            ax.scatter = new_scatter
+            axCurrent.scatter = fnNewScatter
 
         # TODO: Override ax.imshow as well so we can
         # automatically add units to colorbars.
 
-    def _add_labels(self):
+    def fnAddLabels(self):
 
         # Get the labels for each axis
-        for k, ax in enumerate(self.axes):
+        for iK, axCurrent in enumerate(self.axes):
 
             # Skip if there's no data to parse
-            if len(ax.lines) == 0 and len(ax.collections) == 0:
+            if len(axCurrent.lines) == 0 and len(axCurrent.collections) == 0:
                 continue
 
             # Check if there are labels already
-            xlabel_exists = not (
-                ax.get_xlabel() is None or ax.get_xlabel() == ""
+            bXlabelExists = not (
+                axCurrent.get_xlabel() is None or axCurrent.get_xlabel() == ""
             )
-            ylabel_exists = not (
-                ax.get_ylabel() is None or ax.get_ylabel() == ""
+            bYlabelExists = not (
+                axCurrent.get_ylabel() is None or axCurrent.get_ylabel() == ""
             )
-            legend_exists = ax.get_legend() is not None
+            bLegendExists = axCurrent.get_legend() is not None
 
             # Skip if the user already set these
-            if xlabel_exists and ylabel_exists and legend_exists:
+            if bXlabelExists and bYlabelExists and bLegendExists:
                 continue
 
             # Get info on all lines in the axis
-            xunits = []
-            xlabels = []
-            xtypes = []
-            yunits = []
-            ylabels = []
-            ytypes = []
-            bodies = []
-            lines = [
+            listXunits = []
+            listXlabels = []
+            listXtypes = []
+            listYunits = []
+            listYlabels = []
+            listYtypes = []
+            listBodies = []
+            listLines = [
                 line
-                for line in ax.lines + ax.collections
+                for line in axCurrent.lines + axCurrent.collections
                 if hasattr(line, "get_data")
             ]
-            for line in lines:
+            for line in listLines:
 
                 # Get the data
                 x, y = line.get_data()
 
                 # Grab the x metadata
-                unit, _, label, physical_type = _get_array_info(
+                sUnit, _, sLabel, sPhysicalType = ftupleGetArrayInfo(
                     x, self.max_label_length
                 )
-                xunits.append(unit)
-                xlabels.append(label)
-                xtypes.append(physical_type)
+                listXunits.append(sUnit)
+                listXlabels.append(sLabel)
+                listXtypes.append(sPhysicalType)
 
                 # Grab the y metadata
-                unit, body, label, physical_type = _get_array_info(
+                sUnit, sBody, sLabel, sPhysicalType = ftupleGetArrayInfo(
                     y, self.max_label_length
                 )
-                yunits.append(unit)
-                ylabels.append(label)
-                ytypes.append(physical_type)
-                bodies.append(body)
+                listYunits.append(sUnit)
+                listYlabels.append(sLabel)
+                listYtypes.append(sPhysicalType)
+                listBodies.append(sBody)
 
             # Figure out the x physical type
-            if len(set(xtypes)) == 0:
-                xtype = None
-            elif len(set(xtypes)) == 1:
-                xtype = xtypes[0]
-            elif len(set(xtypes)) == 2 and None in xtypes:
+            if len(set(listXtypes)) == 0:
+                sXtype = None
+            elif len(set(listXtypes)) == 1:
+                sXtype = listXtypes[0]
+            elif len(set(listXtypes)) == 2 and None in listXtypes:
                 # Allow unitless quantities to be shown on the same
                 # axis as unitful quantities, since matplotlib.units allows it
-                xtype = [xtype for xtype in xtypes if xtype is not None][0]
+                sXtype = [sXtype for sXtype in listXtypes if sXtype is not None][0]
             else:
                 raise ValueError(
                     "Axis #{} contains quantities with different physical types: {}".format(
-                        k + 1, ", ".join(xtypes)
+                        iK + 1, ", ".join(listXtypes)
                     )
                 )
 
             # Figure out the y physical type
-            if len(set(ytypes)) == 0:
-                ytype = None
-            elif len(set(ytypes)) == 1:
-                ytype = ytypes[0]
-            elif len(set(ytypes)) == 2 and None in ytypes:
+            if len(set(listYtypes)) == 0:
+                sYtype = None
+            elif len(set(listYtypes)) == 1:
+                sYtype = listYtypes[0]
+            elif len(set(listYtypes)) == 2 and None in listYtypes:
                 # Allow unitless quantities to be shown on the same
                 # axis as unitful quantities, since matplotlib.units allows it
-                ytype = [ytype for ytype in ytypes if ytype is not None][0]
+                sYtype = [sYtype for sYtype in listYtypes if sYtype is not None][0]
             else:
                 raise ValueError(
                     "Axis #{} contains quantities with different physical types: {}".format(
-                        k + 1, ", ".join(ytypes)
+                        iK + 1, ", ".join(listYtypes)
                     )
                 )
 
             # Figure out the x unit
-            if len(set(xunits)) == 0:
-                xunit = None
-            elif len(set(xunits)) == 1:
-                if xunits[0] is None:
-                    xunit = None
+            if len(set(listXunits)) == 0:
+                sXunit = None
+            elif len(set(listXunits)) == 1:
+                if listXunits[0] is None:
+                    sXunit = None
                 else:
-                    xunit = str(xunits[0])
-            elif len(set(xunits)) > 1:
-                xunit = None
-                for xunit in set(xunits):
-                    if xunit is not None:
+                    sXunit = str(listXunits[0])
+            elif len(set(listXunits)) > 1:
+                sXunit = None
+                for sXunit in set(listXunits):
+                    if sXunit is not None:
                         # A hacky way to figure out the actual unit
-                        if ax.convert_xunits(1 * u.Unit(xunit)) == 1:
+                        if axCurrent.convert_xunits(1 * u.Unit(sXunit)) == 1:
                             break
 
             # Figure out the y unit
-            if len(set(yunits)) == 0:
-                yunit = None
-            elif len(set(yunits)) == 1:
-                if yunits[0] is None:
-                    yunit = None
+            if len(set(listYunits)) == 0:
+                sYunit = None
+            elif len(set(listYunits)) == 1:
+                if listYunits[0] is None:
+                    sYunit = None
                 else:
-                    yunit = str(yunits[0])
-            elif len(set(yunits)) > 1:
-                yunit = None
-                for yunit in set(yunits):
-                    if yunit is not None:
+                    sYunit = str(listYunits[0])
+            elif len(set(listYunits)) > 1:
+                sYunit = None
+                for sYunit in set(listYunits):
+                    if sYunit is not None:
                         # A hacky way to figure out the actual unit
-                        if ax.convert_yunits(1 * u.Unit(yunit)) == 1:
+                        if axCurrent.convert_yunits(1 * u.Unit(sYunit)) == 1:
                             break
 
             # Are we dealing with single bodies/quantity types?
-            single_body = len(set(bodies)) == 1 and bodies[0] is not None
-            single_xparam = len(set(xlabels)) == 1 and xlabels[0] is not None
-            single_yparam = len(set(ylabels)) == 1 and ylabels[0] is not None
+            bSingleBody = len(set(listBodies)) == 1 and listBodies[0] is not None
+            bSingleXparam = len(set(listXlabels)) == 1 and listXlabels[0] is not None
+            bSingleYparam = len(set(listYlabels)) == 1 and listYlabels[0] is not None
 
             # Add the x axis label
-            if not xlabel_exists:
+            if not bXlabelExists:
 
-                xlabel = ""
+                sXlabel = ""
 
-                if single_xparam:
-                    xlabel += "{}".format(xlabels[0])
-                elif xtype is not None:
-                    xlabel += "{}".format(xtype)
+                if bSingleXparam:
+                    sXlabel += "{}".format(listXlabels[0])
+                elif sXtype is not None:
+                    sXlabel += "{}".format(sXtype)
 
-                if xunit is not None:
-                    xlabel += " [{}]".format(xunit)
+                if sXunit is not None:
+                    sXlabel += " [{}]".format(sXunit)
 
-                if xlabel.endswith(": "):
-                    xlabel = xlabel[:-2]
+                if sXlabel.endswith(": "):
+                    sXlabel = sXlabel[:-2]
 
-                ax.set_xlabel(xlabel)
+                axCurrent.set_xlabel(sXlabel)
 
             # Add the y axis label
-            if not ylabel_exists:
+            if not bYlabelExists:
 
-                ylabel = ""
+                sYlabel = ""
 
-                if single_body:
-                    ylabel += "{}: ".format(bodies[0])
+                if bSingleBody:
+                    sYlabel += "{}: ".format(listBodies[0])
 
-                if single_yparam:
-                    ylabel += "{}".format(ylabels[0])
-                elif ytype is not None:
-                    ylabel += "{}".format(ytype)
+                if bSingleYparam:
+                    sYlabel += "{}".format(listYlabels[0])
+                elif sYtype is not None:
+                    sYlabel += "{}".format(sYtype)
 
-                if yunit is not None:
-                    ylabel += " [{}]".format(yunit)
+                if sYunit is not None:
+                    sYlabel += " [{}]".format(sYunit)
 
-                if ylabel.endswith(": "):
-                    ylabel = ylabel[:-2]
+                if sYlabel.endswith(": "):
+                    sYlabel = sYlabel[:-2]
 
-                ax.set_ylabel(ylabel)
+                axCurrent.set_ylabel(sYlabel)
 
             # Add the legend
-            if self.auto_legend and not legend_exists:
+            if self.auto_legend and not bLegendExists:
 
-                make_legend = False
+                bMakeLegend = False
 
-                for j, line in enumerate(lines):
+                for iJ, line in enumerate(listLines):
                     if (
                         line.get_label() is None
                         or line.get_label() == ""
@@ -314,61 +311,61 @@ class VPLOTFigure(Figure):
                         or line.get_label().startswith("_child")
                     ):
 
-                        label = ""
+                        sLabel = ""
 
-                        if not single_body and bodies[j] is not None:
-                            label += "{}: ".format(bodies[j])
+                        if not bSingleBody and listBodies[iJ] is not None:
+                            sLabel += "{}: ".format(listBodies[iJ])
 
-                        if not single_yparam:
-                            if ylabels[j] is not None:
-                                label += "{}".format(ylabels[j])
-                            elif ytype is not None:
-                                label += "{}".format(ytype)
+                        if not bSingleYparam:
+                            if listYlabels[iJ] is not None:
+                                sLabel += "{}".format(listYlabels[iJ])
+                            elif sYtype is not None:
+                                sLabel += "{}".format(sYtype)
 
-                        if label.endswith(": "):
-                            label = label[:-2]
+                        if sLabel.endswith(": "):
+                            sLabel = sLabel[:-2]
 
-                        if label != "":
-                            line.set_label(label)
-                            make_legend = True
+                        if sLabel != "":
+                            line.set_label(sLabel)
+                            bMakeLegend = True
 
-                if make_legend:
-                    ax.legend(loc="best")
+                if bMakeLegend:
+                    axCurrent.legend(loc="best")
 
-    def _format_axes(self):
-        for ax in self.axes:
+    def fnFormatAxes(self):
+        for axCurrent in self.axes:
 
             # Force time axis margins to be zero
-            if "Time" in ax.get_xlabel():
-                ax.margins(0, ax.margins()[1])
+            if "Time" in axCurrent.get_xlabel():
+                axCurrent.margins(0, axCurrent.margins()[1])
 
             # Make axes logarithmic?
             if self.xlog:
-                ax.set_xscale("log")
+                axCurrent.set_xscale("log")
             if self.ylog:
-                ax.set_yscale("log")
+                axCurrent.set_yscale("log")
 
     def draw(self, *args, **kwargs):
         if self._update_on_draw:
-            self._add_labels()
-            self._format_axes()
+            self.fnAddLabels()
+            self.fnFormatAxes()
             self.tight_layout()
             self._update_on_draw = False
         super().draw(*args, **kwargs)
 
 
-# HACK: Override `Figure` so this will work seamlessly in the background
+# Override Figure globally to enable automatic labeling.
 matplotlib.figure.Figure = VPLOTFigure
 
-# HACK: We need to explicitly override `plt.figure` since its default
-# kwarg for `FigureClass` is `matplotlib.figure.Figure`. This default
-# value is parsed on **import**, so if the user imported `pyplot`
-# before `vplot`, the default figure class will still be the old one.
-mpl_figure = matplotlib.pyplot.figure
+# Override plt.figure since its default kwarg for FigureClass is
+# matplotlib.figure.Figure. This default value is parsed on import,
+# so if the user imported pyplot before vplot, the default figure
+# class will still be the old one.
+fnMplFigure = matplotlib.pyplot.figure
 
 
-def figure_wrapper(*args, FigureClass=VPLOTFigure, **kwargs):
-    return mpl_figure(*args, FigureClass=VPLOTFigure, **kwargs)
+def fnFigureWrapper(*args, FigureClass=VPLOTFigure, **kwargs):
+    return fnMplFigure(*args, FigureClass=VPLOTFigure, **kwargs)
 
 
-matplotlib.pyplot.figure = figure_wrapper
+matplotlib.pyplot.figure = fnFigureWrapper
