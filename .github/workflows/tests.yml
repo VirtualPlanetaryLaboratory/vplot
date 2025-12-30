@@ -13,12 +13,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-22.04]
         python-version: ['3.9']
 
     steps:
-      - name: Clone vplot repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -28,7 +27,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
 
-      - name: Install vplanet
+      - name: Install VPLanet
         run: |
           python -m pip install --upgrade pip
           python -m pip install vplanet
@@ -50,6 +49,13 @@ jobs:
               popd
           done
 
+      - name: Run diagnostic test
+        timeout-minutes: 3
+        run: |
+          # First run a simple unit test to verify pytest works
+          echo "Running single unit test as diagnostic..."
+          python -m pytest tests/test_figure.py::test_basic -v -s
+
       - name: Enable subprocess coverage
         run: |
           # Install coverage subprocess support
@@ -58,12 +64,13 @@ jobs:
           echo "COVERAGE_PROCESS_START=${{ github.workspace }}/.coveragerc" >> $GITHUB_ENV
 
       - name: Run tests
-        timeout-minutes: 10
+        timeout-minutes: 20
         run: |
-          python -m pytest tests/ -v --timeout=300 --junitxml=junit/test-results-${{ matrix.os }}-${{ matrix.python-version }}.xml --cov --cov-report=xml --cov-report=term
+          # Run all tests with verbose output, capture disabled to see subprocess output, and per-test timeout
+          python -m pytest tests/ -v -s --timeout=300 --junitxml=junit/test-results-${{ matrix.os }}-${{ matrix.python-version }}.xml --cov --cov-report=xml --cov-report=term
 
       - name: Combine coverage data
-        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.9'
+        if: matrix.os == 'ubuntu-22.04' && matrix.python-version == '3.9'
         run: |
           # Move all coverage files from subdirectories to repository root
           find tests/ -name ".coverage.*" -type f -exec mv {} . \; 2>/dev/null || true
@@ -74,7 +81,7 @@ jobs:
 
       - name: Upload coverage to Codecov
         # Only upload from one runner to avoid redundant API calls
-        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.9'
+        if: matrix.os == 'ubuntu-22.04' && matrix.python-version == '3.9'
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -83,7 +90,7 @@ jobs:
           name: ${{ matrix.os }}-py${{ matrix.python-version }}
           fail_ci_if_error: false
 
-      - name: Publish unit test results
+      - name: Publish test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always() && runner.os == 'Linux'
         with:
