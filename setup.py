@@ -23,7 +23,7 @@ setup(
         "setuptools_scm>=8.0",
         "numpy>=2.0.0",
         "matplotlib>=3.9.0",
-        "astropy>=6.1.0",
+        "astropy>=6.0.0",
         "vplanet>=2.4.24",
     ],
     entry_points={

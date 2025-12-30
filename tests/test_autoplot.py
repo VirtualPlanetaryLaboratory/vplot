@@ -22,7 +22,7 @@ path = os.path.join(
 
 def test_autplot():
     """Test basic auto_plot execution."""
-    figs = vplot.flistAutoPlot(path, show=False)
+    figs = vplot.flistAutoPlot(path, bShow=False)
     assert isinstance(figs, list)
     assert len(figs) > 0
     for fig in figs:
@@ -31,7 +31,7 @@ def test_autplot():
 
 def test_autoplot_return_values():
     """Test that auto_plot returns correct number and type of figures."""
-    figs = vplot.flistAutoPlot(path, show=False)
+    figs = vplot.flistAutoPlot(path, bShow=False)
 
     # Should return multiple figures
     assert isinstance(figs, list)
@@ -45,7 +45,7 @@ def test_autoplot_return_values():
 
 def test_autoplot_group_type():
     """Test grouping plots by physical type."""
-    figs = vplot.flistAutoPlot(path, group="type", show=False)
+    figs = vplot.flistAutoPlot(path, sGroup="type", bShow=False)
     assert len(figs) > 0
     for fig in figs:
         assert isinstance(fig, matplotlib.figure.Figure)
@@ -54,7 +54,7 @@ def test_autoplot_group_type():
 
 def test_autoplot_group_param():
     """Test grouping plots by parameter name."""
-    figs = vplot.flistAutoPlot(path, group="param", show=False)
+    figs = vplot.flistAutoPlot(path, sGroup="param", bShow=False)
     assert len(figs) > 0
     for fig in figs:
         assert isinstance(fig, matplotlib.figure.Figure)
@@ -63,7 +63,7 @@ def test_autoplot_group_param():
 
 def test_autoplot_group_none():
     """Test individual plots for each parameter."""
-    figs = vplot.flistAutoPlot(path, group="none", show=False)
+    figs = vplot.flistAutoPlot(path, sGroup="none", bShow=False)
     assert len(figs) > 0
     for fig in figs:
         assert isinstance(fig, matplotlib.figure.Figure)
@@ -72,7 +72,7 @@ def test_autoplot_group_none():
 
 def test_autoplot_filter_bodies():
     """Test filtering by body names."""
-    figs = vplot.flistAutoPlot(path, bodies=["cbp"], show=False)
+    figs = vplot.flistAutoPlot(path, listBodies=["cbp"], bShow=False)
     assert len(figs) > 0
 
     # Check that only cbp data is plotted (legends should only contain cbp)
@@ -90,7 +90,7 @@ def test_autoplot_filter_bodies():
 
 def test_autoplot_filter_params():
     """Test filtering by parameter names."""
-    figs = vplot.flistAutoPlot(path, params=["Eccentricity"], show=False)
+    figs = vplot.flistAutoPlot(path, listParams=["Eccentricity"], bShow=False)
     assert len(figs) > 0
 
     # All figures should be for Eccentricity
@@ -105,12 +105,12 @@ def test_autoplot_filter_params():
 def test_autoplot_invalid_group():
     """Test that invalid group raises assertion error."""
     with pytest.raises(AssertionError, match="must be one of"):
-        vplot.flistAutoPlot(path, group="invalid", show=False)
+        vplot.flistAutoPlot(path, sGroup="invalid", bShow=False)
 
 
 def test_autoplot_xlog():
     """Test xlog parameter."""
-    figs = vplot.flistAutoPlot(path, xlog=True, show=False)
+    figs = vplot.flistAutoPlot(path, xlog=True, bShow=False)
     assert len(figs) > 0
 
     # Trigger formatting by calling draw (which calls _format_axes)
@@ -126,7 +126,7 @@ def test_autoplot_xlog():
 
 def test_autoplot_ylog():
     """Test ylog parameter."""
-    figs = vplot.flistAutoPlot(path, ylog=True, show=False)
+    figs = vplot.flistAutoPlot(path, ylog=True, bShow=False)
     assert len(figs) > 0
 
     # Trigger formatting by calling draw (which calls _format_axes)
@@ -142,7 +142,7 @@ def test_autoplot_ylog():
 
 def test_autoplot_figsize():
     """Test custom figure size."""
-    figs = vplot.flistAutoPlot(path, figsize=(10, 8), show=False)
+    figs = vplot.flistAutoPlot(path, figsize=(10, 8), bShow=False)
     assert len(figs) > 0
 
     # Check first figure has correct size
@@ -158,7 +158,7 @@ def test_autoplot_figsize():
 def test_autoplot_bodies_string_converted():
     """Test that bodies parameter accepts a string and converts to list."""
     # auto_plot automatically converts strings to lists, so this should work
-    figs = vplot.flistAutoPlot(path, bodies="cbp", show=False)
+    figs = vplot.flistAutoPlot(path, listBodies="cbp", bShow=False)
     assert len(figs) > 0
     for fig in figs:
         matplotlib.pyplot.close(fig)
@@ -167,7 +167,7 @@ def test_autoplot_bodies_string_converted():
 def test_autoplot_params_string_converted():
     """Test that params parameter accepts a string and converts to list."""
     # auto_plot automatically converts strings to lists, so this should work
-    figs = vplot.flistAutoPlot(path, params="Eccentricity", show=False)
+    figs = vplot.flistAutoPlot(path, listParams="Eccentricity", bShow=False)
     assert len(figs) > 0
     for fig in figs:
         matplotlib.pyplot.close(fig)
@@ -176,15 +176,15 @@ def test_autoplot_params_string_converted():
 def test_autoplot_no_params_found():
     """Test error when no parameters match the filter."""
     with pytest.raises(RuntimeError, match="No parameters found for plotting"):
-        vplot.flistAutoPlot(path, params=["NonExistentParameter"], show=False)
+        vplot.flistAutoPlot(path, listParams=["NonExistentParameter"], bShow=False)
 
 
 def test_autoplot_show_true():
-    """Test auto_plot with show=True (mock plt.show)."""
+    """Test auto_plot with bShow=True (mock plt.show)."""
     from unittest.mock import patch
     with patch('matplotlib.pyplot.show'):
-        # This should not return anything when show=True
-        result = vplot.flistAutoPlot(path, group="param", show=True)
+        # This should not return anything when bShow=True
+        result = vplot.flistAutoPlot(path, sGroup="param", bShow=True)
         assert result is None
 
 
