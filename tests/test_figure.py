@@ -66,7 +66,7 @@ def test_unit_change():
 
 def test_two_quantities():
     with FigureTester(
-        ylabel="cbp: Angle [deg]",
+        ylabel="cbp: angle [deg]",
         legend_texts=[
             "Longitude of ascending node",
             "Longitude of pericenter",
@@ -86,7 +86,7 @@ def test_two_bodies():
 
 def test_two_quantities_two_bodies():
     with FigureTester(
-        ylabel="Angle [deg]",
+        ylabel="angle [deg]",
         legend_texts=[
             "cbp: Longitude of ascending node",
             "earth: Longitude of pericenter",
@@ -98,7 +98,7 @@ def test_two_quantities_two_bodies():
 
 def test_degrees_radians():
     with FigureTester(
-        ylabel="cbp: Angle [deg]",
+        ylabel="cbp: angle [deg]",
         legend_texts=[
             "Longitude of ascending node",
             "Longitude of pericenter",
@@ -110,8 +110,8 @@ def test_degrees_radians():
 
 def test_mixed_y_units():
     with FigureTester(
-        ylabel="Angle [deg]",
-        legend_texts=["cbp: Longitude of ascending node", "Angle"],
+        ylabel="angle [deg]",
+        legend_texts=["cbp: Longitude of ascending node", "angle"],
     ):
         plt.plot(output.cbp.Time, output.cbp.LongA)
         plt.plot(output.cbp.Time, np.ones(len(output.cbp.LongA)))
@@ -119,9 +119,9 @@ def test_mixed_y_units():
 
 def test_mixed_xy_units():
     with FigureTester(
-        xlabel="Time [yr]",
-        ylabel="Angle [deg]",
-        legend_texts=["cbp: Longitude of ascending node", "Angle"],
+        xlabel="time [yr]",
+        ylabel="angle [deg]",
+        legend_texts=["cbp: Longitude of ascending node", "angle"],
     ):
         plt.plot(output.cbp.Time, output.cbp.LongA)
         plt.plot(
@@ -145,4 +145,91 @@ def test_unitless():
         plt.plot(np.linspace(0, 1, 100), np.ones(100))
 
 
-# TODO: test scatter
+def test_scatter():
+    """Test that scatter plots preserve metadata and generate correct labels."""
+    with FigureTester(ylabel="cbp: Orbital Eccentricity"):
+        plt.scatter(output.cbp.Time, output.cbp.Eccentricity)
+
+
+def test_scatter_two_bodies():
+    """Test scatter plots with multiple bodies."""
+    with FigureTester(
+        ylabel="Orbital Eccentricity", legend_texts=["cbp", "earth"]
+    ):
+        plt.scatter(output.cbp.Time, output.cbp.Eccentricity)
+        plt.scatter(output.earth.Time, output.earth.Eccentricity)
+
+
+def test_mixed_plot_scatter():
+    """Test combination of plot and scatter on same axes."""
+    with FigureTester(
+        ylabel="Orbital Eccentricity", legend_texts=["cbp", "earth"]
+    ):
+        plt.plot(output.cbp.Time, output.cbp.Eccentricity)
+        plt.scatter(output.earth.Time, output.earth.Eccentricity)
+
+
+def test_xlog():
+    """Test logarithmic x-axis."""
+    fig = plt.figure(xlog=True)
+    ax = fig.add_subplot(111)
+    ax.plot(output.cbp.Time, output.cbp.Eccentricity)
+    fig._add_labels()
+    fig._format_axes()  # Need to call _format_axes to apply log scale
+    assert ax.get_xscale() == "log"
+    assert ax.get_ylabel() == "cbp: Orbital Eccentricity"
+    plt.close(fig)
+
+
+def test_ylog():
+    """Test logarithmic y-axis."""
+    fig = plt.figure(ylog=True)
+    ax = fig.add_subplot(111)
+    ax.plot(output.cbp.Time, output.cbp.Eccentricity)
+    fig._add_labels()
+    fig._format_axes()  # Need to call _format_axes to apply log scale
+    assert ax.get_yscale() == "log"
+    assert ax.get_ylabel() == "cbp: Orbital Eccentricity"
+    plt.close(fig)
+
+
+def test_multiple_subplots():
+    """Test figure with multiple subplots."""
+    fig, axes = plt.subplots(2, 1)
+    axes[0].plot(output.cbp.Time, output.cbp.Eccentricity)
+    axes[1].plot(output.cbp.Time, output.cbp.LongA)
+    fig._add_labels()
+
+    # Both subplots get xlabels (vplot adds labels to all axes)
+    assert axes[0].get_xlabel() == "Simulation Time [yr]"
+    assert axes[0].get_ylabel() == "cbp: Orbital Eccentricity"
+    assert axes[1].get_xlabel() == "Simulation Time [yr]"
+    # When there's only one line, uses specific parameter name
+    assert axes[1].get_ylabel() == "cbp: Longitude of ascending node [deg]"
+    plt.close(fig)
+
+
+def test_auto_legend_disabled():
+    """Test that auto_legend=False prevents legend creation."""
+    fig = plt.figure(auto_legend=False)
+    ax = fig.add_subplot(111)
+    ax.plot(output.cbp.Time, output.cbp.Eccentricity)
+    ax.plot(output.earth.Time, output.earth.Eccentricity)
+    fig._add_labels()
+
+    assert ax.get_legend() is None
+    plt.close(fig)
+
+
+def test_max_label_length():
+    """Test that max_label_length truncates long descriptions."""
+    fig = plt.figure(max_label_length=10)
+    ax = fig.add_subplot(111)
+    ax.plot(output.cbp.Time, output.cbp.Eccentricity)
+    fig._add_labels()
+
+    # With short max_label_length, should use parameter name instead of description
+    ylabel = ax.get_ylabel()
+    assert "cbp" in ylabel
+    assert len(ylabel) < 50  # Should be shorter than full description
+    plt.close(fig)
