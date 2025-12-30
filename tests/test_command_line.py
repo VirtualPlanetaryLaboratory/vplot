@@ -21,13 +21,13 @@ path = os.path.join(
 
 
 def test_entry_point_function():
-    """Test _entry_point function directly for code coverage."""
-    from vplot.command_line import _entry_point
+    """Test fnEntryPoint function directly for code coverage."""
+    from vplot.command_line import fnEntryPoint
 
     # Test with --help flag (should exit)
     with patch('sys.argv', ['vplot', '--help']):
         with pytest.raises(SystemExit) as excinfo:
-            _entry_point()
+            fnEntryPoint()
         assert excinfo.value.code == 0
 
     # Test with minimal arguments
@@ -38,7 +38,7 @@ def test_entry_point_function():
             os.chdir(path)
             # Mock show to prevent actual display
             with patch('matplotlib.pyplot.show'):
-                _entry_point()
+                fnEntryPoint()
         finally:
             os.chdir(original_cwd)
             plt.close('all')

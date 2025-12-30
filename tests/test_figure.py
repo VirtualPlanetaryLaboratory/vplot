@@ -38,7 +38,7 @@ class FigureTester(object):
         return self.fig
 
     def __exit__(self, type, value, traceback):
-        self.fig._add_labels()
+        self.fig.fnAddLabels()
 
         # Check labels and legend
         assert self.ax.get_xlabel() == self.xlabel
@@ -176,8 +176,8 @@ def test_xlog():
     fig = plt.figure(xlog=True)
     ax = fig.add_subplot(111)
     ax.plot(output.cbp.Time, output.cbp.Eccentricity)
-    fig._add_labels()
-    fig._format_axes()  # Need to call _format_axes to apply log scale
+    fig.fnAddLabels()
+    fig.fnFormatAxes()  # Need to call fnFormatAxes to apply log scale
     assert ax.get_xscale() == "log"
     assert ax.get_ylabel() == "cbp: Orbital Eccentricity"
     plt.close(fig)
@@ -188,8 +188,8 @@ def test_ylog():
     fig = plt.figure(ylog=True)
     ax = fig.add_subplot(111)
     ax.plot(output.cbp.Time, output.cbp.Eccentricity)
-    fig._add_labels()
-    fig._format_axes()  # Need to call _format_axes to apply log scale
+    fig.fnAddLabels()
+    fig.fnFormatAxes()  # Need to call fnFormatAxes to apply log scale
     assert ax.get_yscale() == "log"
     assert ax.get_ylabel() == "cbp: Orbital Eccentricity"
     plt.close(fig)
@@ -200,7 +200,7 @@ def test_multiple_subplots():
     fig, axes = plt.subplots(2, 1)
     axes[0].plot(output.cbp.Time, output.cbp.Eccentricity)
     axes[1].plot(output.cbp.Time, output.cbp.LongA)
-    fig._add_labels()
+    fig.fnAddLabels()
 
     # Both subplots get xlabels (vplot adds labels to all axes)
     assert axes[0].get_xlabel() == "Simulation Time [yr]"
@@ -217,7 +217,7 @@ def test_auto_legend_disabled():
     ax = fig.add_subplot(111)
     ax.plot(output.cbp.Time, output.cbp.Eccentricity)
     ax.plot(output.earth.Time, output.earth.Eccentricity)
-    fig._add_labels()
+    fig.fnAddLabels()
 
     assert ax.get_legend() is None
     plt.close(fig)
@@ -228,7 +228,7 @@ def test_max_label_length():
     fig = plt.figure(max_label_length=10)
     ax = fig.add_subplot(111)
     ax.plot(output.cbp.Time, output.cbp.Eccentricity)
-    fig._add_labels()
+    fig.fnAddLabels()
 
     # With short max_label_length, should use parameter name instead of description
     ylabel = ax.get_ylabel()
