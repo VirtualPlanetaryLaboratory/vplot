@@ -19,8 +19,8 @@ def ftupleGetArrayInfo(array, max_label_length=40):
                 sUnit = None
             sBody = None
             sLabel = None
-            sPhysicalType = array.unit.physical_type
-            if sPhysicalType == "Dimensionless":
+            sPhysicalType = str(array.unit.physical_type)
+            if sPhysicalType == "dimensionless":
                 sPhysicalType = None
         else:
             sUnit = str(array.unit)
@@ -30,8 +30,8 @@ def ftupleGetArrayInfo(array, max_label_length=40):
             sLabel = array.tags.get("description", None)
             if sLabel is not None and len(sLabel) > max_label_length:
                 sLabel = array.tags.get("name", None)
-            sPhysicalType = array.unit.physical_type
-            if sPhysicalType == "Dimensionless":
+            sPhysicalType = str(array.unit.physical_type)
+            if sPhysicalType == "dimensionless":
                 sPhysicalType = None
     else:
         sUnit = None
@@ -319,8 +319,6 @@ class VPLOTFigure(Figure):
                         if not bSingleYparam:
                             if listYlabels[iJ] is not None:
                                 sLabel += "{}".format(listYlabels[iJ])
-                            elif sYtype is not None:
-                                sLabel += "{}".format(sYtype)
 
                         if sLabel.endswith(": "):
                             sLabel = sLabel[:-2]
