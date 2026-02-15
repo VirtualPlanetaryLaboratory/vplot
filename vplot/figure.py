@@ -258,8 +258,26 @@ class VPLOTFigure(Figure):
             bSingleXparam = len(set(listXlabels)) == 1 and listXlabels[0] is not None
             bSingleYparam = len(set(listYlabels)) == 1 and listYlabels[0] is not None
 
+            # Skip auto-labeling on inner axes of shared-axis layouts
+            bInnerXaxis = False
+            bInnerYaxis = False
+            try:
+                subplotSpec = axCurrent.get_subplotspec()
+                xSiblings = axCurrent.get_shared_x_axes().get_siblings(
+                    axCurrent
+                )
+                if not subplotSpec.is_last_row() and len(xSiblings) > 1:
+                    bInnerXaxis = True
+                ySiblings = axCurrent.get_shared_y_axes().get_siblings(
+                    axCurrent
+                )
+                if not subplotSpec.is_first_col() and len(ySiblings) > 1:
+                    bInnerYaxis = True
+            except AttributeError:
+                pass  # Not a subplot (e.g., inset axes)
+
             # Add the x axis label
-            if not bXlabelExists:
+            if not bXlabelExists and not bInnerXaxis:
 
                 sXlabel = ""
 
@@ -277,7 +295,7 @@ class VPLOTFigure(Figure):
                 axCurrent.set_xlabel(sXlabel)
 
             # Add the y axis label
-            if not bYlabelExists:
+            if not bYlabelExists and not bInnerYaxis:
 
                 sYlabel = ""
 
